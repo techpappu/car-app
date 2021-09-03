@@ -1,25 +1,25 @@
 @extends('layouts.backend.app')
-@section('title', 'Brand')
+@section('title', 'Model')
 @push('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.css">
 
 @endpush
 @section('content')
-    <h3>Car Brand</h3>
+    <h3>Car Model</h3>
 
     <!-- Button trigger modal -->
     <div class="modal-header">
         <button type="button" id="car_add" class="btn btn-primary mr-auto" style="float: right" data-toggle="modal"
-            data-target="#brandModal">Add New
+            data-target="#modelModal">Add New
         </button>
     </div>
     <div class="clearfix"></div>
     <!-- Modal -->
-    <div class="modal fade" id="brandModal" tabindex="-1" role="dialog" aria-labelledby="brandModal" aria-hidden="true">
+    <div class="modal fade" id="modelModal" tabindex="-1" role="dialog" aria-labelledby="modelModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class='col-12 modal-title text-center'>Add Brand</h5>
+                    <h5 class='col-12 modal-title text-center'>Add Model</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -27,19 +27,27 @@
 
                 <div class="alert alert-danger alert-dismissible" id="alertdanger" role="alert"></div>
                 <div class="alert alert-success" id="alertsuccess"></div>
-                <form action="" id="brand_form" method="post">
+                <form action="" id="model_form" method="post">
                     <div class="modal-body">
                         @csrf
                         <input type="text" id="id" name="id" style="display: none" />
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" name="name" class="form-control is-invalid" id="brandName"
-                                placeholder="Brand Name" required>
+                            <input type="text" name="name" class="form-control is-invalid" id="modelName"
+                                placeholder="Model Name" required>
                             <span class="text-danger">
                                 <strong id="name-error"></strong>
                             </span>
                         </div>
 
+                        <div class="form-group">
+                            <label>Select a Brand</label>
+                            <select class="form-control" name="brand" id="brand">
+                                @foreach ($brand as $row)
+                                <option value="{{ $row->id }}">{{ $row->name }}</option>   
+                                @endforeach                            
+                            </select>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" id="submitBtn" class="btn btn-primary">SUBMIT</button>
@@ -61,7 +69,7 @@
 
                 <div class="x_content">
                     <div id="table_data">
-                        @include('car.brand_pagination_data')
+                        @include('car.model_pagination_data')
                     </div>
                 </div>
             </div>
@@ -95,23 +103,23 @@
 
         function fetch_data(page) {
             $.ajax({
-                url: "/car/fetchbyPage?page=" + page,
+                url: "/car/model/fetchbyPage?page=" + page,
                 success: function(data) {
                     $('#table_data').html(data);
                 }
             });
         }
-        $('#brand_form').on('submit', function(event) {
+        $('#model_form').on('submit', function(event) {
             event.preventDefault();
             var id = $("#id").val();
-            var url = "{{ route('brand.add') }}";
+            var url = "{{ route('model.add') }}";
             if (id) {
-                url = "{{ route('brand.update') }}";
+                url = "{{ route('model.update') }}";
             }
             $(".ajax-load").show();
             $('#submitBtn').attr('disabled', 'disabled');
             $.ajax({
-                data: $('#brand_form').serialize(),
+                data: $('#model_form').serialize(),
                 url: url,
                 type: "POST",
                 dataType: "json",
@@ -147,23 +155,16 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/car/show/" + id,
+                url: "/car/model/show/" + id,
                 dataType: "json",
                 success: function(response) {
                     $("div#alertdanger").hide();
                     $("div#alertsuccess").hide();
                     $('#id').val(response.data.id);
-                    $('#brandName').val(response.data.name);
-
-                    if (response.data.isEnabled == 1) {
-                        $('#is_enabled').prop('checked', true);
-
-                    } else {
-                        $('#is_enabled').prop('checked', false);
-                    }
-                    $('#isActive').show();
-                    $('.modal-title').text("Edit Brand");
-                    $('#brandModal').modal('show');
+                    $('#modelName').val(response.data.name);
+                    $("#brand").val(response.data.brand_id);                 
+                    $('.modal-title').text("Edit Model");
+                    $('#modelModal').modal('show');
                 }
             });
         });
@@ -172,7 +173,7 @@
             id = $(this).attr('id');
             swal({
                 title: "Are you sure?",
-                text: "To delete this Brand!",
+                text: "To delete this Model!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -182,7 +183,7 @@
                 function() {
                     $.ajax({
                         type: 'get',
-                        url: '/car/delete/' + id,
+                        url: '/car/model/delete/' + id,
                         cache: false,
                         success: function(response) {
                             if (response.hasError == false) {

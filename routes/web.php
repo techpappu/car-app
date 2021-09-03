@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Car\BrandController;
+use App\Http\Controllers\Car\ModelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,13 @@ $router->group(['prefix' => 'car'], function () use ($router) {
     Route::get("/show/{id}", [BrandController::class, 'show']);
     Route::POST("/update", [BrandController::class, 'update'])->name("brand.update");
     Route::get("/delete/{id}", [BrandController::class, 'delete']);
+  
+    Route::get("/model", [ModelController::class, 'index'])->name("model");
+    Route::get("/model/fetchbyPage", [ModelController::class, 'fetchbyPage']);
+    Route::POST("/model/add", [ModelController::class, 'add'])->name("model.add");
+    Route::get("/model/show/{id}", [ModelController::class, 'show']);
+    Route::POST("/model/update", [ModelController::class, 'update'])->name("model.update");
+    Route::get("model/delete/{id}", [ModelController::class, 'delete']);
 });
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

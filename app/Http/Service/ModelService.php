@@ -2,50 +2,45 @@
 
 namespace App\Http\Service;
 
-use App\Http\Repository\BrandRepository;
+use App\Http\Repository\ModelRepository;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Response;
-use App\Http\Resources\BrandResource;
+use App\Http\Resources\ModelResource;
 
-class BrandService
+class ModelService
 {
     use RespondsWithHttpStatus;
 
     public function index()
     {
-        return BrandResource::collection(BrandRepository::index());
+        return ModelResource::collection(ModelRepository::index());
     }
 
-    public function allBrand()
-    {
-        return BrandResource::collection(BrandRepository::allBrand());
-    }
-    
     public function add($request)
     {
-        $brand = BrandRepository::store($request);
-        if ($brand) {
+        $models = ModelRepository::store($request);
+        if ($models) {
             return $this->success(trans('messages.add'), Response::HTTP_CREATED);
         }
     }
 
     public function show($id)
     {
-        $brand = BrandRepository::findById($id);
-        if (!$brand) {
+        $models = ModelRepository::findById($id);
+        if (!$models) {
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
 
-        return new BrandResource($brand);
+        return new ModelResource($models);
     }
 
     public function update($request)
     {
-        $brand = BrandRepository::findById($request->id);
-        if (!$brand) {
+        $models = ModelRepository::findById($request->id);
+        if (!$models) {
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
-        $isUpdated = BrandRepository::update($brand, $request);
+        $isUpdated = ModelRepository::update($models, $request);
         if ($isUpdated) {
             return $this->success(trans('messages.update'), Response::HTTP_OK);
         }
@@ -53,10 +48,10 @@ class BrandService
 
     public function delete($id)
     {
-        $brand = BrandRepository::findById($id);
-        if (!$brand) {
+        $models = ModelRepository::findById($id);
+        if (!$models) {
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
-        return $this->success(BrandRepository::delete($brand));
+        return $this->success(ModelRepository::delete($models));
     }
 }

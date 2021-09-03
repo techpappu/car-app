@@ -17,6 +17,13 @@ class BrandRepository extends CommonRepository
         return Brand::orderBy('id', 'desc')
             ->paginate(5);
     }
+
+    public static function allBrand()
+    {
+        return Brand::orderBy('id', 'desc')
+            ->get();
+    }
+    
     public static function store($request)
     {
         $brand = new Brand();

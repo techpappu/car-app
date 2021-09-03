@@ -32,6 +32,9 @@
           <li class="{{Request::is('car/brand') ? 'active':''}}">
             <a href="{{ route('brand') }}"><i class="fa fa-image"></i> <span>Brand</span></a>                     
          </li>
+         <li class="{{Request::is('car/model') ? 'active':''}}">
+          <a href="{{ route('model') }}"><i class="fa fa-image"></i> <span>Model</span></a>                     
+       </li>
         </ul>
       </li>
      </ul>
