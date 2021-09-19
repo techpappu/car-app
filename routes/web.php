@@ -65,6 +65,7 @@ $router->group(['prefix' => 'car'], function () use ($router) {
     Route::POST("/color/update", [ColorController::class, 'update'])->name("color.update");
     Route::get("color/delete/{id}", [ColorController::class, 'delete']);
     
+    Route::get("/", [CarController::class, 'index'])->name("car");
 });
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
