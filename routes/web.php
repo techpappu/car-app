@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Car\BodyStyleController;
 use App\Http\Controllers\Car\BrandController;
+use App\Http\Controllers\Car\CarController;
 use App\Http\Controllers\Car\ColorController;
 use App\Http\Controllers\Car\ModelController;
 
@@ -66,6 +67,11 @@ $router->group(['prefix' => 'car'], function () use ($router) {
     Route::get("color/delete/{id}", [ColorController::class, 'delete']);
     
     Route::get("/", [CarController::class, 'index'])->name("car");
+    Route::get("/fetchbyPage", [CarController::class, 'fetchbyPage']);
+    Route::POST("/add", [CarController::class, 'add'])->name("add");
+    Route::get("/show/{id}", [CarController::class, 'show']);
+    Route::POST("/update", [CarController::class, 'update'])->name("update");
+    Route::get("delete/{id}", [CarController::class, 'delete']);
 });
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

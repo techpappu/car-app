@@ -4,7 +4,7 @@ namespace App\Http\Repository;
 
 use App\Models\Car;
 
-class BodyStyleRepository extends CommonRepository
+class CarRepository extends CommonRepository
 {
     public function __construct()
     {
@@ -37,19 +37,19 @@ class BodyStyleRepository extends CommonRepository
         return Car::find($id);
     }
 
-   /*  public static function update($bodyStyle, $request)
+    public static function update($car, $request)
     {
         if ($request->has('name')) {
-            $bodyStyle->name = $request->name;
+            $car->name = $request->name;
         }
 
-        $bodyStyle->update();
+        $car->update();
 
         return true;
     }
 
-    public static function delete($bodyStyle)
+    public static function delete($car)
     {
-        return $bodyStyle->delete();
-    } */
+        return $car->delete();
+    }
 }
