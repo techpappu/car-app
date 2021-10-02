@@ -39,11 +39,11 @@ $router->group(['prefix' => 'user'], function () use ($router) {
 
 $router->group(['prefix' => 'car'], function () use ($router) {
     Route::get("/brand", [BrandController::class, 'index'])->name("brand");
-    Route::get("/fetchbyPage", [BrandController::class, 'fetchbyPage']);
-    Route::POST("/add", [BrandController::class, 'add'])->name("brand.add");
-    Route::get("/show/{id}", [BrandController::class, 'show']);
-    Route::POST("/update", [BrandController::class, 'update'])->name("brand.update");
-    Route::get("/delete/{id}", [BrandController::class, 'delete']);
+    Route::get("/brand/fetchbyPage", [BrandController::class, 'fetchbyPage']);
+    Route::POST("/brand/add", [BrandController::class, 'add'])->name('brand.add');
+    Route::get("/brand/show/{id}", [BrandController::class, 'show']);
+    Route::POST("/brand/update", [BrandController::class, 'update'])->name("brand.update");
+    Route::get("/brand/delete/{id}", [BrandController::class, 'delete']);
 
     Route::get("/model", [ModelController::class, 'index'])->name("model");
     Route::get("/model/fetchbyPage", [ModelController::class, 'fetchbyPage']);
@@ -51,6 +51,7 @@ $router->group(['prefix' => 'car'], function () use ($router) {
     Route::get("/model/show/{id}", [ModelController::class, 'show']);
     Route::POST("/model/update", [ModelController::class, 'update'])->name("model.update");
     Route::get("model/delete/{id}", [ModelController::class, 'delete']);
+    Route::get("/model/{brandId}", [ModelController::class, 'getModelsByBrand']);
 
     Route::get("/bodyStyle", [BodyStyleController::class, 'index'])->name("bodyStyle");
     Route::get("/bodyStyle/fetchbyPage", [BodyStyleController::class, 'fetchbyPage']);

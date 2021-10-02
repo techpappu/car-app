@@ -16,7 +16,7 @@ class BodyStyleService
         return BodyStyleResource::collection(BodyStyleRepository::index());
     }
 
-    public function allBrand()
+    public function allBodyStyle()
     {
         return BodyStyleResource::collection(BodyStyleRepository::allBodyStyle());
     }

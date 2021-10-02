@@ -14,7 +14,7 @@ class ModelRepository extends CommonRepository
 
     public static function index()
     {
-        return Models::select('models.id', 'models.name','brands.id as brand_id', 'brands.name as brand')
+        return Models::select('models.id', 'models.name', 'brands.id as brand_id', 'brands.name as brand')
             ->join('brands', 'brands.id', '=', 'models.brand_id')
             ->orderBy('id', 'desc')
             ->paginate(5);
@@ -49,5 +49,13 @@ class ModelRepository extends CommonRepository
     public static function delete($models)
     {
         return $models->delete();
+    }
+
+    public static function getModelsByBrand($brandId)
+    {
+        
+        return Models::select('id', 'name')
+            ->where('brand_id', $brandId)
+            ->get();
     }
 }

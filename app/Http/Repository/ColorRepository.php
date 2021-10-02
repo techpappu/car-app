@@ -18,7 +18,7 @@ class ColorRepository extends CommonRepository
             ->paginate(5);
     }
 
-    public static function allBodyStyle()
+    public static function allColor()
     {
         return Color::orderBy('id', 'desc')
             ->get();

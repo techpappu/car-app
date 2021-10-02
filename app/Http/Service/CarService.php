@@ -16,17 +16,18 @@ class CarService
         return CarResource::collection(CarRepository::index());
     }
 
-   
+
 
     public function add($request)
     {
+
         $car = CarRepository::store($request);
         if ($car) {
             return $this->success(trans('messages.add'), Response::HTTP_CREATED);
         }
     }
 
-   /*  public function show($id)
+    /*  public function show($id)
     {
         $bodyStyle = BodyStyleRepository::findById($id);
         if (!$bodyStyle) {

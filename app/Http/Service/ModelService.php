@@ -54,4 +54,8 @@ class ModelService
         }
         return $this->success(ModelRepository::delete($models));
     }
+    public function getModelsByBrand($brandId)
+    {
+        return ModelResource::collection(ModelRepository::getModelsByBrand($brandId));
+    }
 }

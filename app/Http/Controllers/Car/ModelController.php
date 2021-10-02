@@ -47,4 +47,9 @@ class ModelController extends Controller
     {
         return $this->modelService->delete($id);
     }
+
+    public function getModelsByBrand($brandId)
+    {
+        return $this->modelService->getModelsByBrand($brandId);
+    }
 }

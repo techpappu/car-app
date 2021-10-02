@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Car;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CarAddRequest;
+use App\Http\Service\BodyStyleService;
 use App\Http\Service\BrandService;
 use App\Http\Service\CarService;
 use App\Http\Service\CarConditionService;
+use App\Http\Service\ColorService;
 use App\Http\Service\EquipmentService;
 use App\Http\Service\InteriorExteriorService;
 use App\Http\Service\SafetyEquipmentService;
@@ -22,6 +25,8 @@ class CarController extends Controller
     public $interiorExteriorService;
     public $selfDrivingService;
     public $safetyEquipmentService;
+    public $bodyStyleService;
+    public $colorService;
     public function __construct(
         CarService $carService,
         BrandService $brandService,
@@ -30,7 +35,9 @@ class CarController extends Controller
         EquipmentService $equipmentService,
         InteriorExteriorService $interiorExteriorService,
         SelfDrivingService $selfDrivingService,
-        SafetyEquipmentService $safetyEquipmentService
+        SafetyEquipmentService $safetyEquipmentService,
+        BodyStyleService $bodyStyleService,
+        ColorService $colorService
     ) {
         $this->middleware('auth');
         $this->carService = $carService;
@@ -41,25 +48,44 @@ class CarController extends Controller
         $this->interiorExteriorService = $interiorExteriorService;
         $this->selfDrivingService = $selfDrivingService;
         $this->safetyEquipmentService = $safetyEquipmentService;
+        $this->bodyStyleService = $bodyStyleService;
+        $this->colorService = $colorService;
     }
 
     public function index()
     {
         $data = $this->carService->index();
         $brand = $this->brandService->allBrand();
+        $bodyStyle = $this->bodyStyleService->allBodyStyle();
+        $colors = $this->colorService->allColor();
         $carCondition = $this->carConditionService->index();
         $standardFeature = $this->standardFeatureService->index();
         $equipment = $this->equipmentService->index();
         $interiorExterior = $this->interiorExteriorService->index();
         $selfDriving = $this->selfDrivingService->index();
         $safetyEquipment = $this->safetyEquipmentService->index();
-        return view('car.car', compact('data', 'brand', 'carCondition', 'standardFeature', 
-        'equipment', 'interiorExterior', 'selfDriving', 'safetyEquipment'));
+        return view('car.car', compact(
+            'data',
+            'brand',
+            'bodyStyle',
+            'colors',
+            'carCondition',
+            'standardFeature',
+            'equipment',
+            'interiorExterior',
+            'selfDriving',
+            'safetyEquipment'
+        ));
     }
 
     public function fetchbyPage()
     {
         $data = $this->carService->index();
         return view('car.car_pagination_data', compact('data'))->render();
+    }
+
+    public function add(CarAddRequest $request)
+    {
+        return $this->carService->add($request);
     }
 }

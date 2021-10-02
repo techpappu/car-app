@@ -16,9 +16,9 @@ class ColorService
         return ColorResource::collection(ColorRepository::index());
     }
 
-    public function allBrand()
+    public function allColor()
     {
-        return ColorResource::collection(ColorRepository::allBodyStyle());
+        return ColorResource::collection(ColorRepository::allColor());
     }
 
     public function add($request)

@@ -2,7 +2,8 @@
 
 namespace App\Http\Repository;
 
-use App\Models\Car;
+use App\Models\BodyStyle;
+
 
 class BodyStyleRepository extends CommonRepository
 {
@@ -14,30 +15,30 @@ class BodyStyleRepository extends CommonRepository
 
     public static function index()
     {
-        return Car::orderBy('id', 'desc')
+        return BodyStyle::orderBy('id', 'desc')
             ->paginate(5);
     }
 
     public static function allBodyStyle()
     {
-        return Car::orderBy('id', 'desc')
+        return BodyStyle::orderBy('id', 'desc')
             ->get();
     }
 
     public static function store($request)
     {
-        $car = new Car();
-        $car->name = $request->name;
-        $car->save();
-        return $car;
+        $bodyStyle = new BodyStyle();
+        $bodyStyle->name = $request->name;
+        $bodyStyle->save();
+        return $bodyStyle;
     }
 
     public static function findById($id)
     {
-        return Car::find($id);
+        return BodyStyle::find($id);
     }
 
-   /*  public static function update($bodyStyle, $request)
+    public static function update($bodyStyle, $request)
     {
         if ($request->has('name')) {
             $bodyStyle->name = $request->name;
@@ -51,5 +52,5 @@ class BodyStyleRepository extends CommonRepository
     public static function delete($bodyStyle)
     {
         return $bodyStyle->delete();
-    } */
+    }
 }
