@@ -2,49 +2,45 @@
 
 namespace App\Http\Service;
 
-use App\Http\Repository\CarRepository;
+use App\Http\Repository\FAQRepository;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Response;
-use App\Http\Resources\CarResource;
-use App\Http\Resources\ShowCarResource;
+use App\Http\Resources\FAQResource;
 
-class CarService
+class FAQService
 {
     use RespondsWithHttpStatus;
 
     public function index()
     {
-        return CarResource::collection(CarRepository::index());
+        return FAQResource::collection(FAQRepository::index());
     }
-
-
 
     public function add($request)
     {
-
-        $car = CarRepository::store($request);
-        if ($car) {
+        $faq = FAQRepository::store($request);
+        if ($faq) {
             return $this->success(trans('messages.add'), Response::HTTP_CREATED);
         }
     }
 
     public function show($id)
     {
-        $car = CarRepository::findById($id);
-        if (!$car) {
+        $faq = FAQRepository::findById($id);
+        if (!$faq) {
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
 
-        return new ShowCarResource($car);
+        return new FAQResource($faq);
     }
 
     public function update($request)
     {
-        $car = CarRepository::findById($request->id);
-        if (!$car) {
+        $faq = FAQRepository::findById($request->id);
+        if (!$faq) {
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
-        $isUpdated = CarRepository::update($car, $request);
+        $isUpdated = FAQRepository::update($faq, $request);
         if ($isUpdated) {
             return $this->success(trans('messages.update'), Response::HTTP_OK);
         }
@@ -52,10 +48,10 @@ class CarService
 
     public function delete($id)
     {
-        $car = CarRepository::findById($id);
-        if (!$car) {
+        $faq = FAQRepository::findById($id);
+        if (!$faq) {
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
-        return $this->success(CarRepository::delete($car));
+        return $this->success(FAQRepository::delete($faq));
     }
 }

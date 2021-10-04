@@ -34,12 +34,13 @@
     </div>
     <div class="clearfix"></div>
     <!-- Modal -->
-    <div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="carModal" aria-hidden="true">
+    <div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="carModal" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class='col-12 modal-title text-center'>Add Car</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close resetForm" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -213,7 +214,8 @@
                             @foreach ($carCondition as $row)
 
                                 <label>
-                                    <input type="checkbox" name="carCondition[]" value="{{ $row->id }}">
+                                    <input type="checkbox" name="carCondition[]" id="carCondition_{{ $row->id }}"
+                                        value="{{ $row->id }}">
                                     {{ $row->name }}
                                 </label>
                             @endforeach
@@ -222,7 +224,8 @@
                             <h4>Standard Features</h4>
                             @foreach ($standardFeature as $row)
                                 <label>
-                                    <input type="checkbox" name="standardFeature[]" value="{{ $row->id }}">
+                                    <input type="checkbox" name="standardFeature[]"
+                                        id="standardFeature_{{ $row->id }}" value="{{ $row->id }}">
                                     {{ $row->name }}
                                 </label>
                             @endforeach
@@ -231,7 +234,8 @@
                             <h4>Equipment</h4>
                             @foreach ($equipment as $row)
                                 <label>
-                                    <input type="checkbox" name="equipment[]" value="{{ $row->id }}">
+                                    <input type="checkbox" name="equipment[]" id="equipment_{{ $row->id }}"
+                                        value="{{ $row->id }}">
                                     {{ $row->name }}
                                 </label>
                             @endforeach
@@ -240,7 +244,8 @@
                             <h4>Interior / Exterior</h4>
                             @foreach ($interiorExterior as $row)
                                 <label>
-                                    <input type="checkbox" name="interiorExterior[]" value="{{ $row->id }}">
+                                    <input type="checkbox" name="interiorExterior[]"
+                                        id="interiorExterior_{{ $row->id }}" value="{{ $row->id }}">
                                     {{ $row->name }}
                                 </label>
                             @endforeach
@@ -249,7 +254,8 @@
                             <h4>Self-driving</h4>
                             @foreach ($selfDriving as $row)
                                 <label>
-                                    <input type="checkbox" name="selfDriving[]" value="{{ $row->id }}">
+                                    <input type="checkbox" name="selfDriving[]" id="selfDriving_{{ $row->id }}"
+                                        value="{{ $row->id }}">
                                     {{ $row->name }}
                                 </label>
                             @endforeach
@@ -258,7 +264,8 @@
                             <h4>Safety Equipement</h4>
                             @foreach ($safetyEquipment as $row)
                                 <label>
-                                    <input type="checkbox" name="safetyEquipment[]" value="{{ $row->id }}">
+                                    <input type="checkbox" name="safetyEquipment[]"
+                                        id="safetyEquipment_{{ $row->id }}" value="{{ $row->id }}">
                                     {{ $row->name }}
                                 </label>
                             @endforeach
@@ -276,7 +283,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary resetForm" data-dismiss="modal">Close</button>
                             <button type="submit" id="submitBtn" class="btn btn-primary">SUBMIT</button>
                             <button type="button" class="ajax-load">
                                 <center><img src={{ URL::to('/') }}/ajax-loader2.gif alt="Loading..." /></center>
@@ -345,7 +352,9 @@
             $('#car_form')[0].reset();
 
         });
-
+        $('.resetForm').click(function() {
+            resetForm();
+        });
         $(document).ready(function() {
             $("div#alertdanger").hide();
             $("div#alertsuccess").hide();
@@ -357,6 +366,7 @@
                 todayBtn: 1,
                 autoclose: 1,
                 todayHighlight: 1,
+                format: 'dd/mm/yyyy'
             })
             $(document).on('click', '.pagination a', function(event) {
                 event.preventDefault();
@@ -447,5 +457,116 @@
                 }
             });
         });
+
+        $(document).on('click', '.edit', function() {
+            var id = $(this).attr('id');
+            $.ajax({
+                url: "/car/show/" + id,
+                dataType: "json",
+                success: function(response) {
+                    $('#id').val(response.data.id);
+                    $("#brand_id").val(response.data.brand);
+                    getModelsByBrand(response.data.brand);
+                    $("#model_id").val(response.data.model);
+                    $("#body_style_id").val(response.data.color);
+                    $("#color_id").val(response.data.bodyStyle);
+                    $("#title").val(response.data.title);
+                    $("#stock_no").val(response.data.stock_no);
+                    if (response.data.modelYear != null) {
+
+                        var modelYear = response.data.modelYear.split("-");
+                        $("#model_year").val(modelYear[1] + "/" + modelYear[2] + "/" + modelYear[0]);
+                    }
+
+                    if (response.data.carUpDate != null) {
+                        var carUpDate = response.data.carUpDate.split("-");
+                        $("#car_up_date").val(carUpDate[1] + "/" + carUpDate[2] + "/" + carUpDate[0]);
+                    }
+
+                    $("#car_location").val(response.data.location);
+                    $("#mileage").val(response.data.mileage);
+                    $("#repaired").val(response.data.repaired);
+                    $("#steering").val(response.data.steering);
+                    $("#transmission").val(response.data.transmission);
+                    $("#fuel").val(response.data.fuel);
+                    $("#drive_system").val(response.data.drive_system);
+                    $("#doors").val(response.data.doors);
+                    $("#displacement").val(response.data.displacement);
+                    $("#chassis_no").val(response.data.chassisNo);
+                    $("#model_code").val(response.data.modelCode);
+
+                    response.data.carCondition.forEach(function(carCondition) {
+                        $("#carCondition_" + carCondition.car_condition_id + "").prop('checked',
+                            true);
+                    });
+                    response.data.carStandardFeature.forEach(function(carStandardFeature) {
+                        $("#standardFeature_" + carStandardFeature.standard_feature_id + "")
+                            .prop('checked', true);
+                    });
+                    response.data.carEquipment.forEach(function(carEquipment) {
+                        $("#equipment_" + carEquipment.equipment_id + "").prop('checked', true);
+                    });
+                    response.data.carInteriorExterior.forEach(function(carInteriorExterior) {
+                        $("#interiorExterior_" + carInteriorExterior.interior_exterior_id + "")
+                            .prop('checked', true);
+                    });
+                    response.data.carSelfDriving.forEach(function(carSelfDriving) {
+                        $("#selfDriving_" + carSelfDriving.self_driving_id + "").prop('checked',
+                            true);
+                    });
+                    response.data.carSafetyEquipment.forEach(function(carSafetyEquipment) {
+                        $("#safetyEquipment_" + carSafetyEquipment.safety_equipment_id + "")
+                            .prop('checked', true);
+                    });
+
+                    $("div#alertdanger").hide();
+                    $("div#alertsuccess").hide();
+                    $('.modal-title').text("Edit Car");
+                    $('#carModal').modal('show');
+                }
+            });
+        });
+
+        $(document).on('click', '.delete', function() {
+            id = $(this).attr('id');
+            swal({
+                title: "Are you sure?",
+                text: "To delete this Car!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+            }).then(
+                function() {
+                    $.ajax({
+                        type: 'get',
+                        url: '/car/delete/' + id,
+                        cache: false,
+                        success: function(response) {
+                            if (response.hasError == false) {
+                                fetch_data(1);
+                            }
+
+                        }
+                    });
+                },
+                function() {
+                    return false;
+                });
+        });
+
+        function resetForm() {
+            $(":checkbox").prop("checked", false);
+            $("#title").val("");
+            $("#model_year").val("");
+            $("#car_up_date").val("");
+            $("#car_location").val("");
+            $("#mileage").val("");
+            $("#repaired").val("");
+            $("#displacement").val("");
+            $("#chassis_no").val("");
+            $("#model_code").val("");
+        }
     </script>
 @endpush

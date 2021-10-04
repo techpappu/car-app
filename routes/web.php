@@ -7,6 +7,7 @@ use App\Http\Controllers\Car\BodyStyleController;
 use App\Http\Controllers\Car\BrandController;
 use App\Http\Controllers\Car\CarController;
 use App\Http\Controllers\Car\ColorController;
+use App\Http\Controllers\Car\FAQController;
 use App\Http\Controllers\Car\ModelController;
 
 /*
@@ -73,6 +74,13 @@ $router->group(['prefix' => 'car'], function () use ($router) {
     Route::get("/show/{id}", [CarController::class, 'show']);
     Route::POST("/update", [CarController::class, 'update'])->name("update");
     Route::get("delete/{id}", [CarController::class, 'delete']);
+
+    Route::get("/faq", [FAQController::class, 'index'])->name("faq");
+    Route::get("/faq/fetchbyPage", [FAQController::class, 'fetchbyPage']);
+    Route::POST("/faq/add", [FAQController::class, 'add'])->name("faq.add");
+    Route::get("/faq/show/{id}", [FAQController::class, 'show']);
+    Route::POST("/faq/update", [FAQController::class, 'update'])->name("faq.update");
+    Route::get("faq/delete/{id}", [FAQController::class, 'delete']);
 });
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

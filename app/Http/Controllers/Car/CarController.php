@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Car;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CarAddRequest;
+use App\Http\Requests\CarUpdateRequest;
 use App\Http\Service\BodyStyleService;
 use App\Http\Service\BrandService;
 use App\Http\Service\CarService;
@@ -87,5 +88,20 @@ class CarController extends Controller
     public function add(CarAddRequest $request)
     {
         return $this->carService->add($request);
+    }
+
+    public function show($id)
+    {
+        return $this->carService->show($id);
+    }
+
+    public function update(CarUpdateRequest $request)
+    {
+        return $this->carService->update($request);
+    }
+
+    public function delete($id)
+    {
+        return $this->carService->delete($id);
     }
 }
