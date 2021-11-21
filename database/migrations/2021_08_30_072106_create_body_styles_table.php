@@ -16,6 +16,8 @@ class CreateBodyStylesTable extends Migration
         Schema::create('body_styles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('position')->default(1);
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

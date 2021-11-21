@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Model::unguard();
         $this->call([
+            BrandSeeder::class,
+            BodyStyleSeeder::class,
+            ColorSeeder::class,
             CarConditionSeeder::class,
             StandardFeatureSeeder::class,
             EquipmentSeeder::class,

@@ -47,6 +47,7 @@ class CarRepository extends CommonRepository
         $car->body_style_id = $request->body_style_id;
         $car->color_id = $request->color_id;
         $car->title = $request->title;
+        $car->price = $request->price;
         if ($request->has('model_year')) {
             $model_year = $request->model_year != null ? strtotime($request->model_year) : null;
             if ($model_year != null) {
@@ -75,7 +76,10 @@ class CarRepository extends CommonRepository
         $car->displacement = $request->displacement;
         $car->chassis_no = $request->chassis_no;
         $car->model_code = $request->model_code;
-
+        $car->description = $request->description;
+        if ($request->is_featured) {
+            $car->is_featured = 1;
+        }
         $car->save();
         $car->carCondition()->attach($request->carCondition);
         $car->carStandardFeature()->attach($request->standardFeature);
@@ -116,7 +120,7 @@ class CarRepository extends CommonRepository
         $car = Car::select([
             'id', 'brand_id', 'model_id', 'body_style_id', 'color_id', 'title', 'stock_no', 'model_year', 'car_up_date',
             'car_location', 'mileage', 'repaired', 'steering', 'transmission', 'fuel', 'drive_system', 'doors', 'displacement',
-            'chassis_no', 'model_code'
+            'chassis_no', 'model_code', 'is_featured'
         ])
             ->with([
                 'carCondition' => function ($q) {
@@ -237,7 +241,11 @@ class CarRepository extends CommonRepository
         if ($request->has('model_code')) {
             $car->model_code = $request->model_code;
         }
-
+        if ($request->is_featured) {
+            $car->is_featured = 1;
+        } else {
+            $car->is_featured = 0;
+        }
         $car->carCondition()->where('condition_info.car_id', $car->id)->detach();
         $car->carCondition()->attach($request->carCondition);
 

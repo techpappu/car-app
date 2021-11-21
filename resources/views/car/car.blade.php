@@ -93,6 +93,17 @@
                                 </span>
                             </div>
                             <div class="col-sm-4">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control is-invalid" id="price" name="price"
+                                    placeholder="Car Price" required>
+                                <span class="text-danger">
+                                    <strong id="name-error"></strong>
+                                </span>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
                                 <label for="model_year">Model Year</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
@@ -105,8 +116,6 @@
                                     <strong id="name-error"></strong>
                                 </span>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="stock_no">Stock Number</label>
                                 <input type="text" class="form-control is-invalid" id="stock_no" name="stock_no"
@@ -127,14 +136,15 @@
                                 </div>
 
                             </div>
+                           
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="car_location">Location</label>
                                 <input type="text" class="form-control is-invalid" id="car_location" name="car_location"
                                     placeholder="Location">
 
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="mileage">Mileage</label>
                                 <input type="text" class="form-control is-invalid" id="mileage" name="mileage"
@@ -147,6 +157,10 @@
                                     placeholder="Repaired">
 
                             </div>
+                            
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="steering">Steering</label>
                                 <select class="form-control" name="steering" id="steering">
@@ -154,9 +168,6 @@
                                     <option value="Right">Right</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="transmission">Transmission</label>
                                 <select class="form-control" name="transmission" id="transmission">
@@ -171,6 +182,9 @@
                                     <option value="PETROL">PETROL</option>
                                 </select>
                             </div>
+                            
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="drive_system">Select Drive System</label>
                                 <select class="form-control" name="drive_system" id="drive_system">
@@ -178,8 +192,6 @@
                                     <option value="3WD">3WD</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="doors">Doors</label>
                                 <select class="form-control" name="doors" id="doors">
@@ -192,19 +204,29 @@
                                 <input type="text" class="form-control" id="displacement" name="displacement"
                                     placeholder="Displacement">
                             </div>
+                            
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="chassis_no">Chassis No</label>
                                 <input type="text" class="form-control" id="chassis_no" name="chassis_no"
                                     placeholder="Chassis No">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
+                            <div class="col-sm-2">
                                 <label for="model_code">Model code</label>
                                 <input type="text" class="form-control" id="model_code" name="model_code"
                                     placeholder="Model code">
                             </div>
-
+                            <div class="col-sm-6">
+                                <label for="model_code">Description</label>
+                                <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="is_featured">Is Featured?</label>
+                                <input type="checkbox" style="width: 5%;height:20px" name="is_featured" id="is_featured" />
+                            </div>
                         </div>
 
                         <div>&nbsp;</div>
@@ -494,7 +516,13 @@
                     $("#displacement").val(response.data.displacement);
                     $("#chassis_no").val(response.data.chassisNo);
                     $("#model_code").val(response.data.modelCode);
-
+                    if(response.data.is_featured == 1){
+                        $("#is_featured").prop('checked',
+                            true);
+                    }else{
+                        $("#is_featured").prop('checked',
+                            false);
+                    }
                     response.data.carCondition.forEach(function(carCondition) {
                         $("#carCondition_" + carCondition.car_condition_id + "").prop('checked',
                             true);

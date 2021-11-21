@@ -20,6 +20,7 @@ class CreateCarsTable extends Migration
             $table->unsignedBigInteger('body_style_id');
             $table->unsignedBigInteger('color_id')->nullable();
             $table->string('title')->nullable();
+            $table->unsignedDouble("price", 15, 2);
             $table->string('stock_no')->unique()->nullable();
             $table->date('model_year')->nullable();
             $table->date('car_up_date')->nullable();
@@ -34,6 +35,9 @@ class CreateCarsTable extends Migration
             $table->string('chassis_no')->nullable();
             $table->string('model_code')->nullable();
             $table->string('car_location')->nullable();
+            $table->boolean('is_featured')->default(false);
+            $table->text('description')->nullable();
+            $table->string('images')->nullable();
             $table->timestamps();
         });
     }
