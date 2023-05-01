@@ -16,8 +16,8 @@ class ModelRepository extends CommonRepository
     {
         return Models::select('models.id', 'models.name', 'brands.id as brand_id', 'brands.name as brand')
             ->join('brands', 'brands.id', '=', 'models.brand_id')
-            ->orderBy('id', 'desc')
-            ->paginate(5);
+            ->orderBy('brands.name', 'asc')
+            ->paginate(config('constant.pagination_records'));
     }
     public static function store($request)
     {
@@ -53,7 +53,7 @@ class ModelRepository extends CommonRepository
 
     public static function getModelsByBrand($brandId)
     {
-        
+
         return Models::select('id', 'name')
             ->where('brand_id', $brandId)
             ->get();

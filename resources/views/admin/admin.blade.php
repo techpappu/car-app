@@ -33,7 +33,7 @@
                     <div class="modal-body">
                         @csrf
                         <input type="text" id="id" name="id" style="display: none" />
-                        <input type="text" id="role" name="role" value="2" style="display: none" />
+                        <input type="text" id="role" name="role" value="1" style="display: none" />
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" name="name" class="form-control is-invalid" id="userName" placeholder="Name"
@@ -123,7 +123,7 @@
 
         function fetch_data(page) {
             $.ajax({
-                url: "/user/fetchbyPage?page=" + page,
+                url: "/admin/user/fetchbyPage?page=" + page,
                 success: function(data) {
                     $('#table_data').html(data);
                 }
@@ -175,7 +175,7 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/user/show/" + id,
+                url: "/admin/user/show/" + id,
                 dataType: "json",
                 success: function(response) {
                     $("div#alertdanger").hide();
@@ -211,7 +211,7 @@
                     function () {
                         $.ajax({
                             type: 'get',
-                            url: '/user/delete/' + id,
+                            url: '/admin/user/delete/' + id,
                             cache: false,
                             success: function (response) {
                                 if (response.hasError == false) {

@@ -42,4 +42,13 @@ class Car extends Model
     {
         return $this->morphMany('App\Models\File', 'fileable');
     }
+    /**
+     * Get the Model that owns the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function model()
+    {
+        return $this->belongsTo(Models::class);
+    }
 }

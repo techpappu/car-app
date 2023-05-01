@@ -20,7 +20,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class='col-12 modal-title text-center'>Add FAQ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="faq_add" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -87,10 +87,10 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.js"></script>
     <script>
-        $('#F').click(function() {
+        $('#faq_add').click(function() {
             $("div#alertdanger").hide();
             $("div#alertsuccess").hide();
-            $('#body_style_form')[0].reset();
+            $('#faq_form')[0].reset();
 
         });
 
@@ -110,7 +110,7 @@
 
         function fetch_data(page) {
             $.ajax({
-                url: "/car/faq/fetchbyPage?page=" + page,
+                url: "/admin/car/faq/fetchbyPage?page=" + page,
                 success: function(data) {
                     $('#table_data').html(data);
                 }
@@ -163,7 +163,7 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/car/faq/show/" + id,
+                url: "/admin/car/faq/show/" + id,
                 dataType: "json",
                 success: function(response) {
                     $("div#alertdanger").hide();
@@ -192,7 +192,7 @@
                 function() {
                     $.ajax({
                         type: 'get',
-                        url: '/car/faq/delete/' + id,
+                        url: '/admin/car/faq/delete/' + id,
                         cache: false,
                         success: function(response) {
                             if (response.hasError == false) {

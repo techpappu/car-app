@@ -19,14 +19,14 @@ class AdminController extends Controller
     }
     public function index(Request $request)
     {
-        $request->role = 2;
+        $request->role = 1;
         $data = $this->userService->index($request);
         return view('admin.admin', compact('data'));
     }
     public function fetchbyPage(Request $request)
     {
         if ($request->ajax()) {
-            $request->role = 2;
+            $request->role = 1;
             $data = $this->userService->index($request);
             return view('admin.pagination_data', compact('data'))->render();
         }
@@ -62,6 +62,22 @@ class AdminController extends Controller
     {
         if ($request->ajax()) {
             $request->role = 3;
+            $data = $this->userService->index($request);
+            return view('admin.pagination_data', compact('data'))->render();
+        }
+    }
+
+    public function customerList(Request $request)
+    {
+        $request->role = 4;
+        $data = $this->userService->index($request);
+        return view('admin.customer', compact('data'));
+    }
+
+    public function customerFetchbyPage(Request $request)
+    {
+        if ($request->ajax()) {
+            $request->role = 4;
             $data = $this->userService->index($request);
             return view('admin.pagination_data', compact('data'))->render();
         }

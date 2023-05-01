@@ -9,7 +9,7 @@ php artisan migrate:fresh --seed
 sudo npm run watch
 
 
-php artisan migrate --path=/database/migrations/2021_10_03_062356_create_f_a_q_s_table.php
+php artisan migrate --path=/database/migrations/2021_12_04_165617_create_gallery_images_table.php
 
 git checkout -b local_feb_15 origin/intranet
 

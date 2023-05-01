@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Car;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CarAddRequest;
 use App\Http\Requests\CarUpdateRequest;
@@ -103,5 +103,20 @@ class CarController extends Controller
     public function delete($id)
     {
         return $this->carService->delete($id);
+    }
+
+    public function carImageById($id)
+    {
+        $data = $this->carService->carImageById($id);
+        return view('car.car_image_list', compact('data'))->render();
+    }
+    public function deleteCarImage($id)
+    {
+        return $this->carService->deleteCarImage($id);
+    }
+
+    public function updatePosition(Request $request)
+    {
+        return $this->carService->updatePosition($request);
     }
 }

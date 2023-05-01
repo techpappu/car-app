@@ -1,0 +1,335 @@
+/* home Page CSS for fixing */
+.first-txt {
+    position: absolute;
+    top: 17px;
+    left: 50px;
+}
+
+.b-goods-feat__label_price {
+    position: absolute;
+    /* right: 10px; */
+    bottom: 10px;
+    padding: 0 15px;
+    font-family: Poppins;
+    font-weight: 600;
+    line-height: 38px;
+    color: white;
+    background-color: #28af0f;
+    margin-left: 8px;
+
+}
+
+.b-list-brands {
+    margin-top: 53px;
+    margin-bottom: 30px;
+    -webkit-columns: 3;
+    -moz-columns: 3;
+    columns: 5;
+}
+
+.section-default {
+    position: relative;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.b-filter-type__input:checked+.b-filter-type__label {
+    border: 1px solid #444;
+    border-radius: 2px;
+    background-color: #b3a7a7;
+}
+
+/*   .b-filter-type__label {
+                                    width: 190px;
+                                    height: 110px;
+                                    cursor: pointer;
+                                    text-transform: uppercase;
+                                    border: 1px solid #444;
+                                } */
+
+strong {
+    display: block;
+}
+
+li:hover {
+    cursor: pointer;
+    /*  background: #fff !important; */
+    border-color: #EE1C23 !important;
+}
+
+.b-list-brands__link {
+    display: block;
+    padding-bottom: 0px;
+    font-weight: 600;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    color: #444;
+}
+
+.b-filter-type__icon {
+    display: block;
+    margin-bottom: -20px;
+    font-size: 80px;
+    line-height: 1;
+}
+
+.b-filter-type__label {
+    width: 150px;
+    height: 118px;
+    cursor: pointer;
+    /*   text-transform: uppercase; */
+    border: 1px solid #444;
+}
+
+.img-responsive_1 {
+    max-width: 100%;
+    height: 190px;
+}
+
+.widget-gallery__item {
+    float: right;
+    overflow: hidden;
+    width: 33.333%;
+    padding-right: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.items {
+    width: 100%;
+    margin: 0px auto;
+}
+
+.slick-slide {
+    margin: 10px
+}
+
+.slick-slide img {
+    width: 100%;
+    border: 0px solid #fff
+}
+
+.col-md-4 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 0px !important;
+    padding-right: 15px;
+}
+
+@media only screen and (max-width: 992px) {
+    .b-list-brands {
+        margin-top: 53px;
+        margin-bottom: 30px;
+        -webkit-columns: 3;
+        -moz-columns: 3;
+        columns: 3;
+    }
+}
+
+#img2 {
+    position: absolute;
+    top: 50px;
+    left: 80px;
+}
+
+.title-inner {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: .02em;
+    color: #222;
+}
+
+.title-inner:before {
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    margin-right: 10px;
+    content: '';
+    vertical-align: middle;
+    background-color: #d01818;
+}
+
+
+/* home page car list css */
+.car-list-header{
+    margin-bottom: 10px;
+}
+
+.car-list-header h6{
+display:inline;
+}
+
+.car-list-header p{
+    display:inline;
+    float:right;
+}
+
+.car-list {
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+    display: block;
+    border-radius: 4px;
+    transition: box-shadow .5s;
+    overflow: hidden;
+
+}
+
+.car-list:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+}
+
+.car-list-name a {
+    font-size: 14px;
+    color: #444444;
+}
+
+.car-list-addToCart {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 0 15px;
+    font-family: Poppins;
+    font-weight: 600;
+    line-height: 38px;
+    color: white;
+    cursor: pointer;
+}
+
+.car-list-price {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    padding: 0 15px;
+    font-family: Poppins;
+    font-weight: 600;
+    line-height: 38px;
+    color: white;
+    background-color: #28af0f;
+}
+
+.car-list-image {
+    width: 100%;
+    height: 190px;
+}
+
+.car-list-info {
+    margin: 5px;
+}
+
+.car-list-desc {
+    display: table;
+    width: 100%;
+    font: 500 12px Poppins;
+    color: #888;
+    border: 1px solid #eee;
+    padding: 0px;
+}
+
+.car-desc-item {
+    display: table-cell;
+    line-height: 48px;
+    text-align: center;
+    border-right: 1px solid #eee;
+}
+
+
+/* Car-details fixing css */
+.ulclass {
+    list-style-type: none;
+
+    letter-spacing: 0.7px;
+    padding: 8px 5px;
+    margin: 0 7px 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7B7B7B;
+    background: #F4F4F4;
+    border: 1px solid #F4F4F4;
+    font-size: 1.4rem;
+    height: 47px;
+}
+
+.liclass {
+    text-align: left;
+    justify-content: flex-start;
+    padding: 3px 3px 3px 3px;
+    line-height: 40px;
+    /*  max-width: 90.6%; */
+    letter-spacing: 0.3px;
+    margin-right: 1.3%;
+    white-space: nowrap;
+    margin-right: -5%;
+    margin-left: -10px;
+}
+
+.list-cates {
+    margin-bottom: 62px;
+}
+
+.activeInfo {
+    border: 1px solid rgba(238, 28, 35, 0.6);
+    color: #383838;
+    background: #fef1f2;
+}
+
+.add-to-cart {
+    padding: 0 15px;
+    font: 600 12px/40px Poppins;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 2px solid transparent;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-transform: uppercase;
+    color: white;
+    transition: all .3s;
+    letter-spacing: .05em;
+    border-radius: 2px;
+}
+
+.b-goods-feat__label_price {
+    position: absolute;
+    /* right: 10px; */
+    bottom: 10px;
+    padding: 0 15px;
+    font-family: Poppins;
+    font-weight: 600;
+    line-height: 38px;
+    color: white;
+    background-color: #28af0f;
+    margin-left: 8px;
+
+}
+
+.sp-image-container:after {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
+.title-inner {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: .02em;
+    color: #222;
+}
+
+.title-inner:before {
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    margin-right: 10px;
+    content: '';
+    vertical-align: middle;
+    background-color: #d01818;
+}
+.b-car-info {
+    padding: 5px;
+}
+    

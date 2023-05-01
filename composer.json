@@ -11,8 +11,11 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
+        "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3"
+        "laravel/ui": "^3.3",
+        "maatwebsite/excel": "^3.1",
+        "stripe/stripe-php": "^7.103"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

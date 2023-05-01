@@ -2,14 +2,20 @@
 @section('title', 'Brand')
 @push('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.css">
+    <style>
+        .imgPreview img {
+            padding: 8px;
+            max-width: 100px;
+        }
 
+    </style>
 @endpush
 @section('content')
-    <h3>Car Brand</h3>
+    <h3>Car Brand new</h3>
 
     <!-- Button trigger modal -->
     <div class="modal-header">
-        <button type="button" id="car_add" class="btn btn-primary mr-auto" style="float: right" data-toggle="modal"
+        <button type="button" id="brand_add" class="btn btn-primary mr-auto" style="float: right" data-toggle="modal"
             data-target="#brandModal">Add New
         </button>
     </div>
@@ -27,7 +33,7 @@
 
                 <div class="alert alert-danger alert-dismissible" id="alertdanger" role="alert"></div>
                 <div class="alert alert-success" id="alertsuccess"></div>
-                <form action="" id="brand_form" method="post">
+                <form action="" id="brand_form" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <input type="text" id="id" name="id" style="display: none" />
@@ -39,7 +45,13 @@
                                 <strong id="name-error"></strong>
                             </span>
                         </div>
-
+                        <div class="form-group">
+                            <div class="user-image mb-3 text-center">
+                                <div class="imgPreview"> </div>
+                            </div>
+                            <label for="image">Image</label>
+                            <input type="file" name="image"  id="image" />
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" id="submitBtn" class="btn btn-primary">SUBMIT</button>
@@ -72,11 +84,43 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.js"></script>
     <script>
-        $('#car_add').click(function() {
+        $(function() {
+            // Multiple images preview with JavaScript
+            var multiImgPreview = function(input, imgPreviewPlaceholder) {
+
+                if (input.files) {
+                    $(".imgPreview").empty();
+
+                    var filesAmount = input.files.length;
+
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(
+                                imgPreviewPlaceholder);
+                        }
+
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+
+            };
+
+            $('#image').on('change', function() {
+                multiImgPreview(this, 'div.imgPreview');
+            });
+        });
+    </script>
+    <script>
+        function resetForm(){
             $("div#alertdanger").hide();
             $("div#alertsuccess").hide();
             $('#brand_form')[0].reset();
-
+            $(".imgPreview").empty();
+        }
+        $('#brand_add').click(function() {
+            resetForm();
         });
 
         $(document).ready(function() {
@@ -95,7 +139,7 @@
 
         function fetch_data(page) {
             $.ajax({
-                url: "/car/brand/fetchbyPage?page=" + page,
+                url: "/admin/car/brand/fetchbyPage?page=" + page,
                 success: function(data) {
                     $('#table_data').html(data);
                 }
@@ -108,14 +152,17 @@
             if (id) {
                 url = "{{ route('brand.update') }}";
             }
+            var formdata = new FormData(this);
             $(".ajax-load").show();
             $('#submitBtn').attr('disabled', 'disabled');
             $.ajax({
-                data: $('#brand_form').serialize(),
                 url: url,
                 type: "POST",
-                dataType: "json",
-
+                data: formdata,
+                mimeTypes: "multipart/form-data",
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function(response) {
                     if (response.hasError == false) {
                         $("div#alertdanger").hide();
@@ -147,21 +194,14 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/car/brand/show/" + id,
+                url: "/admin/car/brand/show/" + id,
                 dataType: "json",
                 success: function(response) {
-                    $("div#alertdanger").hide();
-                    $("div#alertsuccess").hide();
+                    resetForm();
                     $('#id').val(response.data.id);
-                    $('#brandName').val(response.data.name);
-
-                    if (response.data.isEnabled == 1) {
-                        $('#is_enabled').prop('checked', true);
-
-                    } else {
-                        $('#is_enabled').prop('checked', false);
-                    }
-                    $('#isActive').show();
+                    $('#brandName').val(response.data.name);     
+                    $(".imgPreview").append('<img src="{{ URL::to('/') }}/upload/images/'+response.data.image+'">');
+              
                     $('.modal-title').text("Edit Brand");
                     $('#brandModal').modal('show');
                 }
@@ -182,7 +222,7 @@
                 function() {
                     $.ajax({
                         type: 'get',
-                        url: '/car/brand/delete/' + id,
+                        url: '/admin/car/brand/delete/' + id,
                         cache: false,
                         success: function(response) {
                             if (response.hasError == false) {

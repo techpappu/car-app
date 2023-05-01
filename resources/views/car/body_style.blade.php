@@ -2,7 +2,13 @@
 @section('title', 'Body Style')
 @push('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.css">
+    <style>
+        .imgPreview img {
+            padding: 8px;
+            max-width: 100px;
+        }
 
+    </style>
 @endpush
 @section('content')
     <h3>Car Body Style</h3>
@@ -28,7 +34,7 @@
 
                 <div class="alert alert-danger alert-dismissible" id="alertdanger" role="alert"></div>
                 <div class="alert alert-success" id="alertsuccess"></div>
-                <form action="" id="body_style_form" method="post">
+                <form action="" id="body_style_form" method="post"  enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <input type="text" id="id" name="id" style="display: none" />
@@ -40,7 +46,13 @@
                                 <strong id="name-error"></strong>
                             </span>
                         </div>
-
+                        <div class="form-group">
+                            <div class="user-image mb-3 text-center">
+                                <div class="imgPreview"> </div>
+                            </div>
+                            <label for="image">Image</label>
+                            <input type="file" name="image"  id="image" />
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" id="submitBtn" class="btn btn-primary">SUBMIT</button>
@@ -71,13 +83,46 @@
 @endsection
 
 @push('js')
+<script>
+    $(function() {
+        // Multiple images preview with JavaScript
+        var multiImgPreview = function(input, imgPreviewPlaceholder) {
+
+            if (input.files) {
+                $(".imgPreview").empty();
+
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(
+                            imgPreviewPlaceholder);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        $('#image').on('change', function() {
+            multiImgPreview(this, 'div.imgPreview');
+        });
+    });
+</script>
     <script src="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.js"></script>
     <script>
-        $('#car_add').click(function() {
+    
+        function resetForm(){
             $("div#alertdanger").hide();
             $("div#alertsuccess").hide();
             $('#body_style_form')[0].reset();
-
+            $(".imgPreview").empty();
+        }
+        $('#car_add').click(function() {
+            resetForm();
         });
 
         $(document).ready(function() {
@@ -96,7 +141,7 @@
 
         function fetch_data(page) {
             $.ajax({
-                url: "/car/bodyStyle/fetchbyPage?page=" + page,
+                url: "/admin/car/bodyStyle/fetchbyPage?page=" + page,
                 success: function(data) {
                     $('#table_data').html(data);
                 }
@@ -109,14 +154,17 @@
             if (id) {
                 url = "{{ route('bodyStyle.update') }}";
             }
-
+            var formdata = new FormData(this);
             $(".ajax-load").show();
             $('#submitBtn').attr('disabled', 'disabled');
             $.ajax({
-                data: $('#body_style_form').serialize(),
                 url: url,
                 type: "POST",
-                dataType: "json",
+                data: formdata,
+                mimeTypes: "multipart/form-data",
+                contentType: false,
+                cache: false,
+                processData: false,
 
                 success: function(response) {
                     if (response.hasError == false) {
@@ -149,13 +197,15 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/car/bodyStyle/show/" + id,
+                url: "/admin/car/bodyStyle/show/" + id,
                 dataType: "json",
                 success: function(response) {
+                    resetForm();
                     $("div#alertdanger").hide();
                     $("div#alertsuccess").hide();
                     $('#id').val(response.data.id);
                     $('#bodyStyleName').val(response.data.name);
+                    $(".imgPreview").append('<img src="{{ URL::to('/') }}/upload/images/'+response.data.image+'">');
                     $('.modal-title').text("Edit Body Style");
                     $('#bodyStyleModal').modal('show');
                 }
@@ -176,7 +226,7 @@
                 function() {
                     $.ajax({
                         type: 'get',
-                        url: '/car/bodyStyle/delete/' + id,
+                        url: '/admin/car/bodyStyle/delete/' + id,
                         cache: false,
                         success: function(response) {
                             if (response.hasError == false) {

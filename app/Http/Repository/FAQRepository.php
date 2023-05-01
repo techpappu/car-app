@@ -15,7 +15,7 @@ class FAQRepository extends CommonRepository
     public static function index()
     {
         return FAQ::orderBy('id', 'desc')
-            ->paginate(5);
+        ->paginate(config('constant.pagination_records'));
     }
 
     public static function store($request)

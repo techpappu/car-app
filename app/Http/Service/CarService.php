@@ -7,7 +7,7 @@ use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Response;
 use App\Http\Resources\CarResource;
 use App\Http\Resources\ShowCarResource;
-
+use App\Models\File;
 class CarService
 {
     use RespondsWithHttpStatus;
@@ -40,7 +40,7 @@ class CarService
 
     public function update($request)
     {
-        $car = CarRepository::findById($request->id);
+        $car = CarRepository::findById($request->id);       
         if (!$car) {
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
@@ -57,5 +57,32 @@ class CarService
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
         return $this->success(CarRepository::delete($car));
+    }
+
+    public function carImageById($id)
+    {
+
+        return CarRepository::getFileById($id);
+    }
+    public function deleteCarImage($id)
+    {
+      
+        $file = CarRepository::findByFileId($id);
+        if (!$file) {
+            return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
+        }
+        return $this->success(CarRepository::deleteCarImage($file));
+    }
+
+    public function updatePosition($request)
+    {
+        $file = CarRepository::findByFileId($request->carImageId);
+        if (!$file) {
+            return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
+        }
+        $isUpdated = CarRepository::updatePosition($file, $request);
+        if ($isUpdated) {
+            return $this->success(trans('messages.update'), Response::HTTP_OK);
+        }
     }
 }

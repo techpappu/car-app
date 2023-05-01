@@ -15,7 +15,7 @@ class ColorRepository extends CommonRepository
     public static function index()
     {
         return Color::orderBy('id', 'desc')
-            ->paginate(5);
+            ->paginate(config('constant.pagination_records'));
     }
 
     public static function allColor()

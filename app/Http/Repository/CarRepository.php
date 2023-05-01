@@ -29,7 +29,7 @@ class CarRepository extends CommonRepository
             ->join('brands', 'brands.id', '=', 'cars.brand_id')
             ->join('models', 'models.id', '=', 'cars.model_id')
             ->orderBy('id', 'desc')
-            ->paginate(5);
+            ->paginate(config('constant.pagination_records'));
     }
 
     /* public static function allBodyStyle()
@@ -58,15 +58,22 @@ class CarRepository extends CommonRepository
 
         $car->stock_no = $request->stock_no;
 
-        if ($request->has('car_up_date')) {
+        if ($request->has('car_up_date')) {            
             $car_up_date = $request->car_up_date != null ? strtotime($request->car_up_date) : null;
             if ($car_up_date != null) {
                 $date = date('Y-m-d', $car_up_date);
                 $car->car_up_date = $date;
+            }else{
+                $date = date('Y-m-d');
+                $car->car_up_date = $date;
             }
+        }else{
+            $date = date('Y-m-d');
+            $car->car_up_date = $date;
         }
         $car->car_location = $request->car_location;
         $car->mileage = $request->mileage;
+        $car->mileage_type = $request->mileage_type;
         $car->repaired = $request->repaired;
         $car->steering = $request->steering;
         $car->transmission = $request->transmission;
@@ -77,9 +84,15 @@ class CarRepository extends CommonRepository
         $car->chassis_no = $request->chassis_no;
         $car->model_code = $request->model_code;
         $car->description = $request->description;
+        $car->seating_capacity = $request->seating_capacity;
         if ($request->is_featured) {
             $car->is_featured = 1;
         }
+        if ($request->is_gallery) {
+            $car->is_gallery = 1;
+        }
+        $car->cubic_meter = $request->cubic_meter;
+
         $car->save();
         $car->carCondition()->attach($request->carCondition);
         $car->carStandardFeature()->attach($request->standardFeature);
@@ -90,6 +103,7 @@ class CarRepository extends CommonRepository
 
         if ($request->hasfile('imageFile')) {
 
+            $position = 1;
             foreach ($request->file('imageFile') as $imgFile) {
                 $uniqueName = md5($imgFile->getClientOriginalName() . time()) . '.' . $imgFile->extension();
                 $file = env('FILE_PATH') . $uniqueName;
@@ -104,11 +118,14 @@ class CarRepository extends CommonRepository
                 //create FIle model
                 $file = new File([
                     'file_name' => $uniqueName,
+                    'original_file_name' => $imgFile->getClientOriginalName(),
+                    'position' => $position,
                     'extension' => $uploaded_file->extension(),
                     'path' => 'upload/images/' .
                         $uniqueName
                 ]);
                 $car->files()->create($file->toArray());
+                $position = $position + 1;;
             }
         }
 
@@ -118,9 +135,9 @@ class CarRepository extends CommonRepository
     public static function findById($id)
     {
         $car = Car::select([
-            'id', 'brand_id', 'model_id', 'body_style_id', 'color_id', 'title', 'stock_no', 'model_year', 'car_up_date',
-            'car_location', 'mileage', 'repaired', 'steering', 'transmission', 'fuel', 'drive_system', 'doors', 'displacement',
-            'chassis_no', 'model_code', 'is_featured'
+            'id', 'brand_id', 'model_id', 'body_style_id', 'color_id', 'title', 'price', 'stock_no', 'model_year', 'car_up_date',
+            'car_location', 'mileage', 'mileage_type', 'repaired', 'steering', 'transmission', 'fuel', 'drive_system', 'doors', 'displacement',
+            'chassis_no', 'model_code', 'seating_capacity', 'is_featured', 'is_gallery', 'cubic_meter'
         ])
             ->with([
                 'carCondition' => function ($q) {
@@ -187,8 +204,11 @@ class CarRepository extends CommonRepository
         if ($request->has('title')) {
             $car->title = $request->title;
         }
+        if ($request->has('price')) {
+            $car->price = $request->price;
+        }
         if ($request->has('model_year')) {
-            $model_year = $request->model_year != null ? strtotime($request->model_year) : null;
+            $model_year = $request->model_year != null ? strtotime("$request->model_year") : null;
             if ($model_year != null) {
                 $date = date('Y-m-d', $model_year);
                 $car->model_year = $date;
@@ -213,6 +233,9 @@ class CarRepository extends CommonRepository
         }
         if ($request->has('mileage')) {
             $car->mileage = $request->mileage;
+        }
+        if ($request->has('mileage_type')) {
+            $car->mileage_type = $request->mileage_type;
         }
         if ($request->has('repaired')) {
             $car->repaired = $request->repaired;
@@ -241,11 +264,22 @@ class CarRepository extends CommonRepository
         if ($request->has('model_code')) {
             $car->model_code = $request->model_code;
         }
+
+        $car->seating_capacity = $request->seating_capacity;
+        $car->cubic_meter = $request->cubic_meter;
+
         if ($request->is_featured) {
             $car->is_featured = 1;
         } else {
             $car->is_featured = 0;
         }
+
+        if ($request->is_gallery) {
+            $car->is_gallery = 1;
+        } else {
+            $car->is_gallery = 0;
+        }
+
         $car->carCondition()->where('condition_info.car_id', $car->id)->detach();
         $car->carCondition()->attach($request->carCondition);
 
@@ -263,7 +297,39 @@ class CarRepository extends CommonRepository
 
         $car->carSafetyEquipment()->where('car_safety_equipment.car_id', $car->id)->detach();
         $car->carSafetyEquipment()->attach($request->safetyEquipment);
+        if ($request->hasfile('imageFile')) {
 
+            
+            $position = 1;
+            $filePosition = File::orderBy('position', 'desc')->where('fileable_id', $car->id) ->first();
+            if($filePosition){
+                $position =  $position + $filePosition->position;
+             }
+           
+            foreach ($request->file('imageFile') as $imgFile) {
+                $uniqueName = md5($imgFile->getClientOriginalName() . time()) . '.' . $imgFile->extension();
+                $file = env('FILE_PATH') . $uniqueName;
+
+                if (!file_exists(env('FILE_PATH'))) {
+                    // path does not exist
+                    mkdir(env('FILE_PATH'), 0777, true);
+                }
+                $contents = file_get_contents($imgFile);
+                file_put_contents($file, $contents);
+                $uploaded_file = new UploadedFile($file, $uniqueName);
+                //create FIle model
+                $file = new File([
+                    'file_name' => $uniqueName,
+                    'original_file_name' => $imgFile->getClientOriginalName(),
+                    'position' => $position,
+                    'extension' => $uploaded_file->extension(),
+                    'path' => 'upload/images/' .
+                        $uniqueName
+                ]);
+                $car->files()->create($file->toArray());
+                $position = $position+1;
+            }
+        }
         $car->update();
 
         return true;
@@ -272,5 +338,35 @@ class CarRepository extends CommonRepository
     public static function delete($car)
     {
         return $car->delete();
+    }
+
+    public static function getFileById($id)
+    {
+        return File::orderBy('position', 'asc')
+            ->where('fileable_id', $id)
+            ->get();
+    }    
+    
+    public static function findByFileId($id)
+    {
+        return File::find($id);
+    }
+
+    public static function deleteCarImage($file)
+    {
+        
+        unlink(config('constant.image_file_path') . $file->file_name);
+
+        return $file->delete();
+    }
+
+    public static function updatePosition($file, $request)
+    {
+        if ($request->has('position')) {
+            $file->position = $request->position;
+        }
+        
+        $file->update();
+        return true;
     }
 }

@@ -19,7 +19,7 @@ class UserRepository extends CommonRepository
         //return $data = DB::table('users')->paginate(2);
         return User::where('role', '=', $request->role)
             ->orderBy('id', 'desc')
-            ->paginate(5);
+            ->paginate(config('constant.pagination_records'));
     }
     public static function store($request)
     {
@@ -50,7 +50,7 @@ class UserRepository extends CommonRepository
         }
         if ($request->has('is_enabled')) {
             $user->is_enabled = 1;
-        }else{
+        } else {
             $user->is_enabled = 0;
         }
         $user->update();
@@ -61,5 +61,11 @@ class UserRepository extends CommonRepository
     public static function delete($user)
     {
         return $user->delete();
+    }
+
+    public static function findByEmail($request)
+    {
+        return User::where('email', $request->email)
+            ->where('role', 4)->first();
     }
 }

@@ -103,7 +103,7 @@
 
         function fetch_data(page) {
             $.ajax({
-                url: "/car/model/fetchbyPage?page=" + page,
+                url: "/admin/car/model/fetchbyPage?page=" + page,
                 success: function(data) {
                     $('#table_data').html(data);
                 }
@@ -155,7 +155,7 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/car/model/show/" + id,
+                url: "/admin/car/model/show/" + id,
                 dataType: "json",
                 success: function(response) {
                     $("div#alertdanger").hide();
@@ -183,7 +183,7 @@
                 function() {
                     $.ajax({
                         type: 'get',
-                        url: '/car/model/delete/' + id,
+                        url: '/admin/car/model/delete/' + id,
                         cache: false,
                         success: function(response) {
                             if (response.hasError == false) {

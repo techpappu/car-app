@@ -123,7 +123,7 @@
 
         function fetch_data(page) {
             $.ajax({
-                url: "/user/editorFetchbyPage?page=" + page,
+                url: "/admin/user/editorFetchbyPage?page=" + page,
                 success: function(data) {
                     $('#table_data').html(data);
                 }
@@ -175,7 +175,7 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/user/show/" + id,
+                url: "/admin/user/show/" + id,
                 dataType: "json",
                 success: function(response) {
                     $("div#alertdanger").hide();
@@ -211,7 +211,7 @@
                     function () {
                         $.ajax({
                             type: 'get',
-                            url: '/user/delete/' + id,
+                            url: '/admin/user/delete/' + id,
                             cache: false,
                             success: function (response) {
                                 if (response.hasError == false) {

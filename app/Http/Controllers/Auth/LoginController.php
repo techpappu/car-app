@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -26,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-   // protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -35,9 +37,26 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $this->redirectTo = route('admin.dashboard');
         }
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials) && (auth()->user()->role) == 1) {
+
+            return redirect()->route('dashboard');
+        } else {
+            Auth::logout();
+        }
+        return redirect()->route('login')->with('danger','Invalid ID or Password');
     }
 }

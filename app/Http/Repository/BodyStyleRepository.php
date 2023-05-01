@@ -3,7 +3,7 @@
 namespace App\Http\Repository;
 
 use App\Models\BodyStyle;
-
+use Illuminate\Http\UploadedFile;
 
 class BodyStyleRepository extends CommonRepository
 {
@@ -16,7 +16,7 @@ class BodyStyleRepository extends CommonRepository
     public static function index()
     {
         return BodyStyle::orderBy('id', 'desc')
-            ->paginate(5);
+            ->paginate(config('constant.pagination_records'));
     }
 
     public static function allBodyStyle()
@@ -29,6 +29,22 @@ class BodyStyleRepository extends CommonRepository
     {
         $bodyStyle = new BodyStyle();
         $bodyStyle->name = $request->name;
+
+        if ($request->hasfile('image')) {
+            $image = $request->file('image');
+            $uniqueName = md5($image->getClientOriginalName() . time()) . '.' . $image->extension();
+            $file = env('FILE_PATH') . $uniqueName;
+
+            if (!file_exists(env('FILE_PATH'))) {
+                // path does not exist
+                mkdir(env('FILE_PATH'), 0777, true);
+            }
+
+            $contents = file_get_contents($image);
+            file_put_contents($file, $contents);
+            $uploaded_file = new UploadedFile($file, $uniqueName);
+            $bodyStyle->image = $uniqueName;
+        }
         $bodyStyle->save();
         return $bodyStyle;
     }
@@ -43,7 +59,25 @@ class BodyStyleRepository extends CommonRepository
         if ($request->has('name')) {
             $bodyStyle->name = $request->name;
         }
+        if ($request->hasfile('image')) {
+            $image = $request->file('image');
+            $uniqueName = md5($image->getClientOriginalName() . time()) . '.' . $image->extension();
+            $file = env('FILE_PATH') . $uniqueName;
 
+            if (!file_exists(env('FILE_PATH'))) {
+                // path does not exist
+                mkdir(env('FILE_PATH'), 0777, true);
+            }
+
+            $contents = file_get_contents($image);
+            file_put_contents($file, $contents);
+            $uploaded_file = new UploadedFile($file, $uniqueName);
+            if ($bodyStyle->image) {
+                unlink(env('FILE_PATH') . $bodyStyle->image);
+            }
+
+            $bodyStyle->image = $uniqueName;
+        }
         $bodyStyle->update();
 
         return true;
@@ -51,6 +85,9 @@ class BodyStyleRepository extends CommonRepository
 
     public static function delete($bodyStyle)
     {
+        if ($bodyStyle->image) {
+            unlink(env('FILE_PATH') . $bodyStyle->image);
+        }
         return $bodyStyle->delete();
     }
 }
