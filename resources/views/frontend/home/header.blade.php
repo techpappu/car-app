@@ -84,7 +84,7 @@
                  <div class="header-navibox-2">
                      <ul class="yamm main-menu nav navbar-nav">
 
-                         <li><a href="{{ url('/') }}">Home</a>
+                         <li><a href="{{ url('/') }}">Home test auto</a>
                          <li><a href="{{ route('car-list') }}">STOCK LIST</a></li>
                          <li><a href="{{ route('review') }}">Review</a>
                          </li>
