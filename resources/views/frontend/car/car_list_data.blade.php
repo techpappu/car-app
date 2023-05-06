@@ -9,17 +9,30 @@
             <div class="row">
                 <div class="b-goods-1__img">
                     <a class="" href="{{ url('car-details/' . $row->id) }}">
-                        <img class="img-responsive"
+                        @if ($row->images )
+                            <img class="img-responsive"
                             src="{{ config('constant.image_base_url') . '/upload/images/' . $row->images->file_name }}"
                             alt="foto" style="object-fit: cover; width: 200px; height: 150px;"/>
-                            @if ($row->car_sold_status == 3)
-                                <img id="img2" src="sold_img.png" style="height: 70px; width: 100px">
-                            @endif
-                            @if ($row->car_sold_status == 2)
-                                <img id="img2" src="reserved_img.png" style="height: 70px; width: 100px">
-                            @endif
+                        @else
+                            <img class="img-responsive"
+                                src="{{ config('constant.image_base_url') . '/default-car.jpg'}}"
+                                alt="foto" style="object-fit: cover; width: 200px; height: 150px;"/>
+                        @endif
+                        @if ($row->car_sold_status == 3)
+                            <img id="img2" src="sold_img.png" style="height: 70px; width: 100px">
+                        @endif
+                        @if ($row->car_sold_status == 2)
+                            <img id="img2" src="reserved_img.png" style="height: 70px; width: 100px">
+                        @endif
                     </a>
-                    <span class="b-goods-1__price hidden-th" style="width: 200px; margin-right: 62px">{{config('constant.currencySymbool')}}{{ $row->price }}</span>
+                    <span class="b-goods-1__price hidden-th" style="width: 200px; margin-right: 62px">
+                        @if ($row->price > 0)
+                            {{config('constant.currencySymbool')}}{{ $row->price }}
+                        @else
+                            Ask
+                        @endif
+                        
+                    </span>
                     @if ($row->car_sold_status == 1)
                         @if($row->price > 0)
                             <span class="b-goods-feat__label" style="background-color: #f7bd29ed; margin-right: 48px"

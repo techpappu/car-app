@@ -68,82 +68,117 @@
 
                         </div>
                     </div>
+                    <a href="{{route('car.image.download',$carDetails->id)}}">download all Images</a>
                     <!-- end .b-thumb-slider-->
                     <div class="b-car-details__section ">
                         <h3 class="b-car-details__section-title ui-title-inner">Car Overview</h3>
                         <div class="row b-car-info bg-grey">
                             <input type="hidden" id="carId" value="{{ $carDetails->id }}" />
-                            <div class="col-md-2">
-                                <label>STOCK ID</label>
-                                <p>{{ $carDetails->stock_no }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Month/Year</label>
-                                <p>{{ date('m/Y', strtotime($carDetails->model_year)) }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Mileage</label>
-                                <p>{{ $carDetails->mileage." ".$carDetails->mileage_type }}</p>
-                            </div>
-
-                            <div class="col-md-2">
-                                <label>Transmission</label>
-                                <p>{{ $carDetails->transmission }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Fuel</label>
-                                <p>{{ $carDetails->fuel }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Drive System</label>
-                                <p>{{ $carDetails->drive_system }}</p>
-                            </div>
+                            @if ($carDetails->stock_no)
+                                <div class="col-md-2">
+                                    <label>STOCK ID</label>
+                                    <p>{{ $carDetails->stock_no }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->model_year)
+                                <div class="col-md-2">
+                                    <label>Month/Year</label>
+                                    <p>{{ date('m/Y', strtotime($carDetails->model_year)) }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->mileage)
+                                <div class="col-md-2">
+                                    <label>Mileage</label>
+                                    <p>{{ $carDetails->mileage." ".$carDetails->mileage_type }}</p>
+                                </div>
+                            @endif
+                            
+                            @if ($carDetails->transmission)
+                                <div class="col-md-2">
+                                    <label>Transmission</label>
+                                    <p>{{ $carDetails->transmission }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->fuel)
+                                <div class="col-md-2">
+                                    <label>Fuel</label>
+                                    <p>{{ $carDetails->fuel }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->drive_system)
+                                <div class="col-md-2">
+                                    <label>Drive System</label>
+                                    <p>{{ $carDetails->drive_system }}</p>
+                                </div> 
+                            @endif
+                            
                         </div>
                         <div class="row b-car-info bg-grey">
-
-                            <div class="col-md-2">
-                                <label>Body</label>
-                                <p>{{ $carDetails->bodyStyle }}</p>
-                            </div>
-
-                            <div class="col-md-2">
-                                <label>Colors</label>
-                                <p>{{ $carDetails->colorName }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Repaired</label>
-                                <p>{{ $carDetails->repaired }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Steering</label>
-                                <p>{{ $carDetails->steering }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Doors</label>
-                                <p>{{ $carDetails->doors }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Displacement</label>
-                                <p>{{ $carDetails->displacement }}cc</p>
-                            </div>
+                            @if ($carDetails->bodyStyle)
+                                <div class="col-md-2">
+                                    <label>Body</label>
+                                    <p>{{ $carDetails->bodyStyle }}</p>
+                                </div>
+                            @endif
+                            
+                            @if ($carDetails->colorName)
+                                <div class="col-md-2">
+                                    <label>Colors</label>
+                                    <p>{{ $carDetails->colorName }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->repaired)
+                                <div class="col-md-2">
+                                    <label>Repaired</label>
+                                    <p>{{ $carDetails->repaired }}</p>
+                                </div> 
+                            @endif
+                            @if ($carDetails->steering)
+                                <div class="col-md-2">
+                                    <label>Steering</label>
+                                    <p>{{ $carDetails->steering }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->doors)
+                                <div class="col-md-2">
+                                    <label>Doors</label>
+                                    <p>{{ $carDetails->doors }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->displacement)
+                                <div class="col-md-2">
+                                    <label>Displacement</label>
+                                    <p>{{ $carDetails->displacement }}cc</p>
+                                </div>
+                            @endif
+                            
                         </div>
                         <div class="row b-car-info bg-grey">
-                            <div class="col-md-2">
-                                <label>Chassis No</label>
-                                <p>{{ $carDetails->chassis_no }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Model Code</label>
-                                <p>{{ $carDetails->model_code }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Dimension</label>
-                                <p><span id="cubic_meter">{{ $carDetails->cubic_meter }}</span>m3</p>
-                            </div>
+                            @if ($carDetails->chassis_no)
+                                <div class="col-md-2">
+                                    <label>Chassis No</label>
+                                    <p>{{ $carDetails->chassis_no }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->model_code)
+                                <div class="col-md-2">
+                                    <label>Model Code</label>
+                                    <p>{{ $carDetails->model_code }}</p>
+                                </div>
+                            @endif
+                            @if ($carDetails->cubic_meter)
+                                <div class="col-md-2">
+                                    <label>Dimension</label>
+                                    <p><span id="cubic_meter">{{ $carDetails->cubic_meter }}</span>m3</p>
+                                </div> 
+                            @endif
+                            
+                            @if ($carDetails->seating_capacity)
                             <div class="col-md-3">
                                 <label>Seating Capacity</label>
                                 <p>{{ $carDetails->seating_capacity }}</p>
                             </div>
+                            @endif
                         </div>
                     </div>
 

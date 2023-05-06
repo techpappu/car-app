@@ -5,6 +5,7 @@ namespace App\Http\Repository;
 use App\Models\File;
 use App\Models\Car;
 use Illuminate\Http\UploadedFile;
+use Intervention\Image\Facades\Image as Image;
 
 class CarRepository extends CommonRepository
 {
@@ -124,6 +125,14 @@ class CarRepository extends CommonRepository
                     'path' => 'upload/images/' .
                         $uniqueName
                 ]);
+                
+                // waterMark
+                $img = Image::make('upload/images/'.$uniqueName);
+                //insert watermark at bottom-right corner with 10px offset
+                $img->insert('mark.png', 'bottom-center', 10, 10);
+                $img->save('upload/images/'.$uniqueName);
+
+                //positioning the Image
                 $car->files()->create($file->toArray());
                 $position = $position + 1;;
             }
@@ -314,7 +323,7 @@ class CarRepository extends CommonRepository
                     // path does not exist
                     mkdir(env('FILE_PATH'), 0777, true);
                 }
-                $contents = file_get_contents($imgFile);
+                 $contents = file_get_contents($imgFile);
                 file_put_contents($file, $contents);
                 $uploaded_file = new UploadedFile($file, $uniqueName);
                 //create FIle model
@@ -326,6 +335,13 @@ class CarRepository extends CommonRepository
                     'path' => 'upload/images/' .
                         $uniqueName
                 ]);
+                // waterMark
+                $img = Image::make('upload/images/'.$uniqueName);
+                /* insert watermark at bottom-right corner with 10px offset */
+                $img->insert('mark.png', 'bottom-center', 10, 10);
+                $img->save('upload/images/'.$uniqueName);
+
+                //positioning the images
                 $car->files()->create($file->toArray());
                 $position = $position+1;
             }

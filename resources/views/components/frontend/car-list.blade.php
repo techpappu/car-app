@@ -10,9 +10,16 @@
         <div class="car-list">
             <div style=" position: relative;">
                 <a class="" href="{{ url('car-details/' . $row->id) }}">
-                    <img class="car-list-image"
+                    @if (!empty($row->files()->first()->file_name))
+                        <img class="car-list-image"
                         src="{{ config('constant.image_base_url') . '/upload/images/' . $row->files()->first()->file_name }}"
                         alt="foto" style="object-fit: cover">
+                    @else
+                        <img class="car-list-image"
+                        src="{{ config('constant.image_base_url') . '/default-car.jpg'}}"
+                        alt="foto" style="object-fit: cover">
+                    @endif
+                    
                     
                     @if ($row->car_sold_status == 3)
                     <img id="img2" src="sold_img.png" style="height: 70px; width: 100px">

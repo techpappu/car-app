@@ -42,7 +42,7 @@ Route::get('clear', function () {
     Artisan::call('view:clear');
     Artisan::call('event:clear');
     Artisan::call('route:clear');
-    Artisan::call('optimize');
+    //Artisan::call('optimize');
     return "Cleared!";
 });
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index']);
@@ -115,5 +115,5 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::get('/download/{id}', [DownloadController::class, 'download'])->name('download');
+Route::get('/car/image/download/{id}', [DownloadController::class, 'carImageDownload'])->name('car.image.download');
 Route::get('/download-certficate/{id}', [DownloadController::class, 'downloadCertificate'])->name('download-certficate');
-
