@@ -65,8 +65,14 @@
                                     alt="img" style="object-fit: cover" />
                             </div>
                             @endforeach
-
                         </div>
+                        
+                        @if ($carDetails->car_sold_status == 3)
+                        <img id="soldimg" src="{{asset('sold_img.png')}}" style="height: 70px; width: 100px">
+                        @endif
+                        @if ($carDetails->car_sold_status == 2)
+                            <img id="reserveimg" src="{{asset('reserved_img.png')}}" style="height: 70px; width: 100px">
+                        @endif
                     </div>
                     <a href="{{route('car.image.download',$carDetails->id)}}">download all Images</a>
                     <!-- end .b-thumb-slider-->
@@ -620,7 +626,7 @@
         </div>
         <div class="row">
             <h5>Description</h5>
-            <div class="b-goods-feat__info">{{$carDetails->description}}</div>
+            <div class="b-goods-feat__info">{!! $carDetails->description !!}</div>
         </div>
         <!-- end .b-car-details-->
         <section class="section-default_top">

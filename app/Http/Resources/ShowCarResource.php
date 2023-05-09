@@ -38,6 +38,7 @@ class ShowCarResource extends JsonResource
             'displacement' => $this->displacement,
             'chassisNo' => $this->chassis_no,
             'modelCode' => $this->model_code,
+            'description' => $this->description,
             'seating_capacity' => $this->seating_capacity,
             'is_featured' => $this->is_featured,
             'is_gallery' => $this->is_gallery,

@@ -10,7 +10,9 @@
                 <div class="b-goods-1__img">
                     <a class="" href="{{ url('car-details/' . $row->id) }}">
                         @if ($row->images )
-                            <img class="img-responsive"
+                            <img class="img-responsive
+                                {{$row->car_sold_status == 3 ? 'sold' : ''}}   {{$row->car_sold_status == 2 ? 'reserve' : ''}}
+                            "
                             src="{{ config('constant.image_base_url') . '/upload/images/' . $row->images->file_name }}"
                             alt="foto" style="object-fit: cover; width: 200px; height: 150px;"/>
                         @else

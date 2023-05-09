@@ -332,4 +332,27 @@ display:inline;
 .b-car-info {
     padding: 5px;
 }
-    
+/* car details sold status*/
+.sold{
+    filter: grayscale(1);
+    opacity: .4;
+}
+.reserve{
+    filter: grayscale(1);
+    opacity: .4;
+}
+#soldimg {
+    position:absolute;
+    z-index:999;
+    left:30%;
+    width:40% !important;
+    height:400px !important;
+}
+
+#reserveimg{
+    position:absolute;
+    z-index:999;
+    left:30%;
+    width:40% !important;
+    height:400px !important;
+}

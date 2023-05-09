@@ -252,10 +252,10 @@
                     <div class="form-group">
                         <h4>Car Condition</h4>
                         @foreach ($carCondition as $row)
-                        <label>
-                            <input type="checkbox" name="carCondition[]" id="carCondition_{{ $row->id }}" value="{{ $row->id }}">
-                            {{ $row->name }}
-                        </label>
+                            <label>
+                                <input type="checkbox" name="carCondition[]" id="carCondition_{{ $row->id }}" value="{{ $row->id }}">
+                                {{ $row->name }}
+                            </label>
                         @endforeach
                     </div>
                     <div class="form-group">
@@ -332,6 +332,8 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_content">
+                <div style="display: none" class="alert alert-danger alert-dismissible" id="alertdanger" role="alert"></div>
+                <div style="display: none" class="alert alert-success" id="alertsuccess"></div>
                 <div id="table_data">
                     @include('car.car_pagination_data')
                 </div>
@@ -397,15 +399,6 @@
     });
 </script>
 <script>
-    $('#car_add').click(function() {
-        $("div#alertdanger").hide();
-        $("div#alertsuccess").hide();
-        $('#car_form')[0].reset();
-
-    });
-    $('.resetForm').click(function() {
-        resetForm();
-    });
     $(document).ready(function() {
         $("div#alertdanger").hide();
         $("div#alertsuccess").hide();
@@ -419,12 +412,28 @@
             todayHighlight: 1,
             format: 'mm/dd/yyyy'
         })
-        $(document).on('click', '.pagination a', function(event) {
-            event.preventDefault();
-            var page = $(this).attr('href').split('page=')[1];
-            fetch_data(page);
-        });
+        // $(document).on('click', '.pagination a', function(event) {
+        //     event.preventDefault();
+        //     var page = $(this).attr('href').split('page=')[1];
+        //     fetch_data(page);
+        // });
 
+        
+        $('ul.dropdown-menu li').click(function(e) {
+            var id = $(this).attr("lead-id");
+            var status = $(this).attr("status");
+            var statusValue = $(this).text();
+            carStatusUpdate(status,id,statusValue);
+        });
+    });
+    $('#car_add').click(function() {
+        $("div#alertdanger").hide();
+        $("div#alertsuccess").hide();
+        $('#car_form')[0].reset();
+
+    });
+    $('.resetForm').click(function() {
+        resetForm();
     });
 
     $('#brand_id').change(function() {
@@ -456,9 +465,30 @@
         $.ajax({
             url: "/admin/car/fetchbyPage?page=" + page,
             success: function(data) {
-                console.log("data==" + data);
-
                 $('#table_data').html(data);
+            }
+        });
+    }
+    function carStatusUpdate(status, id,statusValue) {
+        $.ajax({
+            url: '{{ route('updateStatus') }}',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: '{!! csrf_token() !!}',
+                status: status,
+                id: id
+            },
+            success: function(response) {
+                if (response.hasError == false) {
+                    $("div#alertdanger").hide();
+                    $("div#alertsuccess").show();
+                    $("div#alertsuccess").text(response.result.status);
+                    $("td.status_"+id).html(statusValue);
+                    //fetch_data(1);
+                } else {
+                    alert(response.result.status);
+                }
             }
         });
     }
@@ -515,6 +545,7 @@
             url: "/admin/car/show/" + id,
             dataType: "json",
             success: function(response) {
+                console.log(response);
                 $('#id').val(response.data.id);
                 $("#brand_id").val(response.data.brand);
                 getModelsByBrand(response.data.brand);
@@ -547,6 +578,7 @@
                 $("#displacement").val(response.data.displacement);
                 $("#chassis_no").val(response.data.chassisNo);
                 $("#model_code").val(response.data.modelCode);
+                $("#description").val(response.data.description);
                 $("#seating_capacity").val(response.data.seating_capacity);
                 $("#cubic_meter").val(response.data.cubic_meter);
                 if (response.data.is_featured == 1) {
@@ -566,27 +598,26 @@
                 }
 
                 response.data.carCondition.forEach(function(carCondition) {
-                    $("#carCondition_" + carCondition.car_condition_id + "").prop('checked',
+                    $("#carCondition_" + carCondition.id + "").prop('checked',
                         true);
                 });
                 response.data.carStandardFeature.forEach(function(carStandardFeature) {
-                    $("#standardFeature_" + carStandardFeature.standard_feature_id + "")
+                    $("#standardFeature_" + carStandardFeature.id + "")
                         .prop('checked', true);
                 });
                 response.data.carEquipment.forEach(function(carEquipment) {
-                    $("#equipment_" + carEquipment.equipment_id + "").prop('checked', true);
+                    $("#equipment_" + carEquipment.id + "").prop('checked', true);
                 });
                 response.data.carInteriorExterior.forEach(function(carInteriorExterior) {
-                    $("#interiorExterior_" + carInteriorExterior.interior_exterior_id + "")
+                    $("#interiorExterior_" + carInteriorExterior.id + "")
                         .prop('checked', true);
                 });
                 response.data.carSelfDriving.forEach(function(carSelfDriving) {
-                    $("#selfDriving_" + carSelfDriving.self_driving_id + "").prop('checked',
+                    $("#selfDriving_" + carSelfDriving.id + "").prop('checked',
                         true);
                 });
                 response.data.carSafetyEquipment.forEach(function(carSafetyEquipment) {
-                    $("#safetyEquipment_" + carSafetyEquipment.safety_equipment_id + "")
-                        .prop('checked', true);
+                    $("#safetyEquipment_" + carSafetyEquipment.id + "").prop('checked', true);
                 });
 
                 $("div#alertdanger").hide();

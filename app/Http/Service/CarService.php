@@ -85,4 +85,12 @@ class CarService
             return $this->success(trans('messages.update'), Response::HTTP_OK);
         }
     }
+    public function updateCarStatus($request){
+        $data=\Facades\App\Models\Car::find($request->id);
+        if (!empty($data)) {
+            $data->car_sold_status=$request->status;
+            $data->update();
+            return $this->success(trans('messages.update'), Response::HTTP_OK);
+        }
+    }
 }

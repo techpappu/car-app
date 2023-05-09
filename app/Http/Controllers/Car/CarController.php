@@ -119,4 +119,9 @@ class CarController extends Controller
     {
         return $this->carService->updatePosition($request);
     }
+
+    public function updateStatus(Request $request)
+    {
+        return $this->carService->updateCarStatus($request); 
+    }
 }

@@ -87,6 +87,7 @@ Route::group(['prefix' => 'car','middleware' => 'admin'], function() {
     Route::get("carImageById/{id}", [CarController::class, 'carImageById']);
     Route::get("deleteCarImage/{id}", [CarController::class, 'deleteCarImage']);
     Route::POST("/updatePosition", [CarController::class, 'updatePosition'])->name("updatePosition");
+    Route::POST("/updateStatus", [CarController::class, 'updateStatus'])->name("updateStatus");
 
     Route::get("/faq", [FAQController::class, 'index'])->name("faq");
     Route::get("/faq/fetchbyPage", [FAQController::class, 'fetchbyPage']);

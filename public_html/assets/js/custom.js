@@ -613,10 +613,10 @@ if ($('.enumerator').length > 0) {
     var sliderPrice = document.getElementById('slider-price');
 
     noUiSlider.create(sliderPrice, {
-      start: [ 0, 9999999999 ],
+      start: [ 0, 500000 ],
       range: {
         'min': [0],
-        'max': [9999999999]
+        'max': [500000]
       },
       step: 100,
       connect: true,
@@ -663,10 +663,10 @@ if ($('.enumerator').length > 0) {
     var sliderMileage = document.getElementById('slider-mileage');
 
     noUiSlider.create(sliderMileage, {
-      start: [ 0, 9999999 ],
+      start: [ 0, 300000 ],
       range: {
         'min': [0],
-        'max': [9999999]
+        'max': [300000]
       },
       step: 100,
       connect: true,
@@ -688,10 +688,10 @@ if ($('.enumerator').length > 0) {
     var sliderDisplacement = document.getElementById('slider-displacement');
 
     noUiSlider.create(sliderDisplacement, {
-      start: [ 0, 99999],
+      start: [ 0, 10000],
       range: {
         'min': [0],
-        'max': [99999]
+        'max': [10000]
       },
       step: 100,
       connect: true,

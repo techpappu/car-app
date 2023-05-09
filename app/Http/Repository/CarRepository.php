@@ -25,7 +25,8 @@ class CarRepository extends CommonRepository
             'cars.title',
             'cars.stock_no',
             'cars.model_year',
-            'cars.car_location'
+            'cars.car_location',
+            'cars.car_sold_status'
         )
             ->join('brands', 'brands.id', '=', 'cars.brand_id')
             ->join('models', 'models.id', '=', 'cars.model_id')
@@ -143,57 +144,7 @@ class CarRepository extends CommonRepository
 
     public static function findById($id)
     {
-        $car = Car::select([
-            'id', 'brand_id', 'model_id', 'body_style_id', 'color_id', 'title', 'price', 'stock_no', 'model_year', 'car_up_date',
-            'car_location', 'mileage', 'mileage_type', 'repaired', 'steering', 'transmission', 'fuel', 'drive_system', 'doors', 'displacement',
-            'chassis_no', 'model_code', 'seating_capacity', 'is_featured', 'is_gallery', 'cubic_meter'
-        ])
-            ->with([
-                'carCondition' => function ($q) {
-                    $q->select([
-                        'car_id', 'car_condition_id'
-                    ]);
-                }
-            ])
-            ->with([
-                'carStandardFeature' => function ($q) {
-                    $q->select([
-                        'car_id', 'standard_feature_id'
-                    ]);
-                }
-            ])
-            ->with([
-                'carEquipment' => function ($q) {
-                    $q->select([
-                        'car_id', 'equipment_id'
-                    ]);
-                }
-            ])
-            ->with([
-                'carInteriorExterior' => function ($q) {
-                    $q->select([
-                        'car_id', 'interior_exterior_id'
-                    ]);
-                }
-            ])
-            ->with([
-                'carSelfDriving' => function ($q) {
-                    $q->select([
-                        'car_id', 'self_driving_id'
-                    ]);
-                }
-            ])
-            ->with([
-                'carSafetyEquipment' => function ($q) {
-                    $q->select([
-                        'car_id', 'safety_equipment_id'
-                    ]);
-                }
-            ])
-            ->find($id);
-
-        return $car;
-        //return Car::find($id);
+        return Car::find($id);
     }
 
     public static function update($car, $request)
@@ -272,6 +223,9 @@ class CarRepository extends CommonRepository
         }
         if ($request->has('model_code')) {
             $car->model_code = $request->model_code;
+        }
+        if ($request->has('description')) {
+            $car->description = $request->description;
         }
 
         $car->seating_capacity = $request->seating_capacity;
@@ -352,7 +306,12 @@ class CarRepository extends CommonRepository
     }
 
     public static function delete($car)
-    {
+    {   if($car->files){
+            foreach($car->files as $file){
+                unlink(config('constant.image_file_path') . $file->file_name);
+                $file->delete();
+            }
+        }
         return $car->delete();
     }
 
