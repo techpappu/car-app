@@ -64,7 +64,7 @@ class CarRepository extends CommonRepository
         $car = Car::select([
             'cars.id', 'cars.title', 'cars.price',
             'cars.stock_no', 'cars.model_year', 'cars.car_up_date', 'cars.car_location', 'cars.mileage', 'cars.mileage_type', 'cars.repaired', 'cars.steering',
-            'cars.transmission', 'cars.fuel', 'cars.drive_system', 'cars.doors', 'cars.displacement', 'cars.description',
+            'cars.transmission', 'cars.fuel', 'cars.drive_system', 'cars.doors', 'cars.displacement', 'cars.description','cars.is_3rd_party_seller',
             'cars.chassis_no', 'cars.model_code', 'cars.cubic_meter', 'cars.seating_capacity', 'cars.car_sold_status', 'brands.name as brand', 'models.name as model', 'body_styles.name as bodyStyle', 'colors.name as colorName',
         ])
             ->join('brands', 'brands.id', '=', 'cars.brand_id')
@@ -140,7 +140,8 @@ class CarRepository extends CommonRepository
             'cars.stock_no',
             'cars.model_year',
             'cars.mileage',
-            'cars.description'
+            'cars.description',
+            'cars.is_3rd_party_seller'
         )
 
             ->join('brands', 'brands.id', '=', 'cars.brand_id')
@@ -199,7 +200,8 @@ class CarRepository extends CommonRepository
             'cars.steering',
             'cars.transmission',
             'cars.displacement',
-            'cars.car_sold_status'
+            'cars.car_sold_status',
+            'cars.is_3rd_party_seller'
         )
 
             ->join('brands', 'brands.id', '=', 'cars.brand_id')
@@ -249,7 +251,8 @@ class CarRepository extends CommonRepository
             'cars.description',
             'cars.car_sold_status',
             'cars.steering',
-            'cars.displacement'
+            'cars.displacement',
+            'cars.is_3rd_party_seller'
         )
 
             ->join('brands', 'brands.id', '=', 'cars.brand_id')

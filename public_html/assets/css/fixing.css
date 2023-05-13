@@ -356,3 +356,31 @@ display:inline;
     width:40% !important;
     height:400px !important;
 }
+.third-party-seller:after {
+    content:"3RD Party Seller";
+    position:absolute;
+    font-family:tahoma;
+    background:#222222;
+    color:#fff;
+    font-weight:normal;
+    top:198px;
+    left:0;
+    width:200px;
+    text-align:center;
+    font-size:14px;
+    z-index:99;
+    border-bottom:2px solid #D01818; 
+}
+.third-party-seller_carDetails{
+    font-family:tahoma;
+    background:#222222;
+    color:#fff;
+    font-weight:normal;
+    text-align:center;
+    font-size:14px;
+    padding: 10px;
+    border-top:3px solid #D01818; 
+    border-bottom:3px solid #D01818; 
+    margin-bottom: 5px;
+    display: inline-block;
+}

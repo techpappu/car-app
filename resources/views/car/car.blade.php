@@ -227,18 +227,22 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <label for="doors">Seating capacity</label>
                             <select class="form-control" name="seating_capacity" id="seating_capacity">
                                 @for ($i = 1; $i < 100; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                             </select>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <label for="is_featured">Is Featured?</label>
                             <input type="checkbox" style="width: 5%;height:20px" name="is_featured" id="is_featured" />
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
+                            <label for="is_3rd_party_seller">Is 3RD Party Seller?</label>
+                            <input type="checkbox" style="width: 5%;height:20px" name="is_3rd_party_seller" id="is_3rd_party_seller" />
+                        </div>
+                        <div class="col-sm-3">
                             <label for="cubic_meter">Cubic Meter</label>
                             <input type="number" class="form-control is-invalid" id="cubic_meter" name="cubic_meter" placeholder="Cubic Meter" required onkeypress="return isNumberKey(event)">
                             <span class="text-danger">
@@ -586,6 +590,13 @@
                         true);
                 } else {
                     $("#is_featured").prop('checked',
+                        false);
+                }
+                if (response.data.is_3rd_party_seller == 1) {
+                    $("#is_3rd_party_seller").prop('checked',
+                        true);
+                } else {
+                    $("#is_3rd_party_seller").prop('checked',
                         false);
                 }
 

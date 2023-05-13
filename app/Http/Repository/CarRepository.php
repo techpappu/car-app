@@ -87,6 +87,9 @@ class CarRepository extends CommonRepository
         $car->model_code = $request->model_code;
         $car->description = $request->description;
         $car->seating_capacity = $request->seating_capacity;
+        if ($request->is_3rd_party_seller) {
+            $car->is_3rd_party_seller = 1;
+        }
         if ($request->is_featured) {
             $car->is_featured = 1;
         }
@@ -235,6 +238,12 @@ class CarRepository extends CommonRepository
             $car->is_featured = 1;
         } else {
             $car->is_featured = 0;
+        }
+
+        if ($request->is_3rd_party_seller) {
+            $car->is_3rd_party_seller = 1;
+        } else {
+            $car->is_3rd_party_seller = 0;
         }
 
         if ($request->is_gallery) {

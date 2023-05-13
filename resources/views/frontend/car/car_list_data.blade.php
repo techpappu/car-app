@@ -7,7 +7,7 @@
     @foreach ($carList as $row)
         <section class="b-goods-1 b-goods-1_mod-a">
             <div class="row">
-                <div class="b-goods-1__img">
+                <div class="b-goods-1__img {{$row->is_3rd_party_seller ? 'third-party-seller' : ''}}">
                     <a class="" href="{{ url('car-details/' . $row->id) }}">
                         @if ($row->images )
                             <img class="img-responsive

@@ -35,10 +35,13 @@
             <div class="col-md-8">
                 <section class="b-car-details">
                     <div class="b-car-details__header" style="padding-bottom: 14px">
+                        @if ($carDetails->is_3rd_party_seller)
+                            <span class="third-party-seller_carDetails">3RD Party Seller</span>
+                        @endif
                         <h4 class="b-car-details__title" style="font-size: 22px;">{{ $carDetails->title }}</h4>
                         <!--   {{-- <div class="b-car-details__subtitle">AWD 430i xSmart Drive Coupe</div> --}} -->
                         <div class="b-car-details__address"><i
-                                class="icon fa fa-map-marker text-primary"></i>{{ $carDetails->car_location }} </div>
+                                class="icon fa fa-map-marker text-primary"></i>{{ $carDetails->car_location }}</div>
                         {{-- <div class="b-car-details__links"><a class="b-car-details__link" href="car-details.html"><i
                                         class="icon fa fa-exchange text-primary"></i> Add to Compare</a><a
                                     class="b-car-details__link" href="car-details.html"><i
@@ -47,34 +50,8 @@
                                         class="icon fa fa-share-alt text-primary"></i> Share</a>
                             </div> --}}
                     </div>
-                    <div class="slider-car-details slider-pro" id="slider-car-details">
-                        <div class="sp-slides">
-                            @foreach ($carDetails->images as $image)
-                            <div class="sp-slide">
-                                <img class="sp-image"
-                                    src="{{ config('constant.image_base_url') . '/upload/images/' . $image->file_name }}"
-                                    alt="img" style="object-fit: cover" />
-                            </div>
-                            @endforeach
-                        </div>
-                        <div class="sp-thumbnails">
-                            @foreach ($carDetails->images as $image)
-                            <div class="sp-thumbnail">
-                                <img class="img-responsive"
-                                    src="{{ config('constant.image_base_url') . '/upload/images/' . $image->file_name }}"
-                                    alt="img" style="object-fit: cover" />
-                            </div>
-                            @endforeach
-                        </div>
-                        
-                        @if ($carDetails->car_sold_status == 3)
-                        <img id="soldimg" src="{{asset('sold_img.png')}}" style="height: 70px; width: 100px">
-                        @endif
-                        @if ($carDetails->car_sold_status == 2)
-                            <img id="reserveimg" src="{{asset('reserved_img.png')}}" style="height: 70px; width: 100px">
-                        @endif
-                    </div>
-                    <a href="{{route('car.image.download',$carDetails->id)}}">download all Images</a>
+                    <x-frontend.car-details-slider :carDetails="$carDetails"></x-frontend.car-details-slider>
+                    <a style="margin-top: 10px;display:block;border-bottom: 2px solid #F4F4F4;" href="{{route('car.image.download',$carDetails->id)}}"><i class="fa fa-download"></i> download all Images</a>
                     <!-- end .b-thumb-slider-->
                     <div class="b-car-details__section ">
                         <h3 class="b-car-details__section-title ui-title-inner">Car Overview</h3>
@@ -824,4 +801,93 @@
     });
 
 </script>
+
+
+
+
+<script>
+    let leftArrow = document.querySelector("#img_slide_left");
+    let rightArrow = document.querySelector("#img_slide_right");
+    let slidesContainer = document.querySelector("#img_slides");
+
+    let applyThumbnail = function (dataIdx) {
+        document.querySelector("#img_thumbnails > img.active").classList.remove("active");
+        document.querySelector(`#img_thumbnails > [data-index='${parseInt(dataIdx)}']`).classList.add(
+            "active");
+    };
+
+    let thumbnailClick = function (dataIdx) {
+        document.querySelector("#img_thumbnails > img.active").classList.remove("active");
+        document.querySelector(`#img_thumbnails > [data-index='${parseInt(dataIdx)}']`).classList.add(
+            "active");
+        document.querySelector(`#img_slides > img.active`).classList.remove("active");
+        document.querySelector(`#img_slides > [data-index='${parseInt(dataIdx)}']`).classList.add("active");
+    };
+
+    leftArrow.addEventListener("click", function () {
+        const currentActive = document.querySelector("#img_slides > img.active");
+        const prevSibling = currentActive.previousElementSibling;
+
+        currentActive.classList.remove("active");
+
+        if (prevSibling) {
+            // Select Prev Image
+            prevSibling.classList.add("active");
+            applyThumbnail(prevSibling.getAttribute("data-index"));
+        } else {
+            // Select Last Image
+            const last = document.querySelector("#img_slides > :last-child");
+            last.classList.add("active");
+            applyThumbnail(last.getAttribute("data-index"));
+        }
+    });
+
+    rightArrow.addEventListener("click", function () {
+        const currentActive = document.querySelector("#img_slides > img.active");
+        const nextSibling = currentActive.nextElementSibling;
+
+        currentActive.classList.remove("active");
+
+        if (nextSibling) {
+            // Select Next Image
+            nextSibling.classList.add("active");
+            applyThumbnail(nextSibling.getAttribute("data-index"));
+        } else {
+            // Select First Image
+            const first = document.querySelector("#img_slides > :first-child");
+            first.classList.add("active");
+            applyThumbnail(first.getAttribute("data-index"));
+        }
+    });
+
+    document.querySelectorAll(".imgThumbnail").forEach(function (elem) {
+        elem.addEventListener("click", function () {
+            thumbnailClick(this.getAttribute("data-index"));
+        });
+    });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#img_slides img:nth-child(1)").addClass('active');
+        $("#img_thumbnails img:nth-child(1)").addClass('active');
+    });
+
+    // $(document).ready(function(){
+    //   Fancybox.bind('[data-fancybox]', {
+    //       //
+    //     }); 
+    // });
+
+    $('#img_slides').click(function () {
+        var data = $('img.imgSlide.active').attr('src');
+        Fancybox.show([{
+            src: data,
+        }, ]);
+
+    });
+
+</script>
+
 @endpush
