@@ -243,10 +243,8 @@
         </form>
             <hr id="hrline1">
             <p id="text2">or login with</p>
-            <hr id="hrline2"> <button id="facebook" onclick="window.location='{{url('auth/facebook')}}'"><img id="facebook1"
-                    src="https://image.flaticon.com/icons/svg/174/174848.svg">Facebook</button>
-                     <button id="google" onclick="window.location='{{url('auth/google')}}'"><img
-                    id="google1" src="https://image.flaticon.com/icons/svg/281/281764.svg">Google</button>
+            <hr id="hrline2"> <button id="facebook" onclick="window.location='{{url('auth/facebook')}}'"><i class="fa fa-facebook-square"></i> Facebook</button>
+                     <button id="google" onclick="window.location='{{url('auth/google')}}'"><i class="fa fa-google"></i> Google</button>
             <p id="text3">Not a Member?</p> <a id="signup" href="{{route('frontend.register')}}">Signup Now</a>
         </div>
     </div>

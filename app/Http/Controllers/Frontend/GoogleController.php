@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers\Frontend;
 
-use Socialite;
 use Exception;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Service\Frontend\SocialAccountService;
 class GoogleController extends Controller
 {

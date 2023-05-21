@@ -119,29 +119,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
  
   
-      <div id="main_wrapper">
-          <div id="img_slides_wrapper">
-              <div id="img_slide_left" class="img_slide_arrow"><span>&#10094;</span></div>
-              <div id="img_slides">
-                    @foreach ($carDetails->images as $index=>$image)
-                        <img data-index="{{$index}}" class="imgSlide" src="{{ config('constant.image_base_url') . '/upload/images/' . $image->file_name }}" alt="" />
-                    @endforeach
-                    @if ($carDetails->car_sold_status == 3)
-                <img id="soldimg" src="{{asset('sold_img.png')}}" style="height: 70px; width: 100px">
-            @endif
-            @if ($carDetails->car_sold_status == 2)
-                <img id="reserveimg" src="{{asset('reserved_img.png')}}" style="height: 70px; width: 100px">
-            @endif
-              </div>
-              
-              <div id="img_slide_right" class="img_slide_arrow"><span>&#10095;</span></div>
-          </div>
-
-          <div id="img_thumbnails">
+    <div id="main_wrapper">
+        <div id="img_slides_wrapper">
+            <div id="img_slide_left" class="img_slide_arrow"><span>&#10094;</span></div>
+            <div id="img_slides">
                 @foreach ($carDetails->images as $index=>$image)
-                    <img data-index="{{$index}}" class="imgThumbnail" src="{{ config('constant.image_base_url') . '/upload/images/' . $image->file_name }}" alt="" />
+                    <img data-index="{{$index}}" class="imgSlide" src="{{ config('constant.image_base_url') . '/upload/images/' . $image->file_name }}" alt="" />
                 @endforeach
-              
-          </div>
+                @if ($carDetails->car_sold_status == 3)
+            <img id="soldimg" src="{{asset('sold_img.png')}}" style="height: 70px; width: 100px">
+        @endif
+        @if ($carDetails->car_sold_status == 2)
+            <img id="reserveimg" src="{{asset('reserved_img.png')}}" style="height: 70px; width: 100px">
+        @endif
+            </div>
             
-      </div>
+            <div id="img_slide_right" class="img_slide_arrow"><span>&#10095;</span></div>
+        </div>
+
+        <div id="img_thumbnails">
+            @foreach ($carDetails->images as $index=>$image)
+                <img data-index="{{$index}}" class="imgThumbnail" src="{{ config('constant.image_base_url') . '/upload/images/' . $image->file_name }}" alt="" />
+            @endforeach
+            
+        </div>
+        
+    </div>

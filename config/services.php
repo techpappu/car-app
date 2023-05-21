@@ -38,7 +38,7 @@ return [
     'google' => [
         'client_id' => '432435781212-i6i4m0u86es2uo49qud1ur3bufr66n41.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect' => 'https://kmcjapan.co.jp/auth/google/callback',
+        'redirect' => 'https://car.kmcjapan.co.jp/auth/google/callback',
     ],
 
 ];

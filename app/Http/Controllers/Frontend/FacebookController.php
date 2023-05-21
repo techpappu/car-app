@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Service\Frontend\SocialAccountService;
-use Socialite;
 use Exception;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
+use Laravel\Socialite\Facades\Socialite;
 
 class FacebookController extends Controller
 {

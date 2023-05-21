@@ -554,8 +554,8 @@
                 $("#brand_id").val(response.data.brand);
                 getModelsByBrand(response.data.brand);
                 $("#model_id").val(response.data.model);
-                $("#body_style_id").val(response.data.color);
-                $("#color_id").val(response.data.bodyStyle);
+                $("#body_style_id").val(response.data.bodyStyle);
+                $("#color_id").val(response.data.color);
                 $("#title").val(response.data.title);
                 $("#price").val(response.data.price);
                 $("#stock_no").val(response.data.stock_no);

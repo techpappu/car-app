@@ -75,7 +75,7 @@
                 </ul>
             </li>
         @else
-            <li><a href="{{ route('login') }}">Sign In</a>
+            <li><a href="{{ route('frontend.login') }}">Sign In</a>
             </li>
         @endauth
         </ul>
