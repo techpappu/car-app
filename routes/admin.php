@@ -32,7 +32,7 @@ Route::get('/', function () {
 }); */
 Auth::routes(['register' => false]);
 
-Route::group(['prefix' => 'user','middleware' => 'admin'], function() {
+Route::group(['prefix' => 'user','middleware' => ['admin','can:isAdmin']], function() {
     Route::get("/admin", [AdminController::class, 'index'])->name("admin");
     Route::get("/editor", [AdminController::class, 'editorList'])->name("editor");
     Route::get("/customer", [AdminController::class, 'customerList'])->name("customer");
@@ -48,7 +48,7 @@ Route::group(['prefix' => 'user','middleware' => 'admin'], function() {
    
 // });
 
-Route::group(['prefix' => 'car','middleware' => 'admin'], function() {
+Route::group(['prefix' => 'car','middleware' => ['admin','can:isEditor']], function() {
     Route::get("/brand", [BrandController::class, 'index'])->name("brand");
     Route::get("/brand/fetchbyPage", [BrandController::class, 'fetchbyPage']);
     Route::POST("/brand/add", [BrandController::class, 'add'])->name('brand.add');
@@ -77,7 +77,7 @@ Route::group(['prefix' => 'car','middleware' => 'admin'], function() {
     Route::get("/color/show/{id}", [ColorController::class, 'show']);
     Route::POST("/color/update", [ColorController::class, 'update'])->name("color.update");
     Route::get("/color/delete/{id}", [ColorController::class, 'delete']);
-    
+
     Route::get("/", [CarController::class, 'index'])->name("car");
     Route::get("/fetchbyPage", [CarController::class, 'fetchbyPage']);
     Route::POST("/add", [CarController::class, 'add'])->name("add");
@@ -111,8 +111,9 @@ Route::group(['prefix' => 'car','middleware' => 'admin'], function() {
     Route::get("price-calculator/delete/{id}", [PriceCalculatorController::class, 'delete']);
 });
 
-Route::middleware('admin')->group(function () {
-    Route::get("/", [DashboardController::class, 'index'])->name("dashboard");
+Route::get("/", [DashboardController::class, 'index'])->middleware(['admin','can:isEditor'])->name("dashboard");
+
+Route::middleware(['admin','can:isAdmin'])->group(function () {
     Route::get("/contact-us", [ContactUsController::class, 'index'])->name("contact-us");
     Route::get("/contact-us/fetchbyPage", [ContactUsController::class, 'fetchbyPage']);
     Route::get("contact-us/delete/{id}", [ContactUsController::class, 'delete']);

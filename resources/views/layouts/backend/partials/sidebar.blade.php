@@ -3,26 +3,29 @@
     <section class="sidebar">
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="treeview {{ Request::is('admin/user*') ? 'active' : '' }}">
-                <a href="javascript:void(0);">
-                    <i class="fa fa-arrows"></i>
-                    <span>User</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{{ Request::is('admin/user/admin') ? 'active' : '' }}">
-                        <a href="{{ route('admin') }}"><i class="fa fa-image"></i> <span>Admin</span></a>
-                    </li>
-                    <li class="{{ Request::is('admin/user/editor') ? 'active' : '' }}">
-                        <a href="{{ route('editor') }}"><i class="fa fa-image"></i> <span>Editor</span></a>
-                    </li>
-                    <li class="{{ Request::is('admin/user/customer') ? 'active' : '' }}">
-                        <a href="{{ route('customer') }}"><i class="fa fa-image"></i> <span>Customer</span></a>
-                    </li>
-                </ul>
-            </li>
+            @can('isAdmin')
+                <li class="treeview {{ Request::is('admin/user*') ? 'active' : '' }}">
+                    <a href="javascript:void(0);">
+                        <i class="fa fa-arrows"></i>
+                        <span>User</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ Request::is('admin/user/admin') ? 'active' : '' }}">
+                            <a href="{{ route('admin') }}"><i class="fa fa-image"></i> <span>Admin</span></a>
+                        </li>
+                        <li class="{{ Request::is('admin/user/editor') ? 'active' : '' }}">
+                            <a href="{{ route('editor') }}"><i class="fa fa-image"></i> <span>Editor</span></a>
+                        </li>
+                        <li class="{{ Request::is('admin/user/customer') ? 'active' : '' }}">
+                            <a href="{{ route('customer') }}"><i class="fa fa-image"></i> <span>Customer</span></a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            
             <li class="treeview {{ Request::is('admin/car*') ? 'active' : '' }}">
                 <a href="javascript:void(0);">
                     <i class="fa fa-arrows"></i>
@@ -58,18 +61,20 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ Request::is('admin/contact-us') ? 'active' : '' }}">
-                <a href="{{ route('contact-us') }}"><i class="fa fa-image"></i> <span>Contact Us List</span></a>
-            </li>
-            <li class="{{ Request::is('admin/inquiry') ? 'active' : '' }}">
-                <a href="{{ route('admin.inquiry') }}"><i class="fa fa-image"></i> <span>Inquiry List</span></a>
-            </li>
-            <li class="{{ Request::is('admin/order-list') ? 'active' : '' }}">
-                <a href="{{ route('admin.order-list') }}"><i class="fa fa-image"></i> <span>Order List</span></a>
-            </li>
-            <li class="{{ Request::is('admin/payment-list') ? 'active' : '' }}">
-                <a href="{{ route('admin.payment-list') }}"><i class="fa fa-image"></i> <span>Payment List</span></a>
-            </li>
+            @can('isAdmin')
+                <li class="{{ Request::is('admin/contact-us') ? 'active' : '' }}">
+                    <a href="{{ route('contact-us') }}"><i class="fa fa-image"></i> <span>Contact Us List</span></a>
+                </li>
+                <li class="{{ Request::is('admin/inquiry') ? 'active' : '' }}">
+                    <a href="{{ route('admin.inquiry') }}"><i class="fa fa-image"></i> <span>Inquiry List</span></a>
+                </li>
+                <li class="{{ Request::is('admin/order-list') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order-list') }}"><i class="fa fa-image"></i> <span>Order List</span></a>
+                </li>
+                <li class="{{ Request::is('admin/payment-list') ? 'active' : '' }}">
+                    <a href="{{ route('admin.payment-list') }}"><i class="fa fa-image"></i> <span>Payment List</span></a>
+                </li>
+            @endcan
         </ul>
     </section>
     <!-- /.sidebar -->

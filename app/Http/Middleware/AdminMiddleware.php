@@ -20,7 +20,7 @@ class AdminMiddleware
         
     
         if(auth()->check()){
-            if(auth()->user()->role == 1){
+            if(auth()->user()->role == 1 || auth()->user()->role == 3){
                 return $next($request);
             }
             else{
