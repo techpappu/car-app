@@ -7,7 +7,7 @@
     @foreach ($carList as $row)
         <section class="b-goods-1 b-goods-1_mod-a">
             <div class="row">
-                <div class="b-goods-1__img {{$row->is_3rd_party_seller ? 'third-party-seller' : ''}}">
+                <div class="b-goods-1__img">
                     <a class="" href="{{ url('car-details/' . $row->id) }}">
                         @if ($row->images )
                             <img class="img-responsive
@@ -33,8 +33,10 @@
                         @else
                             Ask
                         @endif
-                        
                     </span>
+                    @if ($row->is_3rd_party_seller )
+                    <div class="third-party-seller">3RD Party Seller</div>
+                    @endif
                     @if ($row->car_sold_status == 1)
                         @if($row->price > 0)
                             <span class="b-goods-feat__label" style="background-color: #f7bd29ed; margin-right: 48px"
@@ -63,6 +65,12 @@
                     <div class="b-goods-1__info">
                         <i class="fa fa-map-marker"></i> {{ $row->car_location }}
                     </div>
+                    <div class="car-list-mobile-view-info">
+                        <ul>
+                            <li>Year : {{ date('Y-F', strtotime($row->model_year)) }}</li>
+                            <li>Mileage: {{ $row->mileage." ".$row->mileage_type }}</li>
+                        </ul>
+                    </div>
 
                     <div class="b-goods-1__section">
                         <h3 class="b-goods-1__title" data-toggle="collapse" data-target="#desc-{{ $row->id }}">
@@ -78,7 +86,7 @@
                                {{--  <li class="b-goods-1__desc-item" style="float: left; width:90px">Transmission</li> --}}
                             </ul>
                             <ul class="b-goods-1__desc list-unstyled">
-                                <li class="b-goods-1__desc-item" style="float: left; width:90px;align:center">{{ date('Y-m', strtotime($row->model_year)) }}</li>
+                                <li class="b-goods-1__desc-item" style="float: left; width:90px;align:center">{{ date('Y-F', strtotime($row->model_year)) }}</li>
                                 <li class="b-goods-1__desc-item" style="float: left; width:120px">{{ $row->color }}</li>
                                 <li class="b-goods-1__desc-item" style="float: left; width:90px">{{ $row->mileage." ".$row->mileage_type }}</li>
                                 <li class="b-goods-1__desc-item" style="float: left; width:90px">{{ $row->steering }}</li>

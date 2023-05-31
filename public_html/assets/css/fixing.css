@@ -230,7 +230,56 @@ display:inline;
     text-align: center;
     border-right: 1px solid #eee;
 }
+/* Car-details responsive fixing css */
+ul.car-list-desc-mobile{
+    display: none;
+}
+@media (max-width: 767px){
 
+    span.car-list-price {
+        line-height: 30px;
+        position: relative;
+        display: block;
+        left: 0px;
+        bottom: 0px;
+        text-align: center;
+    }
+
+    span.car-list-addToCart {
+        font-size: 10px;
+        line-height: 30px;
+        padding: 0px 10px;
+        display: none;
+    }
+
+    img.car-list-image {
+        height: 130px;
+    }
+    .car-list-info h3{
+        font-size: 14px;
+        line-height: 20px;
+        margin-top: 0px;
+    }
+
+    .car-list {
+        margin-bottom: 10px;
+    }
+    ul.car-list-desc{
+        display: none;
+    }
+    ul.car-list-desc-mobile{
+        padding: 0px;
+        display: block;
+    }
+    ul.car-list-desc-mobile li{
+        list-style: none;
+        font: 500 12px Poppins;
+        color: #888;
+    }
+    .car-list #img2{
+        left: 25% !important;
+    }
+}
 
 /* Car-details fixing css */
 .ulclass {
@@ -356,19 +405,14 @@ display:inline;
     width:40% !important;
     height:400px !important;
 }
-.third-party-seller:after {
-    content:"3RD Party Seller";
-    position:absolute;
+.third-party-seller{
     font-family:tahoma;
     background:#222222;
     color:#fff;
     font-weight:normal;
-    top:198px;
-    left:0;
     width:200px;
     text-align:center;
     font-size:14px;
-    z-index:99;
     border-bottom:2px solid #D01818; 
 }
 .third-party-seller_carDetails{
@@ -383,4 +427,149 @@ display:inline;
     border-bottom:3px solid #D01818; 
     margin-bottom: 5px;
     display: inline-block;
+}
+
+
+/* car listing mobile view fixing*/
+
+/* @media (max-width:767px){
+    section.b-goods-1.b-goods-1_mod-a {
+    width: 50%;
+    float: left;
+    margin: 0px;
+    }
+    section.b-goods-1.b-goods-1_mod-a .row{
+        width: 96%;
+        margin: 1% !important;
+    }
+    
+    .b-goods-1__img{
+        padding:0px !important;
+        
+    }
+    .b-goods-1__img img.img-responsive {
+        width: 100% !important;
+    }
+
+    .b-goods-1__section {
+        display:none;
+    }
+    .b-goods-1_mod-a .b-goods-1__header{
+        margin-top:5px;
+    }
+    h2.b-goods-1__name {
+        padding-right:0px !important;
+        font-size:14px;
+        margin:0px !important;
+    }
+    span.b-goods-feat__label {
+        width:96% !important;
+        margin:1% !important;
+        text-align:center;
+        bottom:2px;
+        right:0px;
+    }
+    span.b-goods-1__price.hidden-th {
+        width:100% !important;
+    }
+    .third-party-seller:after{
+    width:96% !important;
+    margin:1%
+    }
+    
+    .b-goods-1__inner{
+        padding:10px;
+        margin-top:0px !important;
+    }
+
+    .third-party-seller span.b-goods-1__price.hidden-th {
+    margin-bottom: 20px;
+    margin-right: 0px !important;
+    }
+    
+    #img2{
+        left:35px
+    }
+    div#table_data .pagination{
+        clear:both;
+    }
+    
+} */
+
+
+.car-list-mobile-view-info{
+    display: none;
+}
+
+@media (max-width: 767px){
+    .b-goods-1__img {
+        width:40% !important;
+        float:left !important;
+        padding-right:0px !important;
+        margin:0px;
+    }
+    .b-goods-1__img img.img-responsive {
+        width: 100% !important;
+    }
+    .b-goods-1__inner {
+        width:59% !important;
+        float:left !important;
+        margin:0px !important;
+        margin-left:1% !important;
+        padding:0px !important;
+    }
+    
+    span.b-goods-1__price.hidden-th {
+        width: 100% !important;
+        margin-right:0px !important;
+        /* padding: 0px !important; */
+    }
+    
+    .third-party-seller{
+        width:100%;
+    }
+    .b-goods-1__header {
+        margin:0px !important;
+        padding:0px !important;
+    }
+    h2.b-goods-1__name {
+        padding:0px !important;
+        font-size:14px;
+    }
+    
+    .b-goods-1__img img.img-responsive {
+    height: 100px !important;
+    }
+    .b-goods-1__section {
+    display:none;
+    }
+    .b-goods-1__price {
+    font: 600 14px/25px Poppins;
+    }
+    .third-party-seller .b-goods-1__price{
+        margin-bottom:25px !important;
+    }
+    .b-goods-1 {
+    padding-top: 5px;
+    padding-bottom: 5px !important;
+    }
+    #img2 {
+        top: 20% !important;
+        left: 7% !important;
+    }
+    span.b-goods-feat__label {
+    margin-right: 0px !important;
+    line-height: 30px;
+    }
+    .car-list-mobile-view-info{
+        display: block;
+        padding-bottom: 30px;
+    }
+    .car-list-mobile-view-info ul li {
+        display: block;
+        font-family: 'Poppins';
+        font-size: 14px;
+        color: #676767;
+        font-weight: 500;
+    }
 }

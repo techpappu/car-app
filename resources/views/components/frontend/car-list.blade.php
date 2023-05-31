@@ -6,7 +6,7 @@
     @foreach ($rows as $row )
         
     
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-6">
         <div class="car-list">
             <div style=" position: relative;">
                 <a class="" href="{{ url('car-details/' . $row->id) }}">
@@ -19,8 +19,8 @@
                         src="{{ config('constant.image_base_url') . '/default-car.jpg'}}"
                         alt="foto" style="object-fit: cover">
                     @endif
-                    
-                    
+            
+
                     @if ($row->car_sold_status == 3)
                     <img id="img2" src="sold_img.png" style="height: 70px; width: 100px">
                     @endif
@@ -51,7 +51,14 @@
                 <ul class="car-list-desc">
                     <li class="car-desc-item">{{ $row->mileage." ".$row->mileage_type }}</li>
                     @if ($row->model)
-                        <li class="car-desc-item">Model: {{ $row->model->name}}</li>
+                        <li class="car-desc-item">Model Code: {{ $row->model_code}}</li>
+                    @endif
+                   
+                </ul>
+                <ul class="car-list-desc-mobile">
+                    <li>mileage: {{ $row->mileage." ".$row->mileage_type }}</li>
+                    @if ($row->model)
+                        <li>Model Code: {{ $row->model_code}}</li>
                     @endif
                    
                 </ul>
