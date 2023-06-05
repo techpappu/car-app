@@ -55,114 +55,7 @@
                     <!-- end .b-thumb-slider-->
                     <div class="b-car-details__section ">
                         <h3 class="b-car-details__section-title ui-title-inner">Car Overview</h3>
-                        <div class="row b-car-info bg-grey">
-                            <input type="hidden" id="carId" value="{{ $carDetails->id }}" />
-                            @if ($carDetails->stock_no)
-                                <div class="col-md-2">
-                                    <label>STOCK ID</label>
-                                    <p>{{ $carDetails->stock_no }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->model_year)
-                                <div class="col-md-2">
-                                    <label>Month/Year</label>
-                                    <p>{{ date('m/Y', strtotime($carDetails->model_year)) }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->mileage)
-                                <div class="col-md-2">
-                                    <label>Mileage</label>
-                                    <p>{{ $carDetails->mileage." ".$carDetails->mileage_type }}</p>
-                                </div>
-                            @endif
-                            
-                            @if ($carDetails->transmission)
-                                <div class="col-md-2">
-                                    <label>Transmission</label>
-                                    <p>{{ $carDetails->transmission }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->fuel)
-                                <div class="col-md-2">
-                                    <label>Fuel</label>
-                                    <p>{{ $carDetails->fuel }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->drive_system)
-                                <div class="col-md-2">
-                                    <label>Drive System</label>
-                                    <p>{{ $carDetails->drive_system }}</p>
-                                </div> 
-                            @endif
-                            
-                        </div>
-                        <div class="row b-car-info bg-grey">
-                            @if ($carDetails->bodyStyle)
-                                <div class="col-md-2">
-                                    <label>Body</label>
-                                    <p>{{ $carDetails->bodyStyle }}</p>
-                                </div>
-                            @endif
-                            
-                            @if ($carDetails->colorName)
-                                <div class="col-md-2">
-                                    <label>Colors</label>
-                                    <p>{{ $carDetails->colorName }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->repaired)
-                                <div class="col-md-2">
-                                    <label>Repaired</label>
-                                    <p>{{ $carDetails->repaired }}</p>
-                                </div> 
-                            @endif
-                            @if ($carDetails->steering)
-                                <div class="col-md-2">
-                                    <label>Steering</label>
-                                    <p>{{ $carDetails->steering }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->doors)
-                                <div class="col-md-2">
-                                    <label>Doors</label>
-                                    <p>{{ $carDetails->doors }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->displacement)
-                                <div class="col-md-2">
-                                    <label>Displacement</label>
-                                    <p>{{ $carDetails->displacement }}cc</p>
-                                </div>
-                            @endif
-                            
-                        </div>
-                        <div class="row b-car-info bg-grey">
-                            @if ($carDetails->chassis_no)
-                                <div class="col-md-2">
-                                    <label>Chassis No</label>
-                                    <p>{{ $carDetails->chassis_no }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->model_code)
-                                <div class="col-md-2">
-                                    <label>Model Code</label>
-                                    <p>{{ $carDetails->model_code }}</p>
-                                </div>
-                            @endif
-                            @if ($carDetails->cubic_meter)
-                                <div class="col-md-2">
-                                    <label>Dimension</label>
-                                    <p><span id="cubic_meter">{{ $carDetails->cubic_meter }}</span>m3</p>
-                                </div> 
-                            @endif
-                            
-                            @if ($carDetails->seating_capacity)
-                            <div class="col-md-3">
-                                <label>Seating Capacity</label>
-                                <p>{{ $carDetails->seating_capacity }}</p>
-                            </div>
-                            @endif
-                        </div>
+                        <x-frontend.car-overview :carDetails="$carDetails"></x-frontend.car-overview>
                     </div>
 
                 </section>
@@ -554,57 +447,68 @@
             </div>
         </div>
         <div class="row">
-            <h3 class="b-car-details__section-title ui-title-inner">Specific Info</h3>
+            <div class="col-md-12">
+                <h3 class="b-car-details__section-title ui-title-inner">Specific Info</h3>
+                @if ($data['carCondition'])
+                    <h5>Car Condition</h5>
+                    <x-frontend.car-specific-info :rows="$data['carCondition']"></x-frontend.car-specific-info>
+                @endif
+            </div>
+        </div>
+             
+        @if ($data['standardFeature'])
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Standard Features</h5>
+                    <x-frontend.car-specific-info :rows="$data['standardFeature']"></x-frontend.car-specific-info>
+                </div>
+            </div>
+        @endif
 
-        {{--<h5>Car Condition</h5>  
-            <div class="list-cates">
-                @foreach ($carCondition as $row)
-                <ul style="float:left;" class="ulclass">
-                    <li class="liclass" id="carCondition_{{ $row->id }}">
-                        {{ $row->name }}
-                    </li>
-                </ul>
-                @endforeach
-            </div> --}}
-            @if ($data['carCondition'])
-                <h5>Car Condition</h5>
-                <x-frontend.car-specific-info :rows="$data['carCondition']"></x-frontend.car-specific-info>
-            @endif
-        </div>
-        <div class="row">
-            @if ($data['standardFeature'])
-                <h5>Standard Features</h5>
-                <x-frontend.car-specific-info :rows="$data['standardFeature']"></x-frontend.car-specific-info>
-            @endif
-        </div>
-        <div class="row">
-            @if ($data['equipment'])
-                <h5>Equipment</h5>
-                <x-frontend.car-specific-info :rows="$data['equipment']"></x-frontend.car-specific-info>
-            @endif
-        </div>
-        <div class="row">
-            @if ($data['interiorExterior'])
-                <h5>Interior / Exterior</h5>
-                <x-frontend.car-specific-info :rows="$data['interiorExterior']"></x-frontend.car-specific-info>
-            @endif
-        </div>
-        <div class="row">
-            @if ($data['selfDriving'])
-            <h5>Self-driving</h5>
-            <x-frontend.car-specific-info :rows="$data['selfDriving']"></x-frontend.car-specific-info>
-            @endif
-        </div>
-        <div class="row">
-            @if ($data['safetyEquipment'])
-            <h5>Safety Equipement</h5>
-            <x-frontend.car-specific-info :rows="$data['safetyEquipment']"></x-frontend.car-specific-info>
-            @endif
-        </div>
-        <div class="row">
-            <h5>Description</h5>
-            <div class="b-goods-feat__info">{!! $carDetails->description !!}</div>
-        </div>
+        @if ($data['equipment'])
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Equipment</h5>
+                    <x-frontend.car-specific-info :rows="$data['equipment']"></x-frontend.car-specific-info>
+                </div>
+            </div>
+        @endif
+
+        @if ($data['interiorExterior'])
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Interior / Exterior</h5>
+                    <x-frontend.car-specific-info :rows="$data['interiorExterior']"></x-frontend.car-specific-info>
+                </div>
+            </div>
+        @endif
+
+        @if ($data['selfDriving'])
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Self-driving</h5>
+                    <x-frontend.car-specific-info :rows="$data['selfDriving']"></x-frontend.car-specific-info>
+                </div>
+            </div>
+        @endif
+        @if ($data['safetyEquipment'])
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Safety Equipement</h5>
+                    <x-frontend.car-specific-info :rows="$data['safetyEquipment']"></x-frontend.car-specific-info>
+                </div>
+            </div>
+        @endif
+
+        @if ($carDetails->description)
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Description</h5>
+                    <div class="b-goods-feat__info">{!! $carDetails->description !!}</div>
+                </div>
+            </div>
+        @endif
+        
         <!-- end .b-car-details-->
         <section class="section-default_top">
             <div class="container">

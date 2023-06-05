@@ -107,14 +107,14 @@ li:hover {
     width: 100%;
     border: 0px solid #fff
 }
-
-.col-md-4 {
-    position: relative;
-    min-height: 1px;
-    padding-left: 0px !important;
-    padding-right: 15px;
+@media only screen and (min-width: 768px){
+    .col-md-4 {
+        position: relative;
+        min-height: 1px;
+        padding-left: 0px !important;
+        padding-right: 15px;
+    }
 }
-
 @media only screen and (max-width: 992px) {
     .b-list-brands {
         margin-top: 53px;
@@ -500,7 +500,6 @@ ul.car-list-desc-mobile{
 .car-list-mobile-view-info{
     display: none;
 }
-
 @media (max-width: 767px){
     .b-goods-1__img {
         width:40% !important;
@@ -571,5 +570,106 @@ ul.car-list-desc-mobile{
         font-size: 14px;
         color: #676767;
         font-weight: 500;
+    }
+}
+
+/* front-page body type mobile view fixing */
+@media (max-width: 767px){
+    .b-filter{
+        margin-top: 15px;
+    }
+    .b-filter-type__item {
+        width: 15%;
+        box-sizing: border-box !important;
+        margin-right:3px;
+    }
+    .b-filter-type__icon {
+        width:100%;
+        height:70px;
+    }
+    .b-filter-type__label {
+        height: 60px;;
+    }
+    .b-filter-type__title{
+        font-size:6px;
+    }
+    .ui-title-block{
+        font-size: 30px;
+    }
+}
+
+/* front-page Makers mobile view fixing */
+
+@media (max-width: 767px){
+    .section-list-brands {
+        padding-left: 0px;
+    }
+    .b-list-brands {
+        columns:5 !important;
+        column-gap:0px;
+    }
+    a.b-list-brands__link img {
+    width: 100%;
+    height: 60px;
+    }
+    .makes li{
+        height:80px;
+        padding:0px;
+    }
+    .makes li strong{
+        display:none;
+    }
+    .makes li {
+    width: calc(100% - 5px) !important;
+    margin-bottom: 5px;
+    }
+    .b-list-brands .badge{
+        padding-left: 0px;
+    }
+    .b-list-brands{
+        margin-top: 15px;
+    }
+}
+
+
+
+
+/* car details page  mobile view fixing */
+table.specification{
+    margin-top:20px;
+    width:100%;
+    border:1px solid #e3e3e3;
+}
+table.specification tr:last-child,table.specification tr:nth-last-child(2){
+    border-bottom:none;
+}
+
+table.specification tr{
+    width:50%;
+    float:left;
+    border-bottom:1px solid #e3e3e3;
+}
+
+table.specification tr th{
+    background:#F2F2F2;
+    width: 50%;
+    padding:5px;
+    border-right:1px solid #E6E6E6;
+    float:left;
+}
+table.specification tr td{
+    width:50%;
+    padding:5px;
+    float:left;
+}
+@media (max-width:767px){
+    table.specification tr{
+        width:100%
+    }
+    table.specification tr:nth-last-child(2){
+        border-bottom:1px solid #e3e3e3;
+    }
+    div#img_slides_wrapper {
+        height:25vh !important;
     }
 }
