@@ -429,74 +429,6 @@ ul.car-list-desc-mobile{
     display: inline-block;
 }
 
-
-/* car listing mobile view fixing*/
-
-/* @media (max-width:767px){
-    section.b-goods-1.b-goods-1_mod-a {
-    width: 50%;
-    float: left;
-    margin: 0px;
-    }
-    section.b-goods-1.b-goods-1_mod-a .row{
-        width: 96%;
-        margin: 1% !important;
-    }
-    
-    .b-goods-1__img{
-        padding:0px !important;
-        
-    }
-    .b-goods-1__img img.img-responsive {
-        width: 100% !important;
-    }
-
-    .b-goods-1__section {
-        display:none;
-    }
-    .b-goods-1_mod-a .b-goods-1__header{
-        margin-top:5px;
-    }
-    h2.b-goods-1__name {
-        padding-right:0px !important;
-        font-size:14px;
-        margin:0px !important;
-    }
-    span.b-goods-feat__label {
-        width:96% !important;
-        margin:1% !important;
-        text-align:center;
-        bottom:2px;
-        right:0px;
-    }
-    span.b-goods-1__price.hidden-th {
-        width:100% !important;
-    }
-    .third-party-seller:after{
-    width:96% !important;
-    margin:1%
-    }
-    
-    .b-goods-1__inner{
-        padding:10px;
-        margin-top:0px !important;
-    }
-
-    .third-party-seller span.b-goods-1__price.hidden-th {
-    margin-bottom: 20px;
-    margin-right: 0px !important;
-    }
-    
-    #img2{
-        left:35px
-    }
-    div#table_data .pagination{
-        clear:both;
-    }
-    
-} */
-
-
 .car-list-mobile-view-info{
     display: none;
 }
@@ -629,6 +561,10 @@ ul.car-list-desc-mobile{
     .b-list-brands{
         margin-top: 15px;
     }
+    
+    .main-slider.main-slider-2 {
+        display: none;
+        }
 }
 
 

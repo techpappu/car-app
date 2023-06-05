@@ -8,7 +8,7 @@
 
 @section('content')
 <!-- start .main-slider-->
-@include('frontend.home.slider');
+@include('frontend.home.slider')
 <!-- end .main-slider-->
 
 
