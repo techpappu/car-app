@@ -130,6 +130,54 @@
     font-size: 13px;
 }
 </style>
+<style>
+    .accordion {
+    background-color: #F4F4F4;
+    color: #444;
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+    border: 2px solid #dad9d9;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    }
+    
+    .active, .accordion:hover {
+      background-color: #ccc;
+    }
+    
+    .accordion:after {
+      content: "\f107";
+      font-family: 'FontAwesome';
+      color: #777;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+    
+    .accordion.active:after {
+      content: "\f106";
+    }
+    
+    .panel {
+      background-color: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    @media (max-width:767px){
+        aside.l-sidebar {
+        margin-bottom:0px;
+        margin-top: 10px;
+        }
+        
+        main.l-main-content {
+            padding-top: 0px;
+        }
+    }
+</style>
 @endpush
 @section('content')
 <div class="section-title-page area-bg area-bg_dark area-bg_op_70">
@@ -160,7 +208,160 @@
 <!-- end breadcrumb-->
 <div class="container">
     <div class="row">
-        <div class="col-md-9 col-md-push-3">
+        <div class="col-md-3">
+            <aside class="l-sidebar">
+                <button class="accordion"><i class="fa fa-filter"></i> Filter</button>
+                <div class="panel">
+                    <form class="b-filter-2 bg-grey">
+                        <h3 class="b-filter-2__title">search options</h3>
+                        <div class="b-filter-2__inner">
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">keyword</div>
+                                <input name="carTitle" id="carTitle" class="form-control" type="text" placeholder="Keyword..." />
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Make</div>
+                                <select class="form-control" data-width="100%" name="brand_id" id="brand_id">
+                                    <option value="">All Makes</option>
+                                    @foreach ($brand as $row)
+                                    <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Model</div>
+                                <select name="model_id" id="model_id" class="form-control" data-width="100%">
+                                    <option value="">All Models</option>
+                                </select>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Model Year</div>
+                                <select class="form-control" data-width="100%" name="min_model_year" id="min_model_year">
+                                    <option value="">Min Year</option>
+                                </select>
+                                <select class="form-control" data-width="100%" name="max_model_year" id="max_model_year">
+                                    <option value="">Max Year</option>
+                                </select>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Filter Price</div>
+                                <div class="ui-filter-slider">
+                                    <div id="slider-price"></div>
+                                    <div class="ui-filter-slider__info">
+                                        <div class="ui-filter-slider__label">Price Range:</div><span class="ui-filter-slider__current" id="slider-snap-value-lower"></span>-<span class="ui-filter-slider__current" id="slider-snap-value-upper"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Mileage</div>
+                                <div class="ui-filter-slider">
+                                    <div id="slider-mileage"></div>
+                                    <div class="ui-filter-slider__info">
+                                        <div class="ui-filter-slider__label">Mileage Range:</div><span class="mileage-ui-filter-slider__current" id="mileage-slider-snap-value-lower"></span>-<span class="mileage-ui-filter-slider__current" id="mileage-slider-snap-value-upper"></span>
+                                    </div>
+                                </div>
+                                <div class="b-filter-2__group-title">Mileage In</div>
+                                <select class="form-control" name="mileage_type" id="mileage_type">
+                                        <option value="">Select Mileage type</option>
+                                        <option value="KM">KM</option>
+                                        <option value="HOUR">HOUR</option>
+                                    </select>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Displacement</div>
+                                <div class="ui-filter-slider">
+                                    <div id="slider-displacement"></div>
+                                    <div class="ui-filter-slider__info">
+                                        <div class="ui-filter-slider__label">Displacement Range:</div><span class="displacement-ui-filter-slider__current" id="displacement-slider-snap-value-lower"></span>-<span class="displacement-ui-filter-slider__current" id="displacement-slider-snap-value-upper"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+                                    <legend class="b-filter-2__group-title">TRANSMISSION</legend>
+                                    <input type="radio" name="trasmission" id="any_trasmission" value="" checked="checked" />
+                                    <label for="any_trasmission">ANY</label>
+                                    <input type="radio" name="trasmission" id="trasmissionAt" value="AT" />
+                                    <label for="trasmissionAt">AT</label>
+                                    <input type="radio" name="trasmission" id="trasmissionNt" value="NT" />
+                                    <label for="trasmissionNt">MT</label>
+                                </fieldset>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+                                    <legend class="b-filter-2__group-title">Drive</legend>
+                                    <input type="radio" name="drive" id="any_drive" value="" checked="checked" />
+                                    <label for="any_drive">ANY</label>
+                                    <input type="radio" name="drive" id="drive_2_d" value="2WD" />
+                                    <label for="drive_2_d">2WD</label>
+                                    <input type="radio" name="drive" id="drive_4_d" value="4WD" />
+                                    <label for="drive_4_d">4WD</label>
+                                </fieldset>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+                                    <legend class="b-filter-2__group-title">fuel type</legend>
+                                    <input type="radio" name="fuel" id="any_fuel" value="" checked="checked" />
+                                    <label for="any_fuel">ANY</label>
+                                    <input type="radio" name="fuel" id="gasline" value="GASOLINE" />
+                                    <label for="gasline">GASOLINE</label>
+                                    <input type="radio" name="fuel" id="petrol" value="PETROL" />
+                                    <label for="petrol">PETROL</label>
+                                </fieldset>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+                                    <legend class="b-filter-2__group-title">Repaired</legend>
+                                    <input type="radio" name="repaired" id="any_repaired" value="" checked="checked" />
+                                    <label for="any_repaired">ANY</label>
+                                    <input type="radio" name="repaired" id="none" value="NONE" />
+                                    <label for="none">NONE</label>
+                                    <input type="radio" name="repaired" id="yes" value="YES" />
+                                    <label for="yes">YES</label>
+                                </fieldset>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Color</div>
+                                <ul>
+                                    @foreach ($colors as $row)
+                                    <li><input type="checkbox" id="cb_{{ $row->id }}" value="{{ $row->id }}" />
+                                        <label for="cb_{{ $row->id }}" class="colorLabel"><img src="{{url('/')}}/colorImage/{{ $row->name }}.png" /></label>
+                                    </li>
+                                    @endforeach
+
+                                </ul>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+                                    <legend class="b-filter-2__group-title">Stearing</legend>
+                                    <input type="radio" name="stearing" id="any_stearing" value="" checked="checked" />
+                                    <label for="any_stearing">ANY</label>
+                                    <input type="radio" name="stearing" id="right" value="RIGHT" />
+                                    <label for="right">RIGHT</label>
+                                    <input type="radio" name="stearing" id="left" value="LEFT" />
+                                    <label for="left">LEFT</label>
+                                </fieldset>
+                            </div>
+                            <div class="b-filter-2__group">
+                                <div class="b-filter-2__group-title">Seating Capacity</div>
+                                <div class="ui-filter-slider">
+                                    <div id="slider-seating"></div>
+                                    <div class="ui-filter-slider__info">
+                                        <div class="ui-filter-slider__label">Seating Range:</div><span class="displacement-ui-filter-slider" id="seating-slider-snap-value-lower"></span>-<span class="displacement-ui-filter-slider" id="seating-slider-snap-value-upper"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b-filter-2__title">
+                            <a class="btn btn-lg" id="searchButton">Search</a>
+                        </div>
+                    </form>
+                </div>
+                <!-- end .b-filter-->
+            </aside>
+            <!-- end .l-sidebar-->
+        </div>
+        <div class="col-md-9">
             <main class="l-main-content">
                 <input type="hidden" name="sort_by_brand_id"  id="sort_by_brand_id" value="{{ Request::get('id')}}"/> 
                 <div class="filter-goods__select"><span class="hidden-xs">Sort</span>
@@ -180,157 +381,6 @@
             </main>
             <!-- end .l-main-content-->
 
-        </div>
-
-        <div class="col-md-3 col-md-pull-9">
-            <aside class="l-sidebar">
-                <form class="b-filter-2 bg-grey">
-                    <h3 class="b-filter-2__title">search options</h3>
-                    <div class="b-filter-2__inner">
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">keyword</div>
-                            <input name="carTitle" id="carTitle" class="form-control" type="text" placeholder="Keyword..." />
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Make</div>
-                            <select class="form-control" data-width="100%" name="brand_id" id="brand_id">
-                                <option value="">All Makes</option>
-                                @foreach ($brand as $row)
-                                <option value="{{ $row->id }}">{{ $row->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Model</div>
-                            <select name="model_id" id="model_id" class="form-control" data-width="100%">
-                                <option value="">All Models</option>
-                            </select>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Model Year</div>
-                            <select class="form-control" data-width="100%" name="min_model_year" id="min_model_year">
-                                <option value="">Min Year</option>
-                            </select>
-                            <select class="form-control" data-width="100%" name="max_model_year" id="max_model_year">
-                                <option value="">Max Year</option>
-                            </select>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Filter Price</div>
-                            <div class="ui-filter-slider">
-                                <div id="slider-price"></div>
-                                <div class="ui-filter-slider__info">
-                                    <div class="ui-filter-slider__label">Price Range:</div><span class="ui-filter-slider__current" id="slider-snap-value-lower"></span>-<span class="ui-filter-slider__current" id="slider-snap-value-upper"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Mileage</div>
-                            <div class="ui-filter-slider">
-                                <div id="slider-mileage"></div>
-                                <div class="ui-filter-slider__info">
-                                    <div class="ui-filter-slider__label">Mileage Range:</div><span class="mileage-ui-filter-slider__current" id="mileage-slider-snap-value-lower"></span>-<span class="mileage-ui-filter-slider__current" id="mileage-slider-snap-value-upper"></span>
-                                </div>
-                            </div>
-                            <div class="b-filter-2__group-title">Mileage In</div>
-                            <select class="form-control" name="mileage_type" id="mileage_type">
-                                    <option value="">Select Mileage type</option>
-                                    <option value="KM">KM</option>
-                                    <option value="HOUR">HOUR</option>
-                                </select>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Displacement</div>
-                            <div class="ui-filter-slider">
-                                <div id="slider-displacement"></div>
-                                <div class="ui-filter-slider__info">
-                                    <div class="ui-filter-slider__label">Displacement Range:</div><span class="displacement-ui-filter-slider__current" id="displacement-slider-snap-value-lower"></span>-<span class="displacement-ui-filter-slider__current" id="displacement-slider-snap-value-upper"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
-                                <legend class="b-filter-2__group-title">TRANSMISSION</legend>
-                                <input type="radio" name="trasmission" id="any_trasmission" value="" checked="checked" />
-                                <label for="any_trasmission">ANY</label>
-                                <input type="radio" name="trasmission" id="trasmissionAt" value="AT" />
-                                <label for="trasmissionAt">AT</label>
-                                <input type="radio" name="trasmission" id="trasmissionNt" value="NT" />
-                                <label for="trasmissionNt">MT</label>
-                            </fieldset>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
-                                <legend class="b-filter-2__group-title">Drive</legend>
-                                <input type="radio" name="drive" id="any_drive" value="" checked="checked" />
-                                <label for="any_drive">ANY</label>
-                                <input type="radio" name="drive" id="drive_2_d" value="2WD" />
-                                <label for="drive_2_d">2WD</label>
-                                <input type="radio" name="drive" id="drive_4_d" value="4WD" />
-                                <label for="drive_4_d">4WD</label>
-                            </fieldset>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
-                                <legend class="b-filter-2__group-title">fuel type</legend>
-                                <input type="radio" name="fuel" id="any_fuel" value="" checked="checked" />
-                                <label for="any_fuel">ANY</label>
-                                <input type="radio" name="fuel" id="gasline" value="GASOLINE" />
-                                <label for="gasline">GASOLINE</label>
-                                <input type="radio" name="fuel" id="petrol" value="PETROL" />
-                                <label for="petrol">PETROL</label>
-                            </fieldset>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
-                                <legend class="b-filter-2__group-title">Repaired</legend>
-                                <input type="radio" name="repaired" id="any_repaired" value="" checked="checked" />
-                                <label for="any_repaired">ANY</label>
-                                <input type="radio" name="repaired" id="none" value="NONE" />
-                                <label for="none">NONE</label>
-                                <input type="radio" name="repaired" id="yes" value="YES" />
-                                <label for="yes">YES</label>
-                            </fieldset>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Color</div>
-                            <ul>
-                                @foreach ($colors as $row)
-                                <li><input type="checkbox" id="cb_{{ $row->id }}" value="{{ $row->id }}" />
-                                    <label for="cb_{{ $row->id }}" class="colorLabel"><img src="{{url('/')}}/colorImage/{{ $row->name }}.png" /></label>
-                                </li>
-                                @endforeach
-
-                            </ul>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
-                                <legend class="b-filter-2__group-title">Stearing</legend>
-                                <input type="radio" name="stearing" id="any_stearing" value="" checked="checked" />
-                                <label for="any_stearing">ANY</label>
-                                <input type="radio" name="stearing" id="right" value="RIGHT" />
-                                <label for="right">RIGHT</label>
-                                <input type="radio" name="stearing" id="left" value="LEFT" />
-                                <label for="left">LEFT</label>
-                            </fieldset>
-                        </div>
-                        <div class="b-filter-2__group">
-                            <div class="b-filter-2__group-title">Seating Capacity</div>
-                            <div class="ui-filter-slider">
-                                <div id="slider-seating"></div>
-                                <div class="ui-filter-slider__info">
-                                    <div class="ui-filter-slider__label">Seating Range:</div><span class="displacement-ui-filter-slider" id="seating-slider-snap-value-lower"></span>-<span class="displacement-ui-filter-slider" id="seating-slider-snap-value-upper"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-filter-2__title">
-                        <a class="btn btn-lg" id="searchButton">Search</a>
-                    </div>
-                </form>
-                <!-- end .b-filter-->
-            </aside>
-            <!-- end .l-sidebar-->
         </div>
     </div>
 </div>
@@ -478,5 +528,26 @@
             }
         });
     });
+</script>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    if(screen.width>767){
+        acc[0].classList.toggle("active");
+        var panel = acc[0].nextElementSibling;
+        panel.style.maxHeight = panel.scrollHeight + 40 + "px";
+    }
+    
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      });
+    }
 </script>
 @endpush

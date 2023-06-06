@@ -19,7 +19,6 @@
     <link href="{{ asset('assets/plugins/switcher/css/color2.css') }}" rel="alternate stylesheet" title="color2" />
     <link href="{{ asset('assets/plugins/switcher/css/color3.css') }}" rel="alternate stylesheet" title="color3" />
     <link href="{{ asset('assets/plugins/switcher/css/color4.css') }}" rel="alternate stylesheet" title="color4" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
     @stack('css')
