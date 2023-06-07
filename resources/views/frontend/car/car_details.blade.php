@@ -568,42 +568,42 @@
 
 @push('js')
 <script>
-    $(window).load(function () {
+    // $(window).load(function () {
 
-        var id = $("#carId").val();
-        $.ajax({
-            url: "/car-show/" + id,
-            dataType: "json",
-            success: function (response) {
-                response.data.carCondition.forEach(function (carCondition) {
-                    $('#carCondition_' + carCondition.car_condition_id).addClass(
-                        'activeInfo');
+    //     var id = $("#carId").val();
+    //     $.ajax({
+    //         url: "/car-show/" + id,
+    //         dataType: "json",
+    //         success: function (response) {
+    //             response.data.carCondition.forEach(function (carCondition) {
+    //                 $('#carCondition_' + carCondition.car_condition_id).addClass(
+    //                     'activeInfo');
 
-                });
-                response.data.carStandardFeature.forEach(function (carStandardFeature) {
-                    $('#standardFeature_' + carStandardFeature.standard_feature_id)
-                        .addClass('activeInfo');
-                });
-                response.data.carEquipment.forEach(function (carEquipment) {
-                    $('#equipment_' + carEquipment.equipment_id).addClass('activeInfo');
-                });
-                response.data.carInteriorExterior.forEach(function (carInteriorExterior) {
-                    $('#interiorExterior_' + carInteriorExterior.interior_exterior_id)
-                        .addClass('activeInfo');
-                });
-                response.data.carSelfDriving.forEach(function (carSelfDriving) {
-                    $('#selfDriving_' + carSelfDriving.self_driving_id).addClass(
-                        'activeInfo');
-                });
-                response.data.carSafetyEquipment.forEach(function (carSafetyEquipment) {
+    //             });
+    //             response.data.carStandardFeature.forEach(function (carStandardFeature) {
+    //                 $('#standardFeature_' + carStandardFeature.standard_feature_id)
+    //                     .addClass('activeInfo');
+    //             });
+    //             response.data.carEquipment.forEach(function (carEquipment) {
+    //                 $('#equipment_' + carEquipment.equipment_id).addClass('activeInfo');
+    //             });
+    //             response.data.carInteriorExterior.forEach(function (carInteriorExterior) {
+    //                 $('#interiorExterior_' + carInteriorExterior.interior_exterior_id)
+    //                     .addClass('activeInfo');
+    //             });
+    //             response.data.carSelfDriving.forEach(function (carSelfDriving) {
+    //                 $('#selfDriving_' + carSelfDriving.self_driving_id).addClass(
+    //                     'activeInfo');
+    //             });
+    //             response.data.carSafetyEquipment.forEach(function (carSafetyEquipment) {
 
-                    $('#safetyEquipment_' + carSafetyEquipment.safety_equipment_id)
-                        .addClass('activeInfo');
-                });
+    //                 $('#safetyEquipment_' + carSafetyEquipment.safety_equipment_id)
+    //                     .addClass('activeInfo');
+    //             });
 
-            }
-        });
-    })
+    //         }
+    //     });
+    // })
 
     $("#country").change(function () {
         var country = $(this).val();
@@ -683,8 +683,7 @@
                                 parseFloat(marine_insurance) + parseFloat(pre_export_inspection);
                         }
 
-                        $("#totalPrice").html('{!! config('
-                            constant.currencySymbool ') !!}' + result);
+                        $("#totalPrice").html("{{ config('constant.currencySymbool' ) }} " + result);
 
                     }
                 }

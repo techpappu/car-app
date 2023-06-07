@@ -87,7 +87,7 @@
         @if ($carDetails->cubic_meter)
         <tr>
             <th>Dimension</th>
-            <td>{{ $carDetails->cubic_meter }} m3</td>
+            <td><span id="cubic_meter">{{ $carDetails->cubic_meter }}</span> m3</td>
         </tr>
         @endif
 
