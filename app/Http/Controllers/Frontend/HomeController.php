@@ -51,11 +51,13 @@ class HomeController extends Controller
     {
         $bodyStyle = $this->bodyStyleService->allBodyStyle();
         $brand = $this->brandService->allBrand();
+        //$brand = \Facades\App\Models\Brand::paginate(10);
         $colors = $this->colorService->allColor();
         $fearturedCars = $this->carService->fearturedCar();
        // $galleryImageCars = $this->carService->galleryImageCars();
         $galleryImageCars = $this->galleryImageService->allGallery();
-        $carCountByBrands = $this->carService->getCarCountByBrand();
+        //$carCountByBrands = $this->carService->getCarCountByBrand(); 
+        $carCountByBrands = \Facades\App\Models\Brand::paginate(12); 
         $customerFeedback = $this->customerFeedbackService->index();
         /* return view('home.index', [
             'bodyStyle' => $bodyStyle,

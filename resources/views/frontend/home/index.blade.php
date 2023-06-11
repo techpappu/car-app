@@ -135,7 +135,7 @@
                                     <img src="{{ config('constant.image_base_url') . '/upload/images/' . $carCountByBrand->image }}"
                                         height="70px" width="70px" />
                                     <strong>{{ $carCountByBrand->name }}</strong>
-                                    <p class="badge">({{ $carCountByBrand->count }})</p>
+                                    <p class="badge">({{ $carCountByBrand->cars()->count() }})</p>
                                 </a>
                             </li>
                             @endforeach

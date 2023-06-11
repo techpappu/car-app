@@ -44,11 +44,16 @@
                 <a name="review" class="btn-sm review_button ml-3 review" href="{{url('/admin/car-review?id='. $row->id)}}"
                     style="color: ghostwhite;background-color: green" target="_blank">Review</a>
                 <button type="button" name="edit" id="{{ $row->id }}"
-                    class="edit btn btn-primary btn-sm">Edit</button>
+                    class="edit btn btn-primary btn-sm">Edit
+                </button>
+                <button type="button" name="expense" id="{{ $row->id }}" class="expensebtn btn btn-info btn-sm">
+                    <i class="fa fa-money" aria-hidden="true"></i> Expense
+                </button>
                 <button type="button" name="delete" id="{{ $row->id }}"
                     class="delete btn btn-danger btn-sm">Delete</button>&nbsp;&nbsp;
-                <button type="button" name="imgPreview" id="{{ $row->id }}"
-                    class="imgPreview btn btn-primary btn-sm">Image Preview</button>&nbsp;&nbsp;
+                <button type="button" name="imgPreview" id="{{ $row->id }}" class="imgPreview btn btn-primary btn-sm">
+                    Image Preview
+                </button>
             </td>
         </tr>
     @endforeach

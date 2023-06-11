@@ -51,4 +51,15 @@ class Car extends Model
     {
         return $this->belongsTo(Models::class);
     }
+
+
+    /**
+     * Get all of the expense for the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function expense()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

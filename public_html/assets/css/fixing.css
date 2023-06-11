@@ -537,15 +537,21 @@ ul.car-list-desc-mobile{
         padding-left: 0px;
     }
     .b-list-brands {
-        columns:5 !important;
+        columns:4 !important;
         column-gap:0px;
     }
     a.b-list-brands__link img {
     width: 100%;
     height: 60px;
     }
+    .b-filter-type {
+        display: none;
+    }
+    p.badge {
+        display: none;
+    }
     .makes li{
-        height:80px;
+        height:65px;
         padding:0px;
     }
     .makes li strong{
@@ -565,10 +571,17 @@ ul.car-list-desc-mobile{
     .main-slider.main-slider-2 {
         display: none;
         }
+    .b-filter__inner {
+        padding-top: 10px;
+        padding-bottom: 15px;
+    };
+    .section-default.makes {
+        margin-top: 10px;
+    }
+        
+
+        
 }
-
-
-
 
 /* car details page  mobile view fixing */
 table.specification{

@@ -11,4 +11,14 @@ class Brand extends Model
         'name',       
     ];
 
+    /**
+     * Get all of the cars for the Brand
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
+
 }

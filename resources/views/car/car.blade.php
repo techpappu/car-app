@@ -367,6 +367,55 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="carExpenseModal" tabindex="-1" role="dialog" aria-labelledby="carExpenseModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class='col-12 modal-title text-center'>Car Expenses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger alert-dismissible" id="alertdanger" role="alert"></div>
+                <div class="alert alert-success" id="alertsuccess"></div>
+                <form action="" id="car_expense_form" method="POST">
+                    @csrf
+                    <input type="hidden" id="expenseCarId" name="carId" />
+                    <div class="form-group">
+                        <label for="type">Select Expense Type</label>
+                        <select name="type" id="type" class="form-control" required>
+                            <option value="" selected disabled hidden>Select Expense Type</option>
+                            <option value="Purchase Prices">Purchase Prices</option>
+                            <option value="10% tax">10% tax</option>
+                            <option value="Recycle">Recycle</option>
+                            <option value="Auction Fee">Auction Fee</option>
+                            <option value="Inland Transport">Inland Transport</option>
+                            <option value="Inspection">Inspection</option>
+                            <option value="Export Clearance">Export Clearance</option>
+                            <option value="Port Parking fee">Port Parking fee</option>
+                            <option value="Shipping Freight">Shipping Freight</option>
+                            <option value="Others">Others</option>
+                        </select>
+
+                        <label for="expeseComment">Expese Comment</label>
+                        <input type="text" id="expeseComment" class="form-control" name="comment">
+
+                        <label for="expeseAmount">Expese Amount</label>
+                        <input type="number" step="0.01" id="expeseAmount" class="form-control" name="amount" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit"  class="btn btn-primary">SUBMIT</button>
+                    </div>
+                </form>
+                <div id="car_expense_data">
+                    @include('car.car_expense_data')
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('js')
@@ -761,6 +810,79 @@
 
 
     });
+    
+    //start Car Expense javascripts
+
+    $(document).on('click', '.expensebtn', function() {
+        $("#carExpenseModal div#alertsuccess").hide();
+        $("#carExpenseModal div#alertdanger").hide();
+        var carId = $(this).attr('id');
+        $("#expenseCarId").val(carId);
+        $('#carExpenseModal').modal('show');
+        carExpenseList(carId);
+
+    });
+    $('#car_expense_form').on('submit', function(event) {
+        event.preventDefault();
+        var carId = $("#expenseCarId").val();
+        var url = "{{ route('car.expense.create') }}";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data:  $('#car_expense_form').serialize(),
+            dataType: "json",
+
+            success: function(response) {
+                $('#car_expense_form')[0].reset();
+                carExpenseList(carId);
+                $("#carExpenseModal div#alertsuccess").show();
+                $("#carExpenseModal div#alertdanger").hide();
+                $("div#alertsuccess").text(response.result.status);
+
+            },
+        });
+    });
+    function carExpenseList(carId) {
+        $.ajax({
+            url: "/admin/car/expense/" + carId,
+            success: function(data) {
+                $('#car_expense_data').html(data);
+
+            }
+        });
+    }
+    $(document).on('click', '.carExpenseDelete', function() {
+        id = $(this).attr('id');
+        var carId=$("#expenseCarId").val();
+        swal({
+            title: "Are you sure?",
+            text: "To delete this Car Image!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+        }).then(
+            function() {
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/car/expense/delete/' + id,
+                    cache: false,
+                    success: function(response) {
+                        carExpenseList(carId);
+                        $("#carExpenseModal div#alertsuccess").show();
+                        $("#carExpenseModal div#alertdanger").hide();
+                        $("div#alertsuccess").text('Expense Has been Deleted!');
+
+                    }
+                });
+            },
+            function() {
+                return false;
+            });
+    });
+
+    //end Car Expense javascripts
 
     function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode

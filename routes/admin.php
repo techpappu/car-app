@@ -7,6 +7,7 @@ use App\Http\Controllers\Car\BodyStyleController;
 use App\Http\Controllers\Car\BrandController;
 use App\Http\Controllers\Car\CarController;
 use App\Http\Controllers\Car\ColorController;
+use App\Http\Controllers\Car\expenseController;
 use App\Http\Controllers\Car\FAQController;
 use App\Http\Controllers\Car\GalleryImageController;
 use App\Http\Controllers\Car\ModelController;
@@ -109,6 +110,10 @@ Route::group(['prefix' => 'car','middleware' => ['admin','can:isEditor']], funct
     Route::get("/price-calculator/show/{id}", [PriceCalculatorController::class, 'show']);
     Route::POST("/price-calculator/update", [PriceCalculatorController::class, 'update'])->name("price-calculator.update");
     Route::get("price-calculator/delete/{id}", [PriceCalculatorController::class, 'delete']);
+
+    Route::get("/expense/{id}", [expenseController::class, 'index'])->name("car.expense");
+    Route::post("/expense/create", [expenseController::class, 'create'])->name("car.expense.create");
+    Route::get("/expense/delete/{id}", [expenseController::class, 'delete'])->name("car.expense.delete");
 });
 
 Route::get("/", [DashboardController::class, 'index'])->middleware(['admin','can:isEditor'])->name("dashboard");
