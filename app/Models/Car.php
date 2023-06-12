@@ -52,6 +52,16 @@ class Car extends Model
         return $this->belongsTo(Models::class);
     }
 
+    /**
+     * Get the color that owns the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function color()
+    {
+        return $this->belongsTo(Color::class);
+    }
+
 
     /**
      * Get all of the expense for the Car

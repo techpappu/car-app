@@ -410,7 +410,9 @@
                     </div>
                 </form>
                 <div id="car_expense_data">
-                    @include('car.car_expense_data')
+                    @if ($data['expense'])
+                        @include('car.car_expense_data')
+                    @endif
                 </div> 
             </div>
         </div>

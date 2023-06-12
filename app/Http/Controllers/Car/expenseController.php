@@ -12,9 +12,9 @@ class expenseController extends Controller
     use RespondsWithHttpStatus;
 
     function index($id)
-    {
-        $carData =\Facades\App\Models\Car::find($id);
-        $data=$carData->expense;
+    {   $data=[];
+        $data['carData'] =\Facades\App\Models\Car::find($id);
+        $data['expense']=$data['carData']->expense;
         return view('car.car_expense_data', compact('data'))->render();
     }
     function create(Request $request)
