@@ -28,7 +28,7 @@ style="float: right;margin-bottom:5px;" onclick="printJS('printexpense', 'html')
             @endif 
             </td>    
             <td>{{$row->comment}}</td>    
-            <td>{{config('constant.currencySymbool')}} {{$row->amount}}</td>
+            <td>JPY {{$row->amount}}</td>
             @if ($row->created_at)
                 <td>{{$row->created_at->format('Y-m-d')}}</td>
             @endif
@@ -42,7 +42,7 @@ style="float: right;margin-bottom:5px;" onclick="printJS('printexpense', 'html')
     @endforeach
     
 </table>
-<h3>total Expenses: {{config('constant.currencySymbool')}} {{$data['expense']->sum('amount')}}</h3>
+<h3>total Expenses: JPY {{$data['expense']->sum('amount')}}</h3>
 
 <div class="printExpense" id="printexpense">
     <style>
@@ -108,7 +108,7 @@ style="float: right;margin-bottom:5px;" onclick="printJS('printexpense', 'html')
                 <td>{{ $key + 1 }}</td>  
                 <td>{{$row->type}}</td>    
                 <td>{{$row->comment}}</td>    
-                <td>{{config('constant.currencySymbool')}} {{$row->amount}}</td>
+                <td>JPY {{$row->amount}}</td>
                 @if ($row->created_at)
                     <td>{{$row->created_at->format('Y-m-d')}}</td>
                 @endif
@@ -116,7 +116,7 @@ style="float: right;margin-bottom:5px;" onclick="printJS('printexpense', 'html')
         @endforeach
             <tr>
                 <td colspan="3"><h3>Total</h3></td>
-                <td colspan="2"><h3>{{config('constant.currencySymbool')}} {{$data['expense']->sum('amount')}}</h3></td>
+                <td colspan="2"><h3>JPY {{$data['expense']->sum('amount')}}</h3></td>
             </tr>
         
     </table>
