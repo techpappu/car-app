@@ -80,6 +80,9 @@ Route::group(['prefix' => 'car','middleware' => ['admin','can:isEditor']], funct
     Route::get("/color/delete/{id}", [ColorController::class, 'delete']);
 
     Route::get("/", [CarController::class, 'index'])->name("car");
+    Route::get("/available", [CarController::class, 'index'])->name("car.available");
+    Route::get("/sold", [CarController::class, 'index'])->name("car.sold");
+    Route::get("/reserved", [CarController::class, 'index'])->name("car.reserved");
     Route::get("/fetchbyPage", [CarController::class, 'fetchbyPage']);
     Route::POST("/add", [CarController::class, 'add'])->name("add");
     Route::get("/show/{id}", [CarController::class, 'show']);

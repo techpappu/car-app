@@ -54,8 +54,32 @@ class CarController extends Controller
     }
 
     public function index()
-    {
-        $data = $this->carService->index();
+    {   
+        $allDataCount=\Facades\App\Models\Car::all()->count();
+
+        $sold=\Facades\App\Models\Car::where('car_sold_status',3)
+        ->orderBy('id', 'desc')
+        ->paginate(config('constant.pagination_records'));
+
+        $available=\Facades\App\Models\Car::where('car_sold_status',1)
+        ->orderBy('id', 'desc')
+        ->paginate(config('constant.pagination_records'));
+
+        $reserved=\Facades\App\Models\Car::where('car_sold_status',2)
+        ->orderBy('id', 'desc')
+        ->paginate(config('constant.pagination_records'));
+
+        if(request()->is('admin/car/sold')){
+            $data=$sold;
+        }elseif(request()->is('admin/car/available')){
+            $data=$available;
+        }
+        elseif(request()->is('admin/car/reserved')){
+            $data=$reserved;
+        }
+        else{
+            $data = $this->carService->index();
+        }
         $brand = $this->brandService->allBrand();
         $bodyStyle = $this->bodyStyleService->allBodyStyle();
         $colors = $this->colorService->allColor();
@@ -66,7 +90,11 @@ class CarController extends Controller
         $selfDriving = $this->selfDrivingService->index();
         $safetyEquipment = $this->safetyEquipmentService->index();
         return view('car.car', compact(
+            'allDataCount',
             'data',
+            'available',
+            'sold',
+            'reserved',
             'brand',
             'bodyStyle',
             'colors',

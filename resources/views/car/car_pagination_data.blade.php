@@ -1,3 +1,27 @@
+<style>
+    ul.car-sortedby{
+        padding-left:0px;
+        padding-bottom: 20px; 
+    }
+    ul.car-sortedby li{
+        list-style-type: none;
+        float: left;
+        font-size: 18px;
+    }
+    ul.car-sortedby li a{
+        margin: 0px 10px;
+    }
+    ul.car-sortedby li.active a{
+        color: #151515;
+        font-weight: bold;
+    }
+</style>
+<ul class="car-sortedby">
+    <li class="{{ Request::is('admin/car') ? 'active' : '' }}"><a href="{{route('car')}}">All ({{$allDataCount}})</a>|</li>
+    <li class="{{ Request::is('admin/car/available') ? 'active' : '' }}"><a href="{{route('car.available')}}">Available ({{$available->total()}})</a>|</li>
+    <li class="{{ Request::is('admin/car/sold') ? 'active' : '' }}"><a href="{{route('car.sold')}}">Sold ({{$sold->total()}})</a>|</li>
+    <li class="{{ Request::is('admin/car/reserved') ? 'active' : '' }}"><a href="{{route('car.reserved')}}">Reserved ({{$reserved->total()}})</a></li>
+</ul>
 <table class="table table-striped table-bordered" cellspacing="0" width="100%">
     <tr>
         <th>S/N</th>
@@ -22,8 +46,10 @@
         <tr>
             <td>{{ $key + 1 }}</td>
             <td>{{ $row->id }}</td>
-            <td>{{ $row->brand }}</td>
-            <td>{{ $row->model }}</td>
+            <td>{{ $row->brand->name }}</td>
+            @if ($row->model)
+            <td>{{ $row->model->name }}</td>
+            @endif
             <td>{{ $row->title }}</td>
             <td>{{ $row->stock_no }}</td>
             <td>{{ $row->model_year }}</td>

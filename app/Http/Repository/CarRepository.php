@@ -17,21 +17,21 @@ class CarRepository extends CommonRepository
 
     public static function index()
     {
-
-        return Car::select(
-            'brands.name as brand',
-            'models.name as model',
-            'cars.id',
-            'cars.title',
-            'cars.stock_no',
-            'cars.model_year',
-            'cars.car_location',
-            'cars.car_sold_status'
-        )
-            ->join('brands', 'brands.id', '=', 'cars.brand_id')
-            ->join('models', 'models.id', '=', 'cars.model_id')
-            ->orderBy('id', 'desc')
-            ->paginate(config('constant.pagination_records'));
+        return Car::orderBy('id', 'desc')->paginate(config('constant.pagination_records'));
+        // return Car::select(
+        //     'brands.name as brand',
+        //     'models.name as model',
+        //     'cars.id',
+        //     'cars.title',
+        //     'cars.stock_no',
+        //     'cars.model_year',
+        //     'cars.car_location',
+        //     'cars.car_sold_status'
+        // )
+        //     ->join('brands', 'brands.id', '=', 'cars.brand_id')
+        //     ->join('models', 'models.id', '=', 'cars.model_id')
+        //     ->orderBy('id', 'desc')
+        //     ->paginate(config('constant.pagination_records'));
     }
 
     /* public static function allBodyStyle()
