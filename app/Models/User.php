@@ -42,4 +42,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the sell associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function seller()
+    {
+        return $this->hasOne(SellerDetail::class);
+    }
+
+    /**
+     * The cars that belong to the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function cars()
+    {
+        return $this->belongsToMany(Car::class, 'car_user');
+    }
 }

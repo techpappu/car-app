@@ -57,6 +57,20 @@ class AdminController extends Controller
         $data = $this->userService->index($request);
         return view('admin.editor', compact('data'));
     }
+    public function sellerList(Request $request)
+    {
+        $request->role = 2;
+        $data = $this->userService->index($request);
+        return view('admin.seller', compact('data'));
+    }
+    public function sellerFetchbyPage(Request $request)
+    {
+        if ($request->ajax()) {
+            $request->role = 2;
+            $data = $this->userService->index($request);
+            return view('admin.seller_data', compact('data'))->render();
+        }
+    }
 
     public function editorFetchbyPage(Request $request)
     {

@@ -54,10 +54,18 @@ aria-hidden="true">
 </div>
 <header class="main-header">
         <!-- Logo -->
-        <a href="{{ route('dashboard') }}" class="logo">       
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b></span>
-        </a>
+        @if (auth()->user()->role==2)
+            <a href="{{ route('seller.dashboard') }}" class="logo">       
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Seller</b></span>
+            </a>
+        @else
+            <a href="{{ route('dashboard') }}" class="logo">       
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Admin</b></span>
+            </a>
+        @endif
+        
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
           <!-- Sidebar toggle button-->

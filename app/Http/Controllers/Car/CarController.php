@@ -108,7 +108,7 @@ class CarController extends Controller
     }
 
     public function fetchbyPage()
-    {
+    {   
         $data = $this->carService->index();
         return view('car.car_pagination_data', compact('data'))->render();
     }

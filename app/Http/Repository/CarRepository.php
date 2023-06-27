@@ -99,6 +99,9 @@ class CarRepository extends CommonRepository
         $car->cubic_meter = $request->cubic_meter;
 
         $car->save();
+        if($request->seller_id){
+            $car->user()->attach($request->seller_id);
+        }
         $car->carCondition()->attach($request->carCondition);
         $car->carStandardFeature()->attach($request->standardFeature);
         $car->carEquipment()->attach($request->equipment);

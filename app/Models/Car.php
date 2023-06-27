@@ -81,4 +81,24 @@ class Car extends Model
     {
         return $this->hasMany(Expense::class);
     }
+
+    /**
+     * The user that belong to the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'car_user');
+    }
+
+    /**
+     * Get all of the contactUs for the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contactUs()
+    {
+        return $this->hasMany(ContactUs::class, 'carId');
+    }
 }

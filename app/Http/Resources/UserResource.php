@@ -25,7 +25,7 @@ class UserResource extends JsonResource
             'phone_country_code' => $this->phone_country_code,
             'address' => $this->address,
             'gender' => $this->gender,
-            'isEnabled'=>$this->is_enabled
+            'isEnabled'=>$this->is_enabled,
             
         ];
     }

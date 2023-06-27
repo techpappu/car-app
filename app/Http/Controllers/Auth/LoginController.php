@@ -51,8 +51,10 @@ class LoginController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials) && (auth()->user()->role == 1 || auth()->user()->role == 3)) {
-
+        if (Auth::attempt($credentials) && (auth()->user()->role == 1 || auth()->user()->role == 3 || auth()->user()->role == 2)) {
+            if(auth()->user()->role == 2){
+                return redirect()->route('seller.dashboard');
+            }
             return redirect()->route('dashboard');
         } else {
             Auth::logout();

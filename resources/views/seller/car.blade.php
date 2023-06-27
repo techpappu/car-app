@@ -235,14 +235,6 @@
                             </select>
                         </div>
                         <div class="col-sm-3">
-                            <label for="is_featured">Is Featured?</label>
-                            <input type="checkbox" style="width: 5%;height:20px" name="is_featured" id="is_featured" />
-                        </div>
-                        <div class="col-sm-3">
-                            <label for="is_3rd_party_seller">Is 3RD Party Seller?</label>
-                            <input type="checkbox" style="width: 5%;height:20px" name="is_3rd_party_seller" id="is_3rd_party_seller" />
-                        </div>
-                        <div class="col-sm-3">
                             <label for="cubic_meter">Cubic Meter</label>
                             <input type="number" class="form-control is-invalid" id="cubic_meter" name="cubic_meter" placeholder="Cubic Meter" required onkeypress="return isNumberKey(event)">
                             <span class="text-danger">
@@ -251,7 +243,7 @@
                         </div>
                     </div>
 
-                    <div>&nbsp;</div>
+                    <div>&nbsp;</div><br><br>
                     <h3>Specific Info</h3>
                     <div class="form-group">
                         <h4>Car Condition</h4>
@@ -339,7 +331,7 @@
                 <div style="display: none" class="alert alert-danger alert-dismissible" id="alertdanger" role="alert"></div>
                 <div style="display: none" class="alert alert-success" id="alertsuccess"></div>
                 <div id="table_data">
-                    @include('car.car_pagination_data')
+                    @include('seller.car_pagination_data')
                 </div>
             </div>
         </div>
@@ -472,14 +464,6 @@
         //     var page = $(this).attr('href').split('page=')[1];
         //     fetch_data(page);
         // });
-
-        
-        $('ul.dropdown-menu li').click(function(e) {
-            var id = $(this).attr("lead-id");
-            var status = $(this).attr("status");
-            var statusValue = $(this).text();
-            carStatusUpdate(status,id,statusValue);
-        });
     });
     $('#car_add').click(function() {
         $("div#alertdanger").hide();
@@ -499,7 +483,7 @@
     function getModelsByBrand(brandId) {
         $.ajax({
             type: "get",
-            url: "/admin/car/model/" + brandId,
+            url: "/admin/seller/car/model/" + brandId,
             success: function(res) {
                 if (res) {
                     $("#model_id").empty();
@@ -508,6 +492,8 @@
                         $("#model_id").append('<option value="' + model.id + '">' + model.name +
                             '</option>');
                     });
+
+                    $("#model_id").val(34);
 
                 }
             }
@@ -519,7 +505,7 @@
     function getModelsByBrandForSingleCar(brandId,modelId) {
         $.ajax({
             type: "get",
-            url: "/admin/car/model/" + brandId,
+            url: "/admin/seller/car/model/" + brandId,
             success: function(res) {
                 if (res) {
                     $("#model_id").empty();
@@ -540,41 +526,18 @@
     function fetch_data(page) {
         location.reload(true);
         // $.ajax({
-        //     url: "/admin/car/fetchbyPage?page=" + page,
+        //     url: "/admin/seller/car/fetchbyPage?page=" + page,
         //     success: function(data) {
         //         $('#table_data').html(data);
         //     }
         // });
     }
-    function carStatusUpdate(status, id,statusValue) {
-        $.ajax({
-            url: '{{ route('updateStatus') }}',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                _token: '{!! csrf_token() !!}',
-                status: status,
-                id: id
-            },
-            success: function(response) {
-                if (response.hasError == false) {
-                    $("div#alertdanger").hide();
-                    $("div#alertsuccess").show();
-                    $("div#alertsuccess").text(response.result.status);
-                    $("td.status_"+id).html(statusValue);
-                    //fetch_data(1);
-                } else {
-                    alert(response.result.status);
-                }
-            }
-        });
-    }
     $('#car_form').on('submit', function(event) {
         event.preventDefault();
         var id = $("#id").val();
-        var url = "{{ route('add') }}";
+        var url = "{{ route('seller.add') }}";
         if (id) {
-            url = "{{ route('update') }}";
+            url = "{{ route('seller.update') }}";
         }
         var formdata = new FormData(this);
         $(".ajax-load").show();
@@ -589,7 +552,6 @@
             processData: false,
 
             success: function(response) {
-                console.log(response);
                 if (response.hasError == false) {
                     $("div#alertdanger").hide();
                     $("div#alertsuccess").show();
@@ -619,15 +581,12 @@
     $(document).on('click', '.edit', function() {
         var id = $(this).attr('id');
         $.ajax({
-            url: "/admin/car/show/" + id,
+            url: "/admin/seller/car/show/" + id,
             dataType: "json",
             success: function(response) {
-                console.log(response);
                 $('#id').val(response.data.id);
                 $("#brand_id").val(response.data.brand);
                 getModelsByBrandForSingleCar(response.data.brand,response.data.model);
-                // getModelsByBrand(response.data.brand);
-                // $("#model_id").val(response.data.model);
                 $("#body_style_id").val(response.data.bodyStyle);
                 $("#color_id").val(response.data.color);
                 $("#title").val(response.data.title);
@@ -659,28 +618,6 @@
                 $("#description").val(response.data.description);
                 $("#seating_capacity").val(response.data.seating_capacity);
                 $("#cubic_meter").val(response.data.cubic_meter);
-                if (response.data.is_featured == 1) {
-                    $("#is_featured").prop('checked',
-                        true);
-                } else {
-                    $("#is_featured").prop('checked',
-                        false);
-                }
-                if (response.data.is_3rd_party_seller == 1) {
-                    $("#is_3rd_party_seller").prop('checked',
-                        true);
-                } else {
-                    $("#is_3rd_party_seller").prop('checked',
-                        false);
-                }
-
-                if (response.data.is_gallery == 1) {
-                    $("#is_gallery").prop('checked',
-                        true);
-                } else {
-                    $("#is_gallery").prop('checked',
-                        false);
-                }
 
                 response.data.carCondition.forEach(function(carCondition) {
                     $("#carCondition_" + carCondition.id + "").prop('checked',
@@ -727,7 +664,7 @@
             function() {
                 $.ajax({
                     type: 'get',
-                    url: '/admin/car/delete/' + id,
+                    url: '/admin/seller/car/delete/' + id,
                     cache: false,
                     success: function(response) {
                         if (response.hasError == false) {
@@ -752,7 +689,7 @@
 
     function carImageList(carId) {
         $.ajax({
-            url: "/admin/car/carImageById/" + carId,
+            url: "/admin/seller/car/carImageById/" + carId,
             success: function(data) {
                 $('#image_table_data').html(data);
 
@@ -773,7 +710,7 @@
             function() {
                 $.ajax({
                     type: 'get',
-                    url: '/admin/car/deleteCarImage/' + id,
+                    url: '/admin/seller/car/deleteCarImage/' + id,
                     cache: false,
                     success: function(response) {
                         if (response.hasError == false) {
@@ -812,7 +749,7 @@
         var id = $(this).attr('id');
         var positionValue = $("#position_" + id + "").val();
         $.ajax({
-            url: "{{ route('updatePosition') }}",
+            url: "{{ route('seller.updatePosition') }}",
             type: 'POST',
             dataType: 'JSON',
             data: {
@@ -821,7 +758,6 @@
                 position: positionValue
             },
             success: function(response) {
-                console.log(response);
                 if (response.hasError == false) {
                     alert("updated");
                     $("#position_" + id + "").prop('disabled', true);
@@ -850,7 +786,7 @@
     $('#car_expense_form').on('submit', function(event) {
         event.preventDefault();
         var carId = $("#expenseCarId").val();
-        var url = "{{ route('car.expense.create') }}";
+        var url = "{{ route('seller.car.expense.create') }}";
         $.ajax({
             url: url,
             type: 'POST',
@@ -869,7 +805,7 @@
     });
     function carExpenseList(carId) {
         $.ajax({
-            url: "/admin/car/expense/" + carId,
+            url: "/admin/seller/car/expense/" + carId,
             success: function(data) {
                 $('#car_expense_data').html(data);
 
@@ -891,7 +827,7 @@
             function() {
                 $.ajax({
                     type: 'get',
-                    url: '/admin/car/expense/delete/' + id,
+                    url: '/admin/seller/car/expense/delete/' + id,
                     cache: false,
                     success: function(response) {
                         carExpenseList(carId);

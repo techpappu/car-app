@@ -28,7 +28,19 @@ class UserRepository extends CommonRepository
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->role = $request->role;
+        if ($request->role==2){
+            if ($request->has('is_enabled')) {
+                $user->is_enabled = 1;
+            } else {
+                $user->is_enabled = 0;
+            }
+        }
         $user->save();
+        if ($request->role==2){
+            $data=$request->only('number','address','company_name','company_fax','license_number','company_address','company_number','company_email','account_name','account_number','bank_name','bank_code','branch_name','branch_code','bank_address','sales_commission','paid_amount');
+
+            $user->seller()->create($data);
+        }
         return $user;
     }
 
@@ -52,6 +64,10 @@ class UserRepository extends CommonRepository
             $user->is_enabled = 1;
         } else {
             $user->is_enabled = 0;
+        }
+        if($user->role==2){
+            $data=$request->only('number','address','company_name','company_fax','license_number','company_address','company_number','company_email','account_name','account_number','bank_name','bank_code','branch_name','branch_code','bank_address','sales_commission','paid_amount');
+            $user->seller()->update($data);
         }
         $user->update();
 

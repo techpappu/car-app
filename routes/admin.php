@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Car\BodyStyleController;
 use App\Http\Controllers\Car\BrandController;
 use App\Http\Controllers\Car\CarController;
+use App\Http\Controllers\Car\SellerCarController;
 use App\Http\Controllers\Car\ColorController;
 use App\Http\Controllers\Car\expenseController;
 use App\Http\Controllers\Car\FAQController;
@@ -36,8 +37,10 @@ Auth::routes(['register' => false]);
 Route::group(['prefix' => 'user','middleware' => ['admin','can:isAdmin']], function() {
     Route::get("/admin", [AdminController::class, 'index'])->name("admin");
     Route::get("/editor", [AdminController::class, 'editorList'])->name("editor");
+    Route::get("/seller", [AdminController::class, 'sellerList'])->name("seller");
     Route::get("/customer", [AdminController::class, 'customerList'])->name("customer");
     Route::get("/fetchbyPage", [AdminController::class, 'fetchbyPage']);
+    Route::get("/sellerFetchbyPage", [AdminController::class, 'sellerFetchbyPage']);
     Route::get("/editorFetchbyPage", [AdminController::class, 'editorFetchbyPage']);
     Route::get("/customerFetchbyPage", [AdminController::class, 'customerFetchbyPage']);
     Route::get("/show/{id}", [AdminController::class, 'show']);
@@ -148,4 +151,42 @@ Route::middleware(['admin','can:isAdmin'])->group(function () {
     Route::get("/payment-list/fetch_data_search", [PaymentController::class, 'fetchBySearch']);
     //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
+
+
+//Seller routes 
+Route::group(['prefix' => '/seller/car','middleware' => ['admin','can:isSeller']], function() {
+    Route::get("/brand/fetchbyPage", [BrandController::class, 'fetchbyPage']);
+    Route::get("/model/fetchbyPage", [ModelController::class, 'fetchbyPage']);
+    Route::get("/model/{brandId}", [ModelController::class, 'getModelsByBrand']);
+    Route::get("/bodyStyle/fetchbyPage", [BodyStyleController::class, 'fetchbyPage']);
+    Route::get("/color/fetchbyPage", [ColorController::class, 'fetchbyPage']);
+
+    Route::get("/", [SellerCarController::class, 'index'])->name("seller.car");
+    Route::get("/available", [SellerCarController::class, 'index'])->name("seller.car.available");
+    Route::get("/sold", [SellerCarController::class, 'index'])->name("seller.car.sold");
+    Route::get("/reserved", [SellerCarController::class, 'index'])->name("seller.car.reserved");
+    Route::get("/fetchbyPage", [SellerCarController::class, 'fetchbyPage']);
+    Route::POST("/add", [SellerCarController::class, 'add'])->name("seller.add");
+    Route::get("/show/{id}", [SellerCarController::class, 'show']);
+    Route::POST("/update", [SellerCarController::class, 'update'])->name("seller.update");
+    Route::get("delete/{id}", [SellerCarController::class, 'delete']);
+    Route::get("carImageById/{id}", [SellerCarController::class, 'carImageById']);
+    Route::get("deleteCarImage/{id}", [SellerCarController::class, 'deleteCarImage']);
+    Route::POST("/updatePosition", [SellerCarController::class, 'updatePosition'])->name("seller.updatePosition");
+
+    Route::get("/expense/{id}", [SellerCarController::class, 'expenseIndex'])->name("seller.car.expense");
+    Route::post("/expense/create", [SellerCarController::class, 'expenseCreate'])->name("seller.car.expense.create");
+    Route::get("/expense/delete/{id}", [SellerCarController::class, 'expenseDelete'])->name("seller.car.expense.delete");
+
+});
+Route::group(['prefix' => '/seller','middleware' => ['admin','can:isSeller']], function() {
+    Route::get("/", [DashboardController::class, 'seller'])->middleware(['admin','can:isSeller'])->name("seller.dashboard");
+
+    Route::get("contact-us/delete/{id}", [SellerCarController::class, 'inquiryDelete']);
+    Route::post('/contact-us/mail-reply', [SellerCarController::class, 'replayMail'])->name('seller.mail-reply');
+    Route::get("/inquiry", [SellerCarController::class, 'inquiry'])->name("seller.inquiry");
+    Route::get("/inquiry/inquiryFetchbyPage", [SellerCarController::class, 'inquiryFetchbyPage']);
+});
+
+
 

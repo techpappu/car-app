@@ -6,6 +6,7 @@ use App\Http\Repository\UserRepository;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Response;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\SellerResource;
 
 class UserService
 {
@@ -31,6 +32,10 @@ class UserService
             return $this->failure(trans("messages.notFound"), Response::HTTP_NOT_FOUND);
         }
 
+        if($user->role==2){
+            return new SellerResource($user);
+        }
+        
         return new UserResource($user);
     }
 

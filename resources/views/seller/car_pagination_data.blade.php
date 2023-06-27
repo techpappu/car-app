@@ -17,10 +17,10 @@
     }
 </style>
 <ul class="car-sortedby">
-    <li class="{{ Request::is('admin/car') ? 'active' : '' }}"><a href="{{route('car')}}">All ({{$allDataCount}})</a>|</li>
-    <li class="{{ Request::is('admin/car/available') ? 'active' : '' }}"><a href="{{route('car.available')}}">Available ({{$available->total()}})</a>|</li>
-    <li class="{{ Request::is('admin/car/sold') ? 'active' : '' }}"><a href="{{route('car.sold')}}">Sold ({{$sold->total()}})</a>|</li>
-    <li class="{{ Request::is('admin/car/reserved') ? 'active' : '' }}"><a href="{{route('car.reserved')}}">Reserved ({{$reserved->total()}})</a></li>
+    <li class="{{ Request::is('admin/seller/car') ? 'active' : '' }}"><a href="{{route('seller.car')}}">All ({{$allDataCount}})</a>|</li>
+    <li class="{{ Request::is('admin/seller/car/available') ? 'active' : '' }}"><a href="{{route('seller.car.available')}}">Available ({{$available->total()}})</a>|</li>
+    <li class="{{ Request::is('admin/seller/car/sold') ? 'active' : '' }}"><a href="{{route('seller.car.sold')}}">Sold ({{$sold->total()}})</a>|</li>
+    <li class="{{ Request::is('admin/seller/car/reserved') ? 'active' : '' }}"><a href="{{route('seller.car.reserved')}}">Reserved ({{$reserved->total()}})</a></li>
 </ul>
 <table class="table table-striped table-bordered" cellspacing="0" width="100%">
     <tr>
@@ -33,7 +33,6 @@
         <th>Model year</th>
         <th>Location</th>
         <th>Status</th>
-        <th>Change Status</th>
         <th>Action</th>
     </tr>
     @php
@@ -53,20 +52,7 @@
             <td>{{ $row->model_year }}</td>
             <td>{{ $row->car_location }}</td>
             <td class="status_{{$row->id}}">{{ $status[$row->car_sold_status] }}</td>
-            <td>
-                <div class="dropdown">
-                    <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Status<span class="caret"></span></button>
-                    <ul class="dropdown-menu" style="min-width: 100px">
-                        <li lead-id="{{$row->id}}" status="1"> <a href="javascript:" >Available</a></li>
-                        <li lead-id="{{$row->id}}" status="2"> <a href="javascript:">Reserved </a></li>
-                        <li lead-id="{{$row->id}}" status="3"> <a href="javascript:">Sold </a></li>
-                    </ul>
-                </div>
-            </td>
             <td colspan="3">
-                
-                <a name="review" class="btn-sm review_button ml-3 review" href="{{url('/admin/car-review?id='. $row->id)}}"
-                    style="color: ghostwhite;background-color: green" target="_blank">Review</a>
                 <button type="button" name="edit" id="{{ $row->id }}"
                     class="edit btn btn-primary btn-sm">Edit
                 </button>
