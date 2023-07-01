@@ -135,8 +135,13 @@ class CarRepository extends CommonRepository
                 
                 // waterMark
                 $img = Image::make('upload/images/'.$uniqueName);
+                // Detect the image size
+                $width = $img->width();
                 //insert watermark at bottom-right corner with 10px offset
-                $img->insert('mark.png', 'bottom-center', 10, 10);
+                $waterMark=Image::make('mark.png')->resize($width/4, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->insert($waterMark, 'bottom-center', 10, 10);
                 $img->save('upload/images/'.$uniqueName);
 
                 //positioning the Image
@@ -301,11 +306,16 @@ class CarRepository extends CommonRepository
                     'path' => 'upload/images/' .
                         $uniqueName
                 ]);
-                // waterMark
-                $img = Image::make('upload/images/'.$uniqueName);
-                /* insert watermark at bottom-right corner with 10px offset */
-                $img->insert('mark.png', 'bottom-center', 10, 10);
-                $img->save('upload/images/'.$uniqueName);
+                 // waterMark
+                 $img = Image::make('upload/images/'.$uniqueName);
+                 // Detect the image size
+                 $width = $img->width();
+                 //insert watermark at bottom-right corner with 10px offset
+                 $waterMark=Image::make('mark.png')->resize($width/4, null, function ($constraint) {
+                     $constraint->aspectRatio();
+                 });
+                 $img->insert($waterMark, 'bottom-center', 10, 10);
+                 $img->save('upload/images/'.$uniqueName);
 
                 //positioning the images
                 $car->files()->create($file->toArray());
