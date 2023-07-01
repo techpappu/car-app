@@ -619,6 +619,6 @@ table.specification tr td{
         border-bottom:1px solid #e3e3e3;
     }
     div#img_slides_wrapper {
-        height:25vh !important;
+        height: 65vw !important;
     }
 }
