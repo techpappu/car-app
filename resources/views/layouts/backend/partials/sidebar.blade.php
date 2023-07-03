@@ -16,7 +16,7 @@
                         <li class="{{ Request::is('admin/user/admin') ? 'active' : '' }}">
                             <a href="{{ route('admin') }}"><i class="fa fa-image"></i> <span>Admin</span></a>
                         </li>
-                        <li class="{{ Request::is('admin/user/seller') ? 'active' : '' }}">
+                        <li class="{{ Request::is('admin/user/seller*') ? 'active' : '' }}">
                             <a href="{{ route('seller') }}"><i class="fa fa-image"></i> <span>Seller</span></a>
                         </li>
                         <li class="{{ Request::is('admin/user/editor') ? 'active' : '' }}">

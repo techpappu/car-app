@@ -21,7 +21,7 @@
             <td>{{ $row->email }}</td>
             <td>{{ $row->seller->number }}</td>
             <td>{{ $row->seller->company_name }}</td>
-            <td>{{ $row->cars()->count() }}</td>
+            <td><a href="{{Route('admin.seller.car',$row->id)}}"><i class="fa fa-eye"></i> all </a> ( {{ $row->cars()->count() }} )</td>
             <td>{{$row->cars()->where('car_sold_status',3)->count()}}</td>
             <td>{{config('constant.currencySymbool')}} 
                 {{$row->cars()->where('car_sold_status',3)->sum('price')-(($row->cars()->where('car_sold_status',3)->sum('price')/100)*$row->seller->sales_commission)}}

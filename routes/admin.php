@@ -122,6 +122,16 @@ Route::group(['prefix' => 'car','middleware' => ['admin','can:isEditor']], funct
     Route::get("/expense/delete/{id}", [expenseController::class, 'delete'])->name("car.expense.delete");
 });
 
+//seller car  for Admin to inspection
+Route::group(['prefix' => 'user','middleware' => ['admin','can:isAdmin']], function() {
+    Route::get("/seller/car/all/{id}", [SellerCarController::class, 'sellerCar'])->name("admin.seller.car");
+    Route::get("/seller/car/available/{id}", [SellerCarController::class, 'sellerCar'])->name("admin.seller.car.available");
+    Route::get("/seller/car/sold/{id}", [SellerCarController::class, 'sellerCar'])->name("admin.seller.car.sold");
+    Route::get("/seller/car/reserved/{id}", [SellerCarController::class, 'sellerCar'])->name("admin.seller.car.reserved");
+    Route::get("/fetchbyPage", [SellerCarController::class, 'fetchbyPage']);
+});
+
+
 Route::get("/", [DashboardController::class, 'index'])->middleware(['admin','can:isEditor'])->name("dashboard");
 
 Route::middleware(['admin','can:isAdmin'])->group(function () {

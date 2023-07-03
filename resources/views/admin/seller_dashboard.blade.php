@@ -91,6 +91,86 @@
             </div>
         </div>
     </div>
+    <div class="row" style="background: #fff;margin-top:20px;">
+        <h1 class="text-center">Seller Details</h1>
+        <table class="table  table-striped table-bordered" style="margin-bottom: 0px;" >
+            <tbody>
+                <tr>
+                    <th colspan="2" class="text-center bg-primary">Owner Details</th>
+                </tr>
+                <tr>
+                    <th class="info">Name</th>
+                    <td class="">{{auth()->user()->name}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Number</th>
+                    <td>{{auth()->user()->seller->number}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Address</th>
+                    <td>{{auth()->user()->seller->address}}</td>
+                </tr>
+                <tr>
+                    <th colspan="2" class="text-center bg-primary">Company Details</th>
+                </tr>
+                <tr>
+                    <th class="info">Company Name</th>
+                    <td>{{auth()->user()->seller->company_name}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Company Fax Number</th>
+                    <td>{{auth()->user()->seller->company_fax}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Company License Number</th>
+                    <td>{{auth()->user()->seller->license_number}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Company Address</th>
+                    <td>{{auth()->user()->seller->company_address}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Company Phone Number</th>
+                    <td>{{auth()->user()->seller->company_number}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Company Email</th>
+                    <td>{{auth()->user()->seller->company_email}}</td>
+                </tr>
+                <tr>
+                    <th colspan="2" class="text-center bg-primary">Bank Details</th>
+                </tr>
+                <tr>
+                    <th class="info">Bank AC Holder Name</th>
+                    <td>{{auth()->user()->seller->account_name}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Bank AC Number</th>
+                    <td>{{auth()->user()->seller->account_number}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Bank Name</th>
+                    <td>{{auth()->user()->seller->bank_name}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Bank Code</th>
+                    <td>{{auth()->user()->seller->bank_code}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Branch name</th>
+                    <td>{{auth()->user()->seller->branch_name}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Branch Code</th>
+                    <td>{{auth()->user()->seller->branch_code}}</td>
+                </tr>
+                <tr>
+                    <th class="info">Bank Address</th>
+                    <td>{{auth()->user()->seller->bank_address}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 @endsection

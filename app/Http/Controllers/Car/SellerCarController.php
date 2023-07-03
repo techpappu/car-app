@@ -247,4 +247,64 @@ class SellerCarController extends Controller
         return view('car.inquiry_pagination_data', compact('data'))->render();
     }
 
+
+
+    public function sellerCar($id)
+    {   
+        $user=\Facades\App\Models\User::findOrFail($id);
+        $allDataCount=$user->cars()->count();
+
+        $sold=$user->cars()->where('car_sold_status',3)
+        ->orderBy('id', 'desc')
+        ->paginate(config('constant.pagination_records'));
+
+        $available=$user->cars()->where('car_sold_status',1)
+        ->orderBy('id', 'desc')
+        ->paginate(config('constant.pagination_records'));
+
+        $reserved=$user->cars()->where('car_sold_status',2)
+        ->orderBy('id', 'desc')
+        ->paginate(config('constant.pagination_records'));
+
+        if(request()->is('admin/user/seller/car/sold*')){
+            $data=$sold;
+        }elseif(request()->is('admin/user/seller/car/available*')){
+            $data=$available;
+        }
+        elseif(request()->is('admin/user/seller/car/reserved*')){
+            $data=$reserved;
+        }
+        else{
+            $data = $user->cars()
+            ->orderBy('id', 'desc')
+            ->paginate(config('constant.pagination_records'));
+        }
+        $brand = $this->brandService->allBrand();
+        $bodyStyle = $this->bodyStyleService->allBodyStyle();
+        $colors = $this->colorService->allColor();
+        $carCondition = $this->carConditionService->index();
+        $standardFeature = $this->standardFeatureService->index();
+        $equipment = $this->equipmentService->index();
+        $interiorExterior = $this->interiorExteriorService->index();
+        $selfDriving = $this->selfDrivingService->index();
+        $safetyEquipment = $this->safetyEquipmentService->index();
+        return view('admin.admin_seller_car', compact(
+            'user',
+            'allDataCount',
+            'data',
+            'available',
+            'sold',
+            'reserved',
+            'brand',
+            'bodyStyle',
+            'colors',
+            'carCondition',
+            'standardFeature',
+            'equipment',
+            'interiorExterior',
+            'selfDriving',
+            'safetyEquipment'
+        ));
+    }
+
 }
