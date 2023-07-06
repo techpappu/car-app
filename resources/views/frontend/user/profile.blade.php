@@ -37,7 +37,7 @@
 <div class="container">
     <div class="row" style="margin: 0 auto;">
 
-        <div class="col-md-9" style="background: #F4F4F4;">
+        <div class="col-md-12" style="background: #F4F4F4;padding: 20px;">
             <div class="alert alert-danger alert-dismissible" id="alertdanger" role="alert"></div>
             <div class="alert alert-success" id="alertsuccess"></div>
             <form class="ui-form-3" action="#" method="post" id="profileForm" enctype="multipart/form-data" style="margin-top: 15px;">
@@ -490,7 +490,7 @@
                     </div>
 
                 </div>
-                <div class="col-xs-12" style="text-align: center">
+                <div class="col-md-12" style="text-align: center">
                     <br>
                     <button id="submitBtn" class="btn btn-lg btn-primary" type="submit" style="width: 100px; margin-bottom: 2px"><i class="glyphicon glyphicon-ok-sign"></i>
                         Update</button>
