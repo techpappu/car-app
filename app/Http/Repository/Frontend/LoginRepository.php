@@ -111,7 +111,7 @@ class LoginRepository extends CommonRepository
                     unlink('images/' . $user->image);
                 }
                 
-                $user->image = $uniqueName;
+                $user->image = $uniqueName; 
               
             }
             $user->update();

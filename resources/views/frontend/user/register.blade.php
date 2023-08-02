@@ -181,9 +181,9 @@
                 <form action="" id="register_form" method="post">
                     @csrf
                     <input id="name" name="name" type="text" placeholder="Enter your first name" required>
-                    <input id="last_name" name="last_name" type="text" placeholder="Enter your last name" required>
+                    <input id="name" name="last_name" type="text" placeholder="Enter your last name" required>
                     <input id="email" name="email" type="email" placeholder="Email" required>
-                    <<input id="password" type="password" class="@error('password') is-invalid @enderror" name="password"
+                    <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password"
                         required autocomplete="new-password" placeholder="Enter password">
                         <input id="password-confirm" type="password" name="password_confirmation" required
                             autocomplete="new-password" placeholder="Enter confirm password">

